@@ -1,0 +1,29 @@
+{
+  "name": "yume",
+  "version": "0.0.2",
+  "description": "A mock-up smartwatch application by js",
+  "main": "index.js",
+  "dependencies": {
+    "jasmine-core": "^2.4.1",
+    "live-server": "^1.0.0",
+    "systemjs": "^0.19.27",
+    "typescript": "^1.8.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "live-server --open=unit-test.html --port=1023"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Binary/NZ_YumE.git"
+  },
+  "keywords": [
+    "smartwatch"
+  ],
+  "author": "Brock, Haoyang, Sonny, Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-Binary/NZ_YumE/issues"
+  },
+  "homepage": "https://github.com/Mr-Binary/NZ_YumE#readme"
+}
