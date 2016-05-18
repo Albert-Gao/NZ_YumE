@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "live-server --open=unit-test.html --port=1023"
+    "test": "live-server --open=UnitTest.html --port=1023"
   },
   "repository": {
     "type": "git",
