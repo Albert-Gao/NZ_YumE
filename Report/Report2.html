@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>COSC345 Project Reports - Assignment 2</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body>
+    <h1>Project YumE</h1>
+    <h2>Phase 2 Report for COSC 345</h2>
+    <h3>Team Members</h3>
+    <table>
+        <tbody>
+            <tr>
+                <td>Brock Fairweather</td>
+                <td>brockdf@gmail.com</td>
+                <td>702438</td>
+            </tr>
+            <tr>
+                <td>Haoyang Gao</td>
+                <td>albertgaohy@gmail.com</td>
+                <td>3970509</td>
+            </tr>
+            <tr>
+                <td>Sonny Lim</td>
+                <td>Sonnylim92@gmail.com</td>
+                <td>4144848</td>
+            </tr>
+            <tr>
+                <td>Thomas Scott</td>
+                <td>emailthomasscott@gmail.com</td>
+                <td>1879620</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Project Location</h3>
+    <ul>
+        <li>HTTPS: <a href="https://github.com/Mr-Binary/NZ_YumE.git">https://github.com/Mr-Binary/NZ_YumE.git</a></li>
+        <li>Report: Report2.html, In the “Report” folder of the project</li>
+    </ul>
+
+    <h3>System Architecture</h3>
+    <ul>
+        <li>View Layer</li>
+        <ul>
+            <li>This is the UI of the application, which the user will see. It includes all the HTML, CSS, and some of the JavaScript
+                files which are tightly coupled to the UI.</li>
+        </ul>
+        <li>ViewModel Layer</li>
+        <ul>
+            <li>This sits between the view layer and the model layer. Its role is to bind the UI elements to the actual data.
+                It is loosely coupled with the UI, so we can easily change UI through development without re-coding all the
+                parts.</li>
+        </ul>
+        <li>Model Layer</li>
+        <ul>
+            <li>This is the model of our raw data. In this project, it represents the list item or the data of the restaurant.
+                It is just a data model; we will not implement any data operation in this layer. We will assign these works
+                to the ViewModel layers or Service layer according to the different data source.</li>
+        </ul>
+        <li>Service Layer</li>
+        <ul>
+            <li>Its role is to provide different kinds of services, most of them are about different data fetching approaches
+                like requesting data from 3rd party rest API, initializing support for HTML5 audio input, and so on and so
+                forth. It is an additional layer that we add to this project in order to reduce the size of the viewmodels
+                and to make them more testable. It is like in a mobile system; the OS will provide you with some predefined
+                services, which just need to be invoked when needed.</li>
+        </ul>
+    </ul>
+
+    <h3>Directory Structure</h3>
+    <p>Notation: The words wrapped by the [] represent sub-folders. A paragraph starting with “Brief” is the description of
+        the main (top level) folder.</p>
+    <ul>
+        <li>.vscode</li>
+        <ul>
+            <li>Brief: This is the folder which holds all the config file for an open source and light-weighted IDE named Visual
+                Studio Code.</li>
+        </ul>
+        <li>Application</li>
+        <ul>
+            <li>Brief: It includes all the codes for the application. The style file and the ts file sit in their own folders
+                as below. The HTML file stores in the root of the /Application folder.</li>
+            <li>[CSS]</li>
+            <li>[TS]</li>
+            <ul>
+                <li>[Models]</li>
+                <li>[ViewModels]</li>
+            </ul>
+        </ul>
+        <li>Emulator</li>
+        <ul>
+            <li>Brief: It includes all the codes for the emulator. The style file and the ts file sit in their own folders as
+                below. The HTML file stores in the root of the /Emulator folder.</li>
+            <li>[CSS]</li>
+            <li>[TS]</li>
+            <ul>
+                <li>[Services]</li>
+            </ul>
+            <li>node_modules</li>
+            <ul>
+                <li>Brief: All the 3rd party libraries maintain by NPM sit in this folder. And it is the default folder for the
+                    npm packages.</li>
+            </ul>
+            <li>Report</li>
+            <ul>
+                <li>Brief: The report for phase 2 sits in this folder, as will the following reports.</li>
+            </ul>
+            <li>spec</li>
+            <ul>
+                <li>Brief: This is the folder which holds all the config file for an open source and light-weighted IDE named
+                    Visual Studio Code.</li>
+            </ul>
+            <li>typings</li>
+            <ul>
+                <li>Brief: We use Jasmine as our unit-testing framework. This folder is its default folder, which holds its configuration
+                    file and all the unit test files. These files are named FILENAME.spec.js. This is in accordance with
+                    Jasmine framework conventions.</li>
+            </ul>
+            <li>Files in the root</li>
+            <ul>
+                <li>Package.json: The NPM configuration file.</li>
+                <li>Tsconfig.json: The configuration file for Typescript compilation. </li>
+                <li>UnitTest.html: The UI version of seeing the results of a unit test. Not working at the moment, but you can
+                    still use the command line tool to check results.</li>
+            </ul>
+        </ul>
+
+        <h3>The 3rd party libraries we use and why:</h3>
+        <ul>
+            <li>• Jasmine: We use it as our unit-testing framework. It is easy to use, easy to extend, and it’s very widely used.
+                This means there are numerous resources out there to support us.</li>
+            <li>• Live-server: This is a library which can establish a lightweight web server over your existing system, so we
+                can check our work as we go. Without it we cannot check some things due to the "same origin policy" security
+                restrictions of the browser. It supports live editing which means it will auto refresh the browser if we
+                modify files.</li>
+            <li>• SystemJS: With TypeScript, we can develop web application based on our existing OOP knowledge set. The problem
+                is that browser doesn’t directly support dynamically loading modules. We will therefore use SystemJS to handle
+                this situation. Once most modern browsers adopt the ES6 module implementation, it will not be needed anymore.
+                This however will take some time.</li>
+            <li>• TypeScript: It seems unnecessary for us to install another TypeScript compiler inside the project where we
+                can install it globally. The point here is to unit test the TypeScript directly.</li>
+        </ul>
+
+        <h3>How to check the result of unit testing?</h3>
+        <ul>
+            <li>• With a web page: In the ideal world, you could just open the UnitTest.html to check the result, but as previously
+                mentioned, it is not working so far due to a multi-modules loading issue. </li>
+            <li>• With a CLI: You can just type “jasmine” when in the root directory of the project. It will execute all the
+                unit testing files in the “spec” folder and show the results in the terminal. The precondition of this is
+                that you should install nodejs runtime and install jasmine CLI tool globally with this command “npm install
+                jasmine -g”.</li>
+        </ul>
+
+        <h3>Changes we’ve made so far</h3>
+        <ul>
+            <li>• Product Perspective:</li>
+            <ul>
+                <li>o Before the prototyping phase, we don’t realize that some additional functions would actually be implementable.
+                    We for example found that the audio input would be doable, and discovered the Yelp REST apis. We redesigned
+                    part of our product in order to allow these changes. </li>
+            </ul>
+            <li>• Architecture Perspective:</li>
+            <ul>
+                <li>o At first, we were treating this project as a traditional web project, with many separate web pages, but
+                    we soon realized there are some pitfalls with this when it comes doing unit testing, since the UI and
+                    business logic are tightly coupled, meaning we’d have to deal with tons of node modifications in the
+                    DOM. We therefore changed the whole architecture design, so that it is now more like a web app rather
+                    than web pages. The advantages are obvious:</li>
+                <ul>
+                    <li> We can now unit test all our view models easily due to the benefits of dependency injection.</li>
+                    <li> We can now change the UI without rewriting the business logic underneath.</li>
+                    <li> We can now just bind the model to the UI elements through a ViewModel without dealing with the micro-DOM
+                        manipulations. Loosely coupled and more efficient.</li>
+                </ul>
+            </ul>
+            <li>• Timing Perspective:</li>
+            <ul>
+                <li>o It seems that we underestimate the following two factors. And we have to change the whole time accordingly.</li>
+                <ul>
+                    <li> Factor 1: The learning of best practices. The learning of TypeScript in fact is relatively easy due
+                        to it being just a superset of JavaScript, and following the ECMA standard. But when we do implement
+                        things, we want to do it the right way as often as we can. We therefore needed time to learn the
+                        existing best practices out there. This is time well spent since we should see benefits of it in
+                        the following phases. This included finding case studies and general internet research. It had a
+                        big impact on our system design.</li>
+                    <li> Factor 2: The learning of our tool chain. In order to take advantage of modern front-end development
+                        we need to use some tools to improve our productivity. As web-development is a rapid growing community,
+                        the tools that are currently utilized are many and varied. We needed to choose from them and learn
+                        how to use them. In fact, from notes that were taken when going through all of this, it took 25 steps
+                        (mainly commands) to set up the tool chain. This phase greatly delayed our timeframe for pushing
+                        code to the repository.</li>
+                </ul>
+            </ul>
+        </ul>
+
+        <h3>Remaining work and assigning of it:</h3>
+        <p>If you look through our existing code base, you will notice that we are taking advantage of decoupling. All the existing
+            code is a sort of scaffolding. We still need to implement some real logic like calling the REST API using the
+            OAuth2 standard and invoking the system services like voice input. As we wrote in report 1, we will not provide
+            the schedule after the first deadline (23/05/16). It is not because we thought we could finish the entire project
+            by this date, it is because the project is only in the very early alpha stages at this time. For a new team,
+            any schedule after that date is would a fairly uneducated guess. From now on, as we have already finished the
+            architecture design, we’d be happy to show the timetable for the rest of the project. //I’m not sure I follow
+            what you are saying here. You imply that we are not going to give a schedule at all for the next phase (after
+            the 23rd), but then go on to say that you are happy to produce a time table for the next phase now, as we’ve
+            finished the architecture design. Either way, I think we probably should produce some estimates again, simply
+            because this section is worth 20% of the marks for this phase. We also need to specify who we think will do what.
+            None of this has to be very accurate or indeed even very realistic! We should probably also try to at least vaguely
+            follow some sort of timetable this time ^^!</p>
+</body>
+
+</html>
