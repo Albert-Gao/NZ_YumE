@@ -1,9 +1,23 @@
+/**
+* This model represents the list view.
+* It will be used to display listed restaurants. 
+*/
 import {IListItem} from '../Models/IListItem'
-
+/**
+* @export
+* @class represents a string that shows listed items
+*/
 export class FindListViewModel {
     _list: IListItem[];
     _keyword: string;
-
+/**
+* (Displays listed restaurant data)
+*
+* @constructor
+* @this {string} - list
+* @this {string} - keyword
+* @param {array} - to store and compare strings
+*/
     constructor(passinList?: IListItem[], keyword?: string) {
         if (passinList) {
             this._list = passinList;
@@ -12,7 +26,13 @@ export class FindListViewModel {
             this._keyword = keyword;
         }
     }
-
+/**
+* @function - to check strings are identical to fetch item
+* @param {array} - to store and compare strings
+* @this {string} - keyword
+* @this {string} - list
+* @return (string) - list that matched keyword
+*/
     findByKeyword(keyWord?: string): IListItem[] {
         let myKeyWord: string;
         if (keyWord) {

@@ -1,20 +1,20 @@
 import {IStorageService} from './IStorageService'
 
 /**
- * (description)
+ * (Allows for storage of data)
  * 
  * @export
  * @class MyLocalStorage
  */
 export class StorageService implements IStorageService {
     /**
-     * (description)
+     * (stores key number)
      * 
      * @type {string}
      */
     key: number;
     /**
-     * (description)
+     * (stores a value)
      * 
      * @type {*}
      */
@@ -22,8 +22,8 @@ export class StorageService implements IStorageService {
     /**
      * Creates an instance of MyLocalStorage.
      * 
-     * @param {string} theKey (description)
-     * @param {*} theValue (description)
+     * @param {string} theKey (this.key)
+     * @param {*} theValue (this.value)
      */
     constructor(theKey?: number, theValue?: any) {
         if (theKey) {
@@ -35,7 +35,7 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (description)
+     * (Stores the key that corresponds with assigned value)
      */
     save(theKey?: string, theValue?: any) {
         let myKey: string;
@@ -54,10 +54,10 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (description)
+     * (gets the string)
      * 
-     * @param {string} theKey (description)
-     * @returns {*} (description)
+     * @param {string} theKey (this.key)
+     * @returns {*} (myKey)
      */
     get(theKey?: string): any {
         let myKey: string;
@@ -72,9 +72,9 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (description)
+     * (removes the string)
      * 
-     * @param {string} [theKey] (description)
+     * @param {string} [theKey] (this.key)
      */
     remove(theKey?: string) {
         let myKey: string;
@@ -89,10 +89,10 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (description)
+     * (boolean if string matches)
      * 
-     * @param {string} [theKey] (description)
-     * @returns {boolean} (description)
+     * @param {string} [theKey] (this.key)
+     * @returns {boolean} (this.key)
      */
     contain(theKey?: string): boolean {
         let myKey: string;

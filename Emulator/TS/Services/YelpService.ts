@@ -1,5 +1,15 @@
+/**
+* This model represents the Yelp service.
+* It will be used to store user data. 
+* @export
+* @class YelpService
+*/
 export class YelpService {
-
+/**
+* @function - creates user id
+* 
+* @return {string} - returns user id
+*/
     createIdentity(): string {
         let myID: string;
 
@@ -11,11 +21,17 @@ export class YelpService {
 
         return myID;
     }
-
+    /**
+    * @function - creates a timestamp for user
+    * return {value} - returns the timestamp
+    */
     createTimestamp(): number {
         return Math.round((new Date()).getTime() / 1000.0);
     }
-
+    /**
+    * @function
+    * @return {value}
+    */
     createNonce(length?: number): string {
         let last: any;
         let repeat: number = 0
