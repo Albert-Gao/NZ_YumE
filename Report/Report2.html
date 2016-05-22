@@ -74,7 +74,7 @@
             <ul>
                 <li>Its role is to provide different kinds of services, most of them are about different data fetching approaches
                     like requesting data from 3rd party rest API, initializing support for HTML5 audio input, and so on and
-                    so forth. It is an additional layer that we add to this project in order to reduce the size of the viewmodels
+                    so forth. It is an additional layer that we add to this project in order to reduce the size of the view models
                     and to make them more testable. It is like in a mobile system; the OS will provide you with some predefined
                     services, which just need to be invoked when needed.</li>
             </ul>
@@ -83,13 +83,13 @@
 
     <br>
     <h3>4. Directory Structure</h3>
-    <p>This paragraph can describe the componts that forms each layer.</p>
+    <p>This paragraph describes the components that form each layer.</p>
     <p>Notation: The words wrapped by the [] represent sub-folders. A paragraph starting with “Brief” is the description of
         the main (top level) folder.</p>
     <ul>
         <li>.vscode
             <ul>
-                <li>Brief: This is the folder which holds all the config file for an open source and light-weighted IDE named
+                <li>Brief: This is the folder which holds all the configuration files for an open source and light-weighted IDE named
                     Visual Studio Code.</li>
             </ul>
         </li>
@@ -168,7 +168,7 @@
             of the browser. It supports live editing which means it will auto refresh the browser if we modify files.</li>
         <li>SystemJS: With TypeScript, we can develop web application based on our existing OOP knowledge set. The problem is
             that browser doesn’t directly support dynamically loading modules. We will therefore use SystemJS to handle this
-            situation. Once most modern browsers adopt the ES6 module implementation, it will not be needed anymore. This
+            situation. Once most modern browsers adopt the ES6 module implementation, it will not be needed any more. This
             however will take some time.</li>
         <li>TypeScript: It seems unnecessary for us to install another TypeScript compiler inside the project where we can install
             it globally. The point here is to unit test the TypeScript directly.</li>
@@ -198,13 +198,13 @@
                 <li>UI: the very first stage for UI of the application is done.</li>
                 <li>Logic: the testable logic for emulator of application is done. But actual logic needs implement next.</li>
                 <li>Documents: nearly all documents for this stage are done.</li>
-                <li>Tests: We've tested serval methods with return value.</li>
+                <li>Tests: We've tested several methods with return values.</li>
             </ul>
         </li>
         <li>Product Perspective:
             <ul>
-                <li>Before the prototyping phase, we don’t realize that some additional functions would actually be implementable.
-                    We for example found that the audio input would be doable, and discovered the Yelp REST apis. We redesigned
+                <li>Before the prototyping phase, we didn't realize that some additional functions would actually be implementable.
+                    For example we found that audio input would be doable, and discovered the Yelp REST apis. We redesigned
                     part of our product in order to allow these changes. </li>
             </ul>
         </li>
@@ -228,20 +228,20 @@
         </li>
         <li>Timing Perspective:
             <ul>
-                <li>It seems that we underestimate the following two factors. And we have to change the whole time accordingly.
+                <li>It seems that we underestimated the following two factors, so had to deviate from our initial time estimates a bit:
                     <ul>
                         <li>Factor 1: The learning of best practices. The learning of TypeScript in fact is relatively easy due
                             to it being just a superset of JavaScript, and following the ECMA standard. But when we do implement
                             things, we want to do it the right way as often as we can. We therefore needed time to learn
-                            the existing best practices out there. This is time well spent since we should see benefits of
-                            it in the following phases. This included finding case studies and general internet research.
+                            the existing best practices out there, which was time well spent since we should see benefits of
+                            it in the following phases. This included finding case studies and conducting general internet research.
                             It had a big impact on our system design.</li>
                         <li>Factor 2: The learning of our tool chain. In order to take advantage of modern front-end development
                             we need to use some tools to improve our productivity. As web-development is a rapid growing
                             community, the tools that are currently utilized are many and varied. We needed to choose from
                             them and learn how to use them. In fact, from notes that were taken when going through all of
                             this, it took 25 steps (mainly commands) to set up the tool chain. This phase greatly delayed
-                            our timeframe for pushing code to the repository.
+                            our time-frame for pushing code to the repository.
                         </li>
                     </ul>
                 </li>
@@ -253,8 +253,8 @@
     <h3>9. Remaining work:</h3>
     <p>If you look through our existing code base, you will notice that we are taking advantage of decoupling. All the existing
         code is a sort of scaffolding. We still need to implement some real logic like calling the REST API using the OAuth2
-        standard and invoking the system services like voice input. The assignment 1 only showed the plan before the 2nd
-        deadline. It is now the time to update the time table to represent the future plan.</p>
+        standard and invoking the system services like voice input. The first report only showed the plan up to the second
+        deadline so it is now time to update the time table to represent future plans.</p>
 
     <table>
         <tbody>
