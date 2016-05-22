@@ -1,5 +1,17 @@
+
+/**
+ * This class retrive infomation from Yelp API using OAuth2 protocol.
+ * 
+ * @export
+ * @class YelpService
+ */
 export class YelpService {
 
+    /**
+     * Create the identity that need to fetch the data.
+     * 
+     * @returns {string} The identity that generated.
+     */
     createIdentity(): string {
         let myID: string;
 
@@ -12,10 +24,21 @@ export class YelpService {
         return myID;
     }
 
+    /**
+     * Create the timestamp following the OAuth2 rule.
+     * 
+     * @returns {number} the actual timestamp that has been generated.
+     */
     createTimestamp(): number {
         return Math.round((new Date()).getTime() / 1000.0);
     }
 
+    /**
+     * Generate the random value that is used when creating the identity.
+     * 
+     * @param {number} [length] the length needs to generate.
+     * @returns {string} the generated nonce.
+     */
     createNonce(length?: number): string {
         let last: any;
         let repeat: number = 0

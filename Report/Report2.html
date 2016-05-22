@@ -125,6 +125,11 @@
                     for the npm</li>
             </ul>
         </li>
+        <li>Documents
+            <ul>
+                <li>Brief: This folder holds the documents of the project.</li>
+            </ul>
+        </li>
         <li>Report
             <ul>
                 <li>Brief: The report for phase 2 sits in this folder, as will the following reports.</li>
@@ -172,15 +177,21 @@
     <br>
     <h3>6. How to check the result of unit testing?</h3>
     <ul>
-        <li>With a web page: In the ideal world, you could just open the UnitTest.html to check the result, but as previously
-            mentioned, it is not working so far due to a multi-modules loading issue. </li>
+        <li>With a web page: under the root of the project, open terminal, type "npm test", you will see the result. Make sure
+            you installed Node.js first. The NPM will install along Node.js.</li>
         <li>With a CLI: You can just type “jasmine” when in the root directory of the project. It will execute all the unit testing
             files in the “spec” folder and show the results in the terminal. The precondition of this is that you should
             install nodejs runtime and install jasmine CLI tool globally with this command “npm install jasmine -g”.</li>
     </ul>
 
     <br>
-    <h3>7. Changes we’ve made so far</h3>
+    <h3>7. How to see the docuemnts?</h3>
+    <ul>
+        <li>The documents sit in the '/Documents' folder, open the folder then open index.html, you will see the documents.</li>
+    </ul>
+
+    <br>
+    <h3>8. Changes we’ve made so far</h3>
     <ul>
         <li>Actual finished codes:
             <ul>
@@ -239,7 +250,7 @@
     </ul>
 
     <br>
-    <h3>8. Remaining work:</h3>
+    <h3>9. Remaining work:</h3>
     <p>If you look through our existing code base, you will notice that we are taking advantage of decoupling. All the existing
         code is a sort of scaffolding. We still need to implement some real logic like calling the REST API using the OAuth2
         standard and invoking the system services like voice input. The assignment 1 only showed the plan before the 2nd
@@ -381,7 +392,7 @@
     </table>
 
     <br>
-    <h3>9. Workload assign:</h3>
+    <h3>10. Workload assign:</h3>
     <p>This is the job description of each individual.</p>
 
     <table>

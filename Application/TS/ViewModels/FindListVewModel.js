@@ -1,32 +1,18 @@
-import {IListItem} from '../Models/IListItem'
-
+"use strict";
 /**
  * This is the ViewModel for the result page of find list.
- * 
+ *
  * @export
  * @class FindListViewModel
  */
-export class FindListViewModel {
-    /**
-     * private property of list
-     * 
-     * @type {IListItem[]}
-     */
-    _list: IListItem[];
-    /**
-     * private property of keywords
-     * 
-     * @type {string}
-     */
-    _keyword: string;
-
+var FindListViewModel = (function () {
     /**
      * Creates an instance of FindListViewModel.
-     * 
+     *
      * @param {IListItem[]} [passinList] the pass-in parameter as a list
      * @param {string} [keyword] the keyword want to find
      */
-    constructor(passinList?: IListItem[], keyword?: string) {
+    function FindListViewModel(passinList, keyword) {
         if (passinList) {
             this._list = passinList;
         }
@@ -34,33 +20,33 @@ export class FindListViewModel {
             this._keyword = keyword;
         }
     }
-
     /**
      * find the result by keyword.
-     * 
+     *
      * @param {string} [keyWord] the keyword want to find.
      * @returns {IListItem[]} return the result as a list.
      */
-    findByKeyword(keyWord?: string): IListItem[] {
-        let myKeyWord: string;
+    FindListViewModel.prototype.findByKeyword = function (keyWord) {
+        var myKeyWord;
         if (keyWord) {
             myKeyWord = keyWord;
-        } else {
+        }
+        else {
             myKeyWord = this._keyword;
         }
-        let listItem: IListItem = {
+        var listItem = {
             address: "12 The Octagon Dunedin 9016",
             category: "Gastro Pubs",
             picURL: "http://s3-media4.fl.yelpcdn.com/bphoto/TB3tqX9-k2EejwYM4PQayw/o.jpg",
             title: "Mac’s Brewbar",
             url: "http://m.yelp.com/biz/macs-brewbar-dunedin"
         };
-
-        let list: IListItem[];
+        var list;
         list.push(listItem);
         list.push(listItem);
-
         this._list = list;
         return list;
-    }
-}
+    };
+    return FindListViewModel;
+}());
+exports.FindListViewModel = FindListViewModel;

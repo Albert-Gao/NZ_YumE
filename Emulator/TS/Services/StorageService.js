@@ -22,6 +22,9 @@ var StorageService = (function () {
     }
     /**
      * (description)
+     *
+     * @param {string} [theKey] (description)
+     * @param {*} [theValue] (description)
      */
     StorageService.prototype.save = function (theKey, theValue) {
         var myKey;
@@ -43,7 +46,7 @@ var StorageService = (function () {
     /**
      * (description)
      *
-     * @param {string} theKey (description)
+     * @param {string} [theKey] (description)
      * @returns {*} (description)
      */
     StorageService.prototype.get = function (theKey) {

@@ -1,6 +1,7 @@
-import { FindViewModel } from '../Application/TS/ViewModels/FindViewModel';
-import { ISpeechService } from '../Emulator/TS/Services/ISpeechService';
+/// <reference path="../typings/jasmine/jasmine.d.ts" />
 
+import { FindViewModel } from '../Application/TS/ViewModels/FindViewModel.ts';
+import { ISpeechService } from '../Emulator/TS/Services/ISpeechService.ts';
 
 describe('Tests for the FindViewModel', () => {
   it('getKeyword() should return a string', () => {
