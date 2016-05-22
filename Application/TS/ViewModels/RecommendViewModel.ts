@@ -17,5 +17,4 @@ export class RecommendViewModel{
     getHistoryList():IListItem[]{
         return this._myStorage.get(Category.Recommend.toString());
     }
-    
 }
