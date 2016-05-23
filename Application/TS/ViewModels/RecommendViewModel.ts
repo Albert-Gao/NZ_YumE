@@ -1,5 +1,5 @@
-import {IListItem} from '../Models/IListItem.ts'
-import {IStorageService} from '../../../Emulator/TS/Services/IStorageService.ts';
+import {IListItem} from '../Models/IListItem'
+import {IStorageService} from '../../../Emulator/TS/Services/IStorageService';
 import {Category} from '../../../Emulator/TS/Services/Category.ts';
 
 /**

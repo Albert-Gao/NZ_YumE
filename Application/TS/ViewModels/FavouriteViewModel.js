@@ -1,8 +1,7 @@
 "use strict";
 var Category_1 = require('../../../Emulator/TS/Services/Category');
 /**
-* @export
-* @class Favourite
+* @class This model represents the restaurant favourites.
 */
 var FavouriteViewModel = (function () {
     /**

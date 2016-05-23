@@ -1,4 +1,4 @@
-import {IStorageService} from './IStorageService.ts'
+import {IStorageService} from './IStorageService'
 
 /**
  * Allows for storage of data

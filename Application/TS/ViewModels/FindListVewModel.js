@@ -21,11 +21,12 @@ var FindListViewModel = (function () {
         }
     }
     /**
-     * find the result by keyword.
-     *
-     * @param {string} [keyWord] the keyword want to find.
-     * @returns {IListItem[]} return the result as a list.
-     */
+    * @function - to check strings are identical to fetch item
+    * @param {array} - to store and compare strings
+    * @this {string} - keyword
+    * @this {string} - list
+    * @return (string) - list that matched keyword
+    */
     FindListViewModel.prototype.findByKeyword = function (keyWord) {
         var myKeyWord;
         if (keyWord) {

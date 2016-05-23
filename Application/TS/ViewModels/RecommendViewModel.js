@@ -1,7 +1,7 @@
 "use strict";
 var Category_ts_1 = require('../../../Emulator/TS/Services/Category.ts');
 /**
- * (description)
+ * The Viewmodel of the Recommended page
  *
  * @export
  * @class RecommendViewModel
@@ -10,7 +10,7 @@ var RecommendViewModel = (function () {
     /**
      * Creates an instance of RecommendViewModel.
      *
-     * @param {IStorageService} storageService (description)
+     * @param {IStorageService} storageService - checks storage for local data
      */
     function RecommendViewModel(storageService) {
         this._myStorage = storageService;
@@ -19,9 +19,9 @@ var RecommendViewModel = (function () {
         this._list = this.getHistoryList();
     }
     /**
-     * (description)
+     * Gets the history of listed items
      *
-     * @returns {IListItem[]} (description)
+     * @returns {IListItem[]} - list items in HistoryList
      */
     RecommendViewModel.prototype.getHistoryList = function () {
         //return this._myStorage.get(Category.Recommend.toString());

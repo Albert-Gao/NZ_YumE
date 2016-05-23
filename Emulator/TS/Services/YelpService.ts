@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-/**
-* This model represents the Yelp service.
-* It will be used to store user data. 
-* @export
-* @class YelpService
-*/
-export class YelpService {
-/**
-* @function - creates user id
-* 
-* @return {string} - returns user id
-*/
-=======
-
 /**
  * This class retrive infomation from Yelp API using OAuth2 protocol.
  *
@@ -26,7 +11,6 @@ export class YelpService {
      *
      * @returns {string} - The identity that generated.
      */
->>>>>>> origin/dev
     createIdentity(): string {
         let myID: string;
 
@@ -38,19 +22,6 @@ export class YelpService {
 
         return myID;
     }
-<<<<<<< HEAD
-    /**
-    * @function - creates a timestamp for user
-    * return {value} - returns the timestamp
-    */
-    createTimestamp(): number {
-        return Math.round((new Date()).getTime() / 1000.0);
-    }
-    /**
-    * @function
-    * @return {value}
-    */
-=======
 
     /**
      * Create the timestamp following the OAuth2 rule.
@@ -67,7 +38,6 @@ export class YelpService {
      * @param {number} [length] - the length needs to generate.
      * @returns {string} -
      */
->>>>>>> origin/dev
     createNonce(length?: number): string {
         let last: any;
         let repeat: number = 0

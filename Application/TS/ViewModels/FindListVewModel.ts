@@ -1,4 +1,4 @@
-import {IListItem} from '../Models/IListItem.ts'
+import {IListItem} from '../Models/IListItem'
 
 /**
  * This is the ViewModel for the result page of find list.
@@ -36,13 +36,13 @@ export class FindListViewModel {
         }
     }
 
-/**
-* @function - to check strings are identical to fetch item
-* @param {array} - to store and compare strings
-* @this {string} - keyword
-* @this {string} - list
-* @return (string) - list that matched keyword
-*/
+    /**
+    * @function - to check strings are identical to fetch item
+    * @param {array} - to store and compare strings
+    * @this {string} - keyword
+    * @this {string} - list
+    * @return (string) - list that matched keyword
+    */
     findByKeyword(keyWord?: string): IListItem[] {
         let myKeyWord: string;
         if (keyWord) {

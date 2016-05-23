@@ -1,6 +1,6 @@
 "use strict";
 /**
- * (description)
+ * Allows for storage of data
  *
  * @export
  * @class MyLocalStorage
@@ -9,8 +9,8 @@ var StorageService = (function () {
     /**
      * Creates an instance of MyLocalStorage.
      *
-     * @param {string} theKey (description)
-     * @param {*} theValue (description)
+     * @param {string} theKey (this.key)
+     * @param {*} theValue (this.value)
      */
     function StorageService(theKey, theValue) {
         if (theKey) {
@@ -21,7 +21,7 @@ var StorageService = (function () {
         }
     }
     /**
-     * (description)
+     * Stores the key that corresponds with assigned value
      *
      * @param {string} [theKey] (description)
      * @param {*} [theValue] (description)
@@ -44,10 +44,10 @@ var StorageService = (function () {
         localStorage.setItem(myKey, myValue);
     };
     /**
-     * (description)
+     * Gets the string that corresponds with assigned key
      *
-     * @param {string} [theKey] (description)
-     * @returns {*} (description)
+     * @param {string} theKey (this.key)
+     * @returns {*} (myKey)
      */
     StorageService.prototype.get = function (theKey) {
         var myKey;
@@ -62,9 +62,9 @@ var StorageService = (function () {
         }
     };
     /**
-     * (description)
+     * Removes the string that corresponds with assigned key
      *
-     * @param {string} [theKey] (description)
+     * @param {string} [theKey] (this.key)
      */
     StorageService.prototype.remove = function (theKey) {
         var myKey;
@@ -79,10 +79,10 @@ var StorageService = (function () {
         }
     };
     /**
-     * (description)
+     * Boolean value to check if key is equal to string
      *
-     * @param {string} [theKey] (description)
-     * @returns {boolean} (description)
+     * @param {string} [theKey] (this.key)
+     * @returns {boolean} (this.key)
      */
     StorageService.prototype.contain = function (theKey) {
         var myKey;

@@ -11,7 +11,7 @@ var YelpService = (function () {
     /**
      * Create the identity that need to fetch the data.
      *
-     * @returns {string} The identity that generated.
+     * @returns {string} - The identity that generated.
      */
     YelpService.prototype.createIdentity = function () {
         var myID;
@@ -25,7 +25,7 @@ var YelpService = (function () {
     /**
      * Create the timestamp following the OAuth2 rule.
      *
-     * @returns {number} the actual timestamp that has been generated.
+     * @returns {number} - the actual timestamp that has been generated.
      */
     YelpService.prototype.createTimestamp = function () {
         return Math.round((new Date()).getTime() / 1000.0);
@@ -33,8 +33,8 @@ var YelpService = (function () {
     /**
      * Generate the random value that is used when creating the identity.
      *
-     * @param {number} [length] the length needs to generate.
-     * @returns {string} the generated nonce.
+     * @param {number} [length] - the length needs to generate.
+     * @returns {string} -
      */
     YelpService.prototype.createNonce = function (length) {
         var last;
