@@ -1,4 +1,4 @@
-import {IListItem} from '../Models/IListItem'
+import {IListItem} from '../Models/IListItem.ts'
 
 /**
  * This is the ViewModel for the result page of find list.

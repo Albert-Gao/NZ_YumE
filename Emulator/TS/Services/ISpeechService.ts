@@ -1,4 +1,4 @@
-import {IListItem} from '../../../Application/TS/Models/IListItem';
+import {IListItem} from '../../../Application/TS/Models/IListItem.ts';
 
 /**
  * (description)

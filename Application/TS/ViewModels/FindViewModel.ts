@@ -1,4 +1,4 @@
-import {ISpeechService} from '../../../Emulator/TS/Services/ISpeechService';
+import { ISpeechService } from '../../../Emulator/TS/Services/ISpeechService';
 
 /**
  * The ViewModel for the find page.

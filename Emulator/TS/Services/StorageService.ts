@@ -1,4 +1,4 @@
-import {IStorageService} from './IStorageService'
+import {IStorageService} from './IStorageService.ts'
 
 /**
  * (description)
