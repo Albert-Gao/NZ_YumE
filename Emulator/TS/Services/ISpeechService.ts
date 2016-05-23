@@ -8,6 +8,17 @@
  */
 import {IListItem} from '../../../Application/TS/Models/IListItem';
 
+/**
+ * Allows for speech recognition
+ *
+ * @export
+ * @interface ISpeechService
+ */
 export interface ISpeechService{
+    /**
+     * Identify the spoken phrase
+     *
+     * @returns {string} - spoken phrase is returned
+     */
     recognize():string;
 }

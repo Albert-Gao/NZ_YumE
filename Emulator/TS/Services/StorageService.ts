@@ -1,20 +1,20 @@
 import {IStorageService} from './IStorageService'
 
 /**
- * (Allows for storage of data)
+ * Allows for storage of data
  * 
  * @export
  * @class MyLocalStorage
  */
 export class StorageService implements IStorageService {
     /**
-     * (stores key number)
+     * stores key number
      * 
      * @type {string}
      */
     key: number;
     /**
-     * (stores a value)
+     * stores a value
      * 
      * @type {*}
      */
@@ -35,7 +35,14 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (Stores the key that corresponds with assigned value)
+<<<<<<< HEAD
+     * Stores the key that corresponds with assigned value
+=======
+     * Stores the key that corresponds with assigned value
+     *
+     * @param {string} [theKey] (description)
+     * @param {*} [theValue] (description)
+>>>>>>> origin/dev
      */
     save(theKey?: string, theValue?: any) {
         let myKey: string;
@@ -54,10 +61,15 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (gets the string)
+     * Gets the string that corresponds with assigned key
      * 
+<<<<<<< HEAD
      * @param {string} theKey (this.key)
      * @returns {*} (myKey)
+=======
+     * @param {string} [theKey] (description)
+     * @returns {*} (description)
+>>>>>>> origin/dev
      */
     get(theKey?: string): any {
         let myKey: string;
@@ -72,7 +84,7 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (removes the string)
+     * Removes the string that corresponds with assigned key
      * 
      * @param {string} [theKey] (this.key)
      */
@@ -89,7 +101,7 @@ export class StorageService implements IStorageService {
     }
 
     /**
-     * (boolean if string matches)
+     * Boolean value to check if key is equal to string
      * 
      * @param {string} [theKey] (this.key)
      * @returns {boolean} (this.key)
