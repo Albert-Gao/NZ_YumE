@@ -1,4 +1,4 @@
-import {IStorageService} from './IStorageService'
+import {IStorageService} from './IStorageService.ts'
 
 /**
  * (description)
@@ -36,6 +36,9 @@ export class StorageService implements IStorageService {
 
     /**
      * (description)
+     * 
+     * @param {string} [theKey] (description)
+     * @param {*} [theValue] (description)
      */
     save(theKey?: string, theValue?: any) {
         let myKey: string;
@@ -56,7 +59,7 @@ export class StorageService implements IStorageService {
     /**
      * (description)
      * 
-     * @param {string} theKey (description)
+     * @param {string} [theKey] (description)
      * @returns {*} (description)
      */
     get(theKey?: string): any {

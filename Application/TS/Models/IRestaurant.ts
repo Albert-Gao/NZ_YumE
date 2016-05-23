@@ -10,25 +10,25 @@ import {IListItem} from './IListItem';
  */
 export interface IRestaurant extends IListItem{
     /**
-     * (description)
+     * (Displays the rating of listed object)
      * 
      * @type {number}
      */
     ratings:number;
     /**
-     * (description)
+     * (Displays the phone number of listed object)
      * 
      * @type {string}
      */
     phone:string;
     /**
-     * (description)
+     * (Displays the location (longitude) of listed object)
      * 
      * @type {number}
      */
     longitude:number;
     /**
-     * (description)
+     * (Displays the location (longitude) of listed object)
      * 
      * @type {number}
      */

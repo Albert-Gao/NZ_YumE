@@ -16,7 +16,12 @@
     <script src="node_modules/typescript/lib/typescript.js"></script>
     <script>
         System.config({
-            transpiler: 'typescript'     
+            transpiler: 'typescript',
+            meta:{
+                '*.ts':{
+                    format: 'es6'
+                }
+            }  
         });
         System.import('./spec/UnitTest.spec.ts')
             .then(window.onload)

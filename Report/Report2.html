@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>COSC345 Project Reports - Assignment 2</title>
+    <meta charset="utf-8" content="text/html">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="./Reports.css">
+</head>
+
+<body>
+    <h1>Project YumE</h1>
+    <h2>Phase 2 Report for COSC 345</h2>
+    <h3>1. Team Members</h3>
+    <table>
+        <tbody>
+            <tr>
+                <td>Brock Fairweather</td>
+                <td>brockdf@gmail.com</td>
+                <td>702438</td>
+            </tr>
+            <tr>
+                <td>Haoyang Gao</td>
+                <td>albertgaohy@gmail.com</td>
+                <td>3970509</td>
+            </tr>
+            <tr>
+                <td>Sonny Lim</td>
+                <td>Sonnylim92@gmail.com</td>
+                <td>4144848</td>
+            </tr>
+            <tr>
+                <td>Thomas Scott</td>
+                <td>emailthomasscott@gmail.com</td>
+                <td>1879620</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h3>2. Project Location</h3>
+    <ul>
+        <li>HTTPS: <a href="https://github.com/Mr-Binary/NZ_YumE.git">https://github.com/Mr-Binary/NZ_YumE.git</a></li>
+        <li>Report: Report2.html, In the “Report” folder of the project</li>
+    </ul>
+
+    <br>
+    <h3>3. System Architecture</h3>
+    <ul>
+        <li>View Layer
+
+            <ul>
+                <li>This is the UI of the application, which the user will see. It includes all the HTML, CSS, and some of the
+                    JavaScript files which are tightly coupled to the UI.</li>
+            </ul>
+        </li>
+        <li>ViewModel Layer
+            <ul>
+                <li>This sits between the view layer and the model layer. Its role is to bind the UI elements to the actual data.
+                    It is loosely coupled with the UI, so we can easily change UI through development without re-coding all
+                    the parts.
+                </li>
+            </ul>
+        </li>
+        <li>Model Layer
+            <ul>
+                <li>This is the model of our raw data. In this project, it represents the list item or the data of the restaurant.
+                    It is just a data model; we will not implement any data operation in this layer. We will assign these
+                    works to the ViewModel layers or Service layer according to the different data source.</li>
+            </ul>
+        </li>
+        <li>Service Layer
+            <ul>
+                <li>Its role is to provide different kinds of services, most of them are about different data fetching approaches
+                    like requesting data from 3rd party rest API, initializing support for HTML5 audio input, and so on and
+                    so forth. It is an additional layer that we add to this project in order to reduce the size of the view models
+                    and to make them more testable. It is like in a mobile system; the OS will provide you with some predefined
+                    services, which just need to be invoked when needed.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <br>
+    <h3>4. Directory Structure</h3>
+    <p>This paragraph describes the components that form each layer.</p>
+    <p>Notation: The words wrapped by the [] represent sub-folders. A paragraph starting with “Brief” is the description of
+        the main (top level) folder.</p>
+    <ul>
+        <li>.vscode
+            <ul>
+                <li>Brief: This is the folder which holds all the configuration files for an open source and light-weighted IDE named
+                    Visual Studio Code.</li>
+            </ul>
+        </li>
+        <li>Application
+            <ul>
+                <li>Brief: It includes all the codes for the application. The style file and the ts file sit in their own folders
+                    as below. The HTML file stores in the root of the /Application folder.</li>
+                <li>[CSS] Only the style.css is our work, the rest belong to the framework.</li>
+                <li>[img]</li>
+                <li>[js] all belong to the framework.</li>
+                <li>[TS]
+                    <ul>
+                        <li>[Models]</li>
+                        <li>[ViewModels]</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Documentation
+            <ul>
+                <li>Brief: This folder holds the documentation for the project.</li>
+            </ul>
+        </li>
+        <li>Emulator
+            <ul>
+                <li>Brief: No more progress here except for the typescript codes.</li>
+                <li>[CSS]</li>
+                <li>[TS]
+                    <ul>
+                        <li>[Services]</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>node_modules
+            <ul>
+                <li>Brief: All the 3<sup>rd</sup> party libraries maintain by NPM sit in this folder. And it is the default folder
+                    for the npm</li>
+            </ul>
+        </li>
+        <li>Report
+            <ul>
+                <li>Brief: The report for phase 2 sits in this folder, as will the following reports.</li>
+            </ul>
+        </li>
+        <li>spec
+            <ul>
+                <li>Brief: We use Jasmine as our unit-testing framework. This folder is its default folder, which holds its configuration
+                    file and all the unit test files. These files are named FILENAME.spec.js. This is in accordance with
+                    Jasmine framework conventions.</li>
+            </ul>
+        </li>
+        <li>typings
+            <ul>
+                <li>Brief: This project uses TypeScript as its coding language. This folder holds all the type definitions for
+                    the 3<sup>rd</sup> party libraries, which allow us to take advantage of type checking and Intellisense.</li>
+            </ul>
+        </li>
+        <li>Files in the root
+            <ul>
+                <li>json: The NPM configuration file.</li>
+                <li>Tsconfig.json: The configuration file for Typescript compilation.</li>
+                <li>html: The UI version of seeing the results of a unit test. Not working at the moment, but you can still use
+                    the command line tool to check results.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <br>
+    <h3>5. The 3rd party libraries we use and why:</h3>
+    <ul>
+        <li>Jasmine: We use it as our unit-testing framework. It is easy to use, easy to extend, and it’s very widely used. This
+            means there are numerous resources out there to support us.</li>
+        <li>Live-server: This is a library which can establish a lightweight web server over your existing system, so we can
+            check our work as we go. Without it we cannot check some things due to the "same origin policy" security restrictions
+            of the browser. It supports live editing which means it will auto refresh the browser if we modify files.</li>
+        <li>SystemJS: With TypeScript, we can develop web application based on our existing OOP knowledge set. The problem is
+            that browser doesn’t directly support dynamically loading modules. We will therefore use SystemJS to handle this
+            situation. Once most modern browsers adopt the ES6 module implementation, it will not be needed any more. This
+            however will take some time.</li>
+        <li>TypeScript: It seems unnecessary for us to install another TypeScript compiler inside the project when we can install
+            it globally. The point here is to unit test the TypeScript directly.</li>
+    </ul>
+
+    <br>
+    <h3>6. How to check the result of unit testing?</h3>
+    <ul>
+        <li>Using the web page: under the root of the project, open terminal, type "npm test", and the unit testing results will be shown. Make sure
+            Node.js is installed first. The NPM will be installed alongside Node.js.</li>
+        <li>With a CLI: You can just type “jasmine” when in the root directory of the project. It will execute all the unit testing
+            files in the “spec” folder and show the results in the terminal. The precondition of this is that you should
+            install nodejs runtime and install jasmine CLI tool globally with this command “npm install jasmine -g”.</li>
+    </ul>
+
+    <br>
+    <h3>7. Viewing the documentation</h3>
+    <ul>
+        <li>The documentation sits in the '/Documentation' folder. Open the folder then open index.html and you will see the documentation.</li>
+    </ul>
+
+    <br>
+    <h3>8. Changes we’ve made so far</h3>
+    <ul>
+        <li>Actual finished codes:
+            <ul>
+                <li>UI: The very first stage for UI of the application is done.</li>
+                <li>Logic: The testable logic for the emulator (for the application) is done. Actual logic now needs to be implemented.</li>
+                <li>Documentation: Nearly all the documentation for this stage is already done.</li>
+                <li>Tests: We've tested several methods with return values.</li>
+            </ul>
+        </li>
+        <li>Product Perspective:
+            <ul>
+                <li>Before the prototyping phase, we didn't realize that some additional functions would actually be implementable.
+                    For example we found that audio input would be doable, and discovered the Yelp REST apis. We redesigned
+                    part of our product in order to allow these changes. </li>
+            </ul>
+        </li>
+        <li>Architecture Perspective:
+            <ul>
+                <li>At first, we were treating this project as a traditional web project, with many separate web pages, but we
+                    soon realized there are some pitfalls with this when it comes doing unit testing, since the UI and business
+                    logic are tightly coupled, meaning we’d have to deal with tons of node modifications in the DOM. We therefore
+                    changed the whole architecture design, so that it is now more like a web app rather than web pages.
+                </li>
+                <li>The advantages are obvious:
+
+                    <ul>
+                        <li>We can now unit test all our view models easily due to the benefits of dependency injection.</li>
+                        <li>We can now change the UI without rewriting the business logic underneath.</li>
+                        <li>We can now just bind the model to the UI elements through a ViewModel without dealing with the micro-DOM
+                            manipulations. Loosely coupled and more efficient.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Timing Perspective:
+            <ul>
+                <li>It seems that we underestimated the following two factors, so had to deviate from our initial time estimates a bit:
+                    <ul>
+                        <li>Factor 1: The learning of best practices. The learning of TypeScript in fact is relatively easy due
+                            to it being just a superset of JavaScript, and following the ECMA standard. But when we do implement
+                            things, we want to do it the right way as often as we can. We therefore needed time to learn
+                            the existing best practices out there, which was time well spent since we should see benefits of
+                            it in the following phases. This included finding case studies and conducting general internet research.
+                            It had a big impact on our system design.</li>
+                        <li>Factor 2: The learning of our tool chain. In order to take advantage of modern front-end development
+                            we need to use some tools to improve our productivity. As web-development is a rapid growing
+                            community, the tools that are currently utilized are many and varied. We needed to choose from
+                            them and learn how to use them. In fact, from notes that were taken when going through all of
+                            this, it took 25 steps (mainly commands) to set up the tool chain. This phase greatly delayed
+                            our time-frame for pushing code to the repository.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <br>
+    <h3>9. Remaining work:</h3>
+    <p>If you look through our existing code base, you will notice that we are taking advantage of decoupling. All the existing
+        code is a sort of scaffolding. We still need to implement some real logic like calling the REST API using the OAuth2
+        standard and invoking the system services like voice input. The first report only showed the plan up to the second
+        deadline so it is now time to update the time table to represent future plans.</p>
+
+    <table>
+        <tbody>
+            <tr>
+                <td rowspan="2">
+                    Phase 1: Emulator
+                </td>
+                <td colspan="3">
+                    <p>24/May &ndash; 17/July</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Coding</p>
+                </td>
+                <td>
+                    <p>Documenting</p>
+                </td>
+                <td>
+                    <p>Testing</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>UI: HTML + CSS</p>
+                </td>
+                <td>
+                    <p>10/July</p>
+                </td>
+                <td>
+                    <p>12/July</p>
+                </td>
+                <td>
+                    <p>17/July</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Logic: TypeScript</p>
+                </td>
+                <td>
+                    <p>10/July</p>
+                </td>
+                <td>
+                    <p>12/July</p>
+                </td>
+                <td>
+                    <p>17/July</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <table>
+        <tbody>
+            <tr>
+                <td rowspan="2">
+                    Phase 2: Application
+                </td>
+                <td colspan="3">
+                    <p>17/July &ndash; 7/August</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Coding</p>
+                </td>
+                <td>
+                    <p>Documenting</p>
+                </td>
+                <td>
+                    <p>Testing</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>UI: HTML + CSS</p>
+                </td>
+                <td>
+                    <p>31/July</p>
+                </td>
+                <td>
+                    <p>2/August</p>
+                </td>
+                <td>
+                    <p>7/August</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Logic: TypeScript</p>
+                </td>
+                <td>
+                    <p>31/July</p>
+                </td>
+                <td>
+                    <p>2/August</p>
+                </td>
+                <td>
+                    <p>7/August</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <table>
+        <tbody>
+            <tr>
+                <td rowspan="2">
+                    Phase 3: Submitting
+                </td>
+                <td>
+                    <p>8/August &ndash; 14/August</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Bug Fixing</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>UI: HTML + CSS</p>
+                </td>
+                <td rowspan="2">
+                    <p>8/August - 14/August</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Logic: TypeScript</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <h3>10. Assignment of work:</h3>
+    <p>This is the job description of each individual.</p>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <p>Name</p>
+                </td>
+                <td>
+                    <p>Job</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Brock Fairweather</p>
+                </td>
+                <td>
+                    <p>Documentation</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Haoyang Gao</p>
+                </td>
+                <td>
+                    <p>Logic and project management</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Sonny Lim</p>
+                </td>
+                <td>
+                    <p>Tests</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>Thomas Scott</p>
+                </td>
+                <td>
+                    <p>UI</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

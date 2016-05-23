@@ -1,5 +1,17 @@
 "use strict";
+/**
+ * This is the ViewModel for the result page of find list.
+ *
+ * @export
+ * @class FindListViewModel
+ */
 var FindListViewModel = (function () {
+    /**
+     * Creates an instance of FindListViewModel.
+     *
+     * @param {IListItem[]} [passinList] the pass-in parameter as a list
+     * @param {string} [keyword] the keyword want to find
+     */
     function FindListViewModel(passinList, keyword) {
         if (passinList) {
             this._list = passinList;
@@ -8,6 +20,12 @@ var FindListViewModel = (function () {
             this._keyword = keyword;
         }
     }
+    /**
+     * find the result by keyword.
+     *
+     * @param {string} [keyWord] the keyword want to find.
+     * @returns {IListItem[]} return the result as a list.
+     */
     FindListViewModel.prototype.findByKeyword = function (keyWord) {
         var myKeyWord;
         if (keyWord) {

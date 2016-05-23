@@ -1,9 +1,31 @@
-import {IListItem} from '../Models/IListItem'
+import {IListItem} from '../Models/IListItem.ts'
 
+/**
+ * This is the ViewModel for the result page of find list.
+ * 
+ * @export
+ * @class FindListViewModel
+ */
 export class FindListViewModel {
+    /**
+     * private property of list
+     * 
+     * @type {IListItem[]}
+     */
     _list: IListItem[];
+    /**
+     * private property of keywords
+     * 
+     * @type {string}
+     */
     _keyword: string;
 
+    /**
+     * Creates an instance of FindListViewModel.
+     * 
+     * @param {IListItem[]} [passinList] the pass-in parameter as a list
+     * @param {string} [keyword] the keyword want to find
+     */
     constructor(passinList?: IListItem[], keyword?: string) {
         if (passinList) {
             this._list = passinList;
@@ -13,6 +35,12 @@ export class FindListViewModel {
         }
     }
 
+    /**
+     * find the result by keyword.
+     * 
+     * @param {string} [keyWord] the keyword want to find.
+     * @returns {IListItem[]} return the result as a list.
+     */
     findByKeyword(keyWord?: string): IListItem[] {
         let myKeyWord: string;
         if (keyWord) {

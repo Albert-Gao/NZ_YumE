@@ -1,48 +1,51 @@
 /**
- * (description)
+ * This is the interface of the storage service
  * 
  * @export
  * @class MyLocalStorage
  */
 export interface IStorageService {
     /**
-     * (description)
+     * Stores a string
      * 
      * @type {string}
      */
     key: number;
     /**
-     * (description)
+     * Assigns a value
      * 
      * @type {*}
      */
     value: any;
 
     /**
-     * (description)
+     * Saves the string to the assigned value
+     * 
+     * @param {string} [theKey] (description)
+     * @param {*} [theValue] (description)
      */
     save(theKey?:string, theValue?:any):void
-
+    
     /**
-     * (description)
+     * Retrieves the key/string
      * 
-     * @param {string} theKey (description)
-     * @returns {*} (description)
+     * @param {string} theKey Used to locate value
+     * @returns {*} Returns string assigned to value
      */
     get(theKey?: string): any
 
     /**
-     * (description)
+     * Removes the string/key
      * 
-     * @param {string} [theKey] (description)
+     * @param {string} [theKey] removes the string assigned to key
      */
     remove(theKey?: string):void
 
     /**
-     * (description)
+     * Checks to see if there is a string
      * 
-     * @param {string} [theKey] (description)
-     * @returns {boolean} (description)
+     * @param {string} [theKey] checks for related key/string
+     * @returns {boolean} returns true or false value
      */
     contain(theKey?: string): boolean
 }
