@@ -1,4 +1,4 @@
-import {IStorageService} from './IStorageService'
+import {IStorageService} from './IStorageService.ts'
 
 /**
  * Allows for storage of data
@@ -35,14 +35,10 @@ export class StorageService implements IStorageService {
     }
 
     /**
-<<<<<<< HEAD
-     * Stores the key that corresponds with assigned value
-=======
      * Stores the key that corresponds with assigned value
      *
      * @param {string} [theKey] (description)
      * @param {*} [theValue] (description)
->>>>>>> origin/dev
      */
     save(theKey?: string, theValue?: any) {
         let myKey: string;
@@ -63,13 +59,8 @@ export class StorageService implements IStorageService {
     /**
      * Gets the string that corresponds with assigned key
      * 
-<<<<<<< HEAD
      * @param {string} theKey (this.key)
      * @returns {*} (myKey)
-=======
-     * @param {string} [theKey] (description)
-     * @returns {*} (description)
->>>>>>> origin/dev
      */
     get(theKey?: string): any {
         let myKey: string;
