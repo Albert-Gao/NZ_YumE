@@ -1,3 +1,4 @@
+/// <reference path="../typings/jasmine/jasmine.d.ts" />
 "use strict";
 var FindViewModel_1 = require('../Application/TS/ViewModels/FindViewModel');
 describe('Tests for the FindViewModel', function () {

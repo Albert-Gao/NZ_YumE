@@ -1,7 +1,18 @@
 "use strict";
+/**
+ * This class retrive infomation from Yelp API using OAuth2 protocol.
+ *
+ * @export
+ * @class YelpService
+ */
 var YelpService = (function () {
     function YelpService() {
     }
+    /**
+     * Create the identity that need to fetch the data.
+     *
+     * @returns {string} The identity that generated.
+     */
     YelpService.prototype.createIdentity = function () {
         var myID;
         myID = encodeURIComponent("oauth_consumer_key=") + encodeURIComponent("sNul62e6H0We5KJLGYP_Bw");
@@ -11,9 +22,20 @@ var YelpService = (function () {
         myID += "&" + encodeURIComponent(this.createNonce());
         return myID;
     };
+    /**
+     * Create the timestamp following the OAuth2 rule.
+     *
+     * @returns {number} the actual timestamp that has been generated.
+     */
     YelpService.prototype.createTimestamp = function () {
         return Math.round((new Date()).getTime() / 1000.0);
     };
+    /**
+     * Generate the random value that is used when creating the identity.
+     *
+     * @param {number} [length] the length needs to generate.
+     * @returns {string} the generated nonce.
+     */
     YelpService.prototype.createNonce = function (length) {
         var last;
         var repeat = 0;
