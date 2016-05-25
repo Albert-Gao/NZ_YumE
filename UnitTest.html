@@ -17,11 +17,11 @@
     <script>
         System.config({
             transpiler: 'typescript',
-            meta:{
-                '*.ts':{
+            meta: {
+                '*.ts': {
                     format: 'es6'
                 }
-            }  
+            }
         });
         System.import('./spec/UnitTest.spec.ts')
             .then(window.onload)
