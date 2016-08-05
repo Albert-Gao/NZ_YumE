@@ -1,0 +1,33 @@
+{
+  "name": "nz_yume",
+  "version": "1.0.0",
+  "description": "a web project which separate the browser and app",
+  "main": "/dist/emulator/index.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "webpack --progress --colors --watch",
+    "server": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mr-Binary/NZ_YumE.git"
+  },
+  "keywords": [
+    "web",
+    "app"
+  ],
+  "author": "Albert Gao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mr-Binary/NZ_YumE/issues"
+  },
+  "homepage": "https://github.com/Mr-Binary/NZ_YumE#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^2.1.1",
+    "css-loader": "^0.23.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "webpack": "^1.13.1"
+  }
+}

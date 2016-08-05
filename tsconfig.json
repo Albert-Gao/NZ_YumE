@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "charset": "utf8",
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "removeComments": true,
+        "pretty": true,
+        "outDir": "./dist/scripts/"
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+        "test",
+        ".idea"
+    ]
+}
