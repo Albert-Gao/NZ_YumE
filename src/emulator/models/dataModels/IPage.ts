@@ -1,7 +1,9 @@
 import {IFunc} from "./IFunction";
+import {IElement} from "./IElement";
 
 export interface IPage{
     name:string;
-    layout:string;
+    rawLayout:Array<IElement>;
+    afterRenderLayout:JQuery;
     callback:Array<IFunc>;
 }
