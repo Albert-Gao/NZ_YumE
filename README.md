@@ -36,8 +36,9 @@
 - [x] Bundle System configuration (Webpack)
 - [x] this is a complete item
 - [x] All interfaces design
-- [ ] implementing services
-- [ ] optimizing the TemplatingService and SystemService for a better decouple
+- [x] implementing services
+- [x] optimizing the TemplatingService and SystemService for a better decouple
 - [ ] implementing application
+- [ ] integrating testing library 
 - [ ] documenting
 - [ ] testing

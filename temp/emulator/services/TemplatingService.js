@@ -3,8 +3,8 @@ var TemplatingService = (function () {
     function TemplatingService(stateService) {
         this._stateService = stateService;
     }
-    TemplatingService.prototype.generatePage = function (page) {
-        var outDiv = this.generateLayout();
+    TemplatingService.prototype.createPage = function (page) {
+        var outDiv = this.createLayout();
         _.forEach(page.rawLayout, function (element) {
             var row = this.createjQueryItem("div", undefined, "row", undefined);
             switch (element.type) {
@@ -31,10 +31,7 @@ var TemplatingService = (function () {
                     var temp3 = this.createjQueryItem("div", undefined, "form-group");
                     var label = this.createjQueryItem("label", [{ "for": element.name }], "sr-only", element.define);
                     temp3.append(label);
-                    var input = this.createjQueryItem("input", [{ "type": "text" },
-                        { "id": element.name },
-                        { "for": element.name },
-                        { "placeholder": element.define }], "form-control", element.define);
+                    var input = this.createjQueryItem("input", [{ "type": "text" }, { "id": element.name }, { "for": element.name }, { "placeholder": element.define }], "form-control", element.define);
                     temp3.append(input);
                     row.append(temp3);
                     break;
@@ -56,12 +53,14 @@ var TemplatingService = (function () {
         });
         return outDiv;
     };
-    TemplatingService.prototype.generatePages = function () {
+    TemplatingService.prototype.createPages = function () {
+        var result = [];
         _.forEach(this._stateService.getPages(), function (page) {
-            page.afterRenderLayout = this.generatePage(page);
+            result.push(this.createPage(page));
         });
+        return result;
     };
-    TemplatingService.prototype.generateLayout = function () {
+    TemplatingService.prototype.createLayout = function () {
         return this.createjQueryItem('div', undefined, "container-fluid");
     };
     TemplatingService.prototype.removeElementFromDOM = function (className) {

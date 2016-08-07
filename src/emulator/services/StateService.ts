@@ -3,6 +3,7 @@ import {IPage} from "../models/dataModels/IPage";
 import {IApp} from "../models/dataModels/IApp";
 import {IElement} from "../models/dataModels/IElement";
 
+
 export class StateService implements IStateService{
     _app: IApp;
 
@@ -33,6 +34,14 @@ export class StateService implements IStateService{
 
     getPages(): Array<IPage> {
         return this._app.pages;
+    }
+
+    setRenderPage(pageName:string, pageLayouts:Array<JQuery>) {
+        _.map(this._app.pages, function(page:IPage){
+          _.forEach(pageLayouts,function(singleLayout:JQuery){
+              page.afterRenderLayout = singleLayout;
+          });
+        })
     }
 
     emulatorCentralCallBack(element: IElement, targetElementInfo?: string) {

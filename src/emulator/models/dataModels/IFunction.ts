@@ -1,4 +1,5 @@
-export interface IFunc{
-    targetID:string;
-    callbackFunction:{any:any};
+export interface IFunc {
+    bindToName: string;
+    targetID?: string;
+    callbackFunction:Function;
 }

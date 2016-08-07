@@ -4,5 +4,5 @@ export interface IApp{
     title:string;
     currentPageName:string;
     pages:Array<IPage>;
-    CentralCallbackFunc:{(pageName:string, elementID?:string):any;};
+    CentralCallbackFunc:(pageName:string, elementID?:string)=>void;
 }

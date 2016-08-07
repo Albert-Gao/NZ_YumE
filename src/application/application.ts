@@ -1,25 +1,17 @@
 import {IApp} from "../emulator/models/dataModels/IApp";
-export class application{
-    static getInstance():IApp{
-        return null;
+import {IPage} from "../emulator/models/dataModels/IPage";
+
+export class application implements IApp{
+
+    title: string;
+    currentPageName: string;
+    pages: Array<IPage>;
+    CentralCallbackFunc: {(pageName: string, elementID?: string):any};
+
+    constructor(title: string, currentPageName: string, pages: Array<IPage>, CentralCallbackFunc: {(pageName: string, elementID?: string): any}) {
+        this.title = title;
+        this.currentPageName = currentPageName;
+        this.pages = pages;
+        this.CentralCallbackFunc = CentralCallbackFunc;
     }
 }
-
-
-class Handler {
-    msgs:string[];
-    constructor(msgs:string[]) {
-        this.msgs = msgs;
-    }
-    greet() {
-        this.msgs.forEach(x=>alert(x));
-    }
-}
-
-function createHandler(handler: typeof Handler, params: string[]) {
-    var obj = new handler(params);
-    return obj;
-}
-
-var h = createHandler(Handler, ['h111i', 'b1ye']);
-h.greet();
