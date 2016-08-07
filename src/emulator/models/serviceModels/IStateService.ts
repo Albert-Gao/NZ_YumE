@@ -5,8 +5,9 @@ import {IElement} from "../dataModels/IElement";
 export interface IStateService{
     _app:IApp;
     getCurrentPage():IPage;
+    getCurrentPageName():string;
+    setCurrentPageName(name:string);
+    getPages():Array<IPage>;
     getPage(name:string ):IPage;
-    getPageCallbacks(pageName:string):Array<{any:any;}>;
-    getPageCallback(pageName:string, elementID:string):Array<{any:any}>;
     emulatorCentralCallBack(element:IElement,targetElementInfo?:string);
 }

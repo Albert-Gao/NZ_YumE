@@ -1,23 +1,27 @@
 import {ISystemService} from "../models/serviceModels/ISystemService";
 import {IApp} from "../models/dataModels/IApp";
 import {IPage} from "../models/dataModels/IPage";
+import {IStateService} from "../models/serviceModels/IStateService";
+import {ITemplatingService} from "../models/serviceModels/ITemplatingService";
 /**
  * Created by albertgao on 5/08/16.
  */
 export class SystemService implements ISystemService{
-    _app: IApp;
+    _templatingService: ITemplatingService;
+    _stateService: IStateService;
 
-    constructor(app: IApp) {
-        this._app = app;
+    constructor(templatingService: ITemplatingService, stateService: IStateService) {
+        this._templatingService = templatingService;
+        this._stateService = stateService;
     }
 
-    removeCurrentPage() {
-        $(".container-fluid").remove();
+    removeCurrentPageFromScreen() {
+        this._templatingService.removeElementFromDOM(".container-fluid");
     }
 
     goPage(name: string) {
-        this.removeCurrentPage();
-        let page:IPage = _.find(this._app.pages,function(page:IPage){
+        this.removeCurrentPageFromScreen();
+        let page:IPage = _.find(this._stateService.getPages(),function(page:IPage){
             page.name = name;
         });
         $(".emulator").append(page.afterRenderLayout);
@@ -25,16 +29,14 @@ export class SystemService implements ISystemService{
     }
 
     renewCurrentPage(name: string) {
-        this._app.currentPage = name;
+        this._stateService.setCurrentPageName(name);
     }
 
     showSplashScreen(): void {
-        let backgroundDIV = $(document.createElement("div"));
-        backgroundDIV.addClass("splashScreen");
+        let backgroundDIV = this._templatingService.createjQueryItem("div",undefined,"splashScreen");
         $(".emulator").append(backgroundDIV);
         backgroundDIV.fadeIn('slow',function(){
-            let brand = $(document.createElement("p"));
-            brand.addClass('brand').text('Smartisan');
+            let brand = this._templatingService.createjQueryItem("p",undefined,"brand","Smartisan");
             backgroundDIV.append(brand);
             brand.slideDown('slow').fadeOut('slow').fadeIn('slow');
         });
@@ -44,6 +46,14 @@ export class SystemService implements ISystemService{
         $(".splashScreen").fadeOut('slow').remove();
     }
 
-    showErrorScreen(): void {
+    showNotification(text:string) {
+        let noticeDIV = this._templatingService.createjQueryItem("div",
+        undefined,
+        "bg-danger",
+        text);
+        $(".emulator").prepend(noticeDIV);
+        setTimeout(function(){
+            noticeDIV.fadeOut('slow').remove();
+        },2000);
     }
 }

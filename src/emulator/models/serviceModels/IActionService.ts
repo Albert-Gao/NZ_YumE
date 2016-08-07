@@ -1,7 +1,9 @@
+import {ISystemService} from "./ISystemService";
 
-import {IStateService} from "./IStateService";
 export interface IActionService{
-    _stateService:IStateService;
+    _systemService:ISystemService;
     goPage(name:string);
     showNotification(words:string);
+    saveToLocalStorage(key:string,value:string);
+    getFromLocalStorage(key:string):string;
 }

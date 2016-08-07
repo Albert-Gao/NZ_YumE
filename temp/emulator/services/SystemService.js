@@ -1,29 +1,28 @@
 "use strict";
 var SystemService = (function () {
-    function SystemService(app) {
-        this._app = app;
+    function SystemService(templatingService, stateService) {
+        this._templatingService = templatingService;
+        this._stateService = stateService;
     }
-    SystemService.prototype.removeCurrentPage = function () {
-        $(".container-fluid").remove();
+    SystemService.prototype.removeCurrentPageFromScreen = function () {
+        this._templatingService.removeElementFromDOM(".container-fluid");
     };
     SystemService.prototype.goPage = function (name) {
-        this.removeCurrentPage();
-        var page = _.find(this._app.pages, function (page) {
+        this.removeCurrentPageFromScreen();
+        var page = _.find(this._stateService.getPages(), function (page) {
             page.name = name;
         });
         $(".emulator").append(page.afterRenderLayout);
         this.renewCurrentPage(page.name);
     };
     SystemService.prototype.renewCurrentPage = function (name) {
-        this._app.currentPage = name;
+        this._stateService.setCurrentPageName(name);
     };
     SystemService.prototype.showSplashScreen = function () {
-        var backgroundDIV = $(document.createElement("div"));
-        backgroundDIV.addClass("splashScreen");
+        var backgroundDIV = this._templatingService.createjQueryItem("div", undefined, "splashScreen");
         $(".emulator").append(backgroundDIV);
         backgroundDIV.fadeIn('slow', function () {
-            var brand = $(document.createElement("p"));
-            brand.addClass('brand').text('Smartisan');
+            var brand = this._templatingService.createjQueryItem("p", undefined, "brand", "Smartisan");
             backgroundDIV.append(brand);
             brand.slideDown('slow').fadeOut('slow').fadeIn('slow');
         });
@@ -31,7 +30,12 @@ var SystemService = (function () {
     SystemService.prototype.hideSplashScreen = function () {
         $(".splashScreen").fadeOut('slow').remove();
     };
-    SystemService.prototype.showErrorScreen = function () {
+    SystemService.prototype.showNotification = function (text) {
+        var noticeDIV = this._templatingService.createjQueryItem("div", undefined, "bg-danger", text);
+        $(".emulator").prepend(noticeDIV);
+        setTimeout(function () {
+            noticeDIV.fadeOut('slow').remove();
+        }, 2000);
     };
     return SystemService;
 }());

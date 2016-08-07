@@ -1,11 +1,12 @@
-import {IApp} from "../dataModels/IApp";
+import {IStateService} from "./IStateService";
 import {ITemplatingService} from "./ITemplatingService";
 export interface ISystemService{
-    _app:IApp;
-    removeCurrentPage();
+    _stateService:IStateService;
+    _templatingService:ITemplatingService;
+    removeCurrentPageFromScreen();
     goPage(name:string);
     renewCurrentPage(name:string);
     showSplashScreen();
     hideSplashScreen();
-    showErrorScreen();
+    showNotification(text:string);
 }

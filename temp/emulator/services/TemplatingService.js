@@ -1,20 +1,15 @@
 "use strict";
 var TemplatingService = (function () {
-    function TemplatingService(stateService, app) {
+    function TemplatingService(stateService) {
         this._stateService = stateService;
-        this._app = app;
     }
     TemplatingService.prototype.generatePage = function (page) {
         var outDiv = this.generateLayout();
         _.forEach(page.rawLayout, function (element) {
-            var row = $(document.createElement("div"));
-            row.addClass("row");
+            var row = this.createjQueryItem("div", undefined, "row", undefined);
             switch (element.type) {
                 case "button":
-                    var temp = $(document.createElement("button"));
-                    temp.attr("id", element.name);
-                    temp.addClass("btn btn-primary btn-lg btn-block");
-                    temp.text(element.define);
+                    var temp = this.createjQueryItem("button", [{ "id": element.name }], "btn btn-primary btn-lg btn-block", element.define);
                     if (element.targetElementID) {
                         var targetText = $(element.targetElementID).text();
                         temp.click(this._stateService.emulatorCentralCallBack(element, targetText));
@@ -25,48 +20,32 @@ var TemplatingService = (function () {
                     row.append(temp);
                     break;
                 case "text":
-                    var temp1 = $(document.createElement("p"));
-                    temp1.attr("id", element.name);
-                    temp1.text((element.define));
+                    var temp1 = this.createjQueryItem("p", [{ "id": element.name }], undefined, element.define);
                     row.append(temp1);
                     break;
                 case "image":
-                    var temp2 = $(document.createElement("img"));
-                    temp2.addClass("img-fluid");
-                    temp2.attr("id", element.name);
-                    temp2.attr("src", element.define);
+                    var temp2 = this.createjQueryItem("img", [{ "id": element.name }, { "src": element.define }], "img-fluid");
                     row.append(temp2);
                     break;
                 case "input":
-                    var temp3 = $(document.createElement("div"));
-                    temp3.addClass("form-group");
-                    var label = $(document.createElement("label"));
-                    label.addClass("sr-only");
-                    label.attr("for", element.name);
-                    label.text(element.define);
+                    var temp3 = this.createjQueryItem("div", undefined, "form-group");
+                    var label = this.createjQueryItem("label", [{ "for": element.name }], "sr-only", element.define);
                     temp3.append(label);
-                    var input = $(document.createElement("input"));
-                    input.attr("type", "text");
-                    input.addClass("form-control");
-                    input.attr("id", element.name);
-                    input.attr("placeholder", element.define);
+                    var input = this.createjQueryItem("input", [{ "type": "text" },
+                        { "id": element.name },
+                        { "for": element.name },
+                        { "placeholder": element.define }], "form-control", element.define);
                     temp3.append(input);
                     row.append(temp3);
                     break;
                 case "list":
-                    var listGroup_1 = $(document.createElement("div"));
-                    listGroup_1.addClass("list-group");
+                    var listGroup_1 = this.createjQueryItem("div", undefined, "list-group");
                     var listItemsData = (element.define);
                     _.forEach(listItemsData, function (item) {
-                        var a = $(document.createElement("a"));
-                        a.addClass("list-group-item list-group-item-action");
+                        var a = this.createjQueryItem("a", undefined, "list-group-item list-group-item-action");
                         a.click(this._stateService.emulatorCentralCallBack(element));
-                        var h5 = $(document.createElement("h5"));
-                        h5.addClass("list-group-item-heading");
-                        h5.text(item.title);
-                        var p = $(document.createElement("p"));
-                        p.addClass("list-group-item-text");
-                        p.text(item.description);
+                        var h5 = this.createjQueryItem("h5", undefined, "list-group-item-heading", item.title);
+                        var p = this.createjQueryItem("p", undefined, "list-group-item-text", item.description);
                         a.append(h5);
                         a.append(p);
                         listGroup_1.append(a);
@@ -78,14 +57,30 @@ var TemplatingService = (function () {
         return outDiv;
     };
     TemplatingService.prototype.generatePages = function () {
-        _.forEach(this._app.pages, function (page) {
+        _.forEach(this._stateService.getPages(), function (page) {
             page.afterRenderLayout = this.generatePage(page);
         });
     };
     TemplatingService.prototype.generateLayout = function () {
-        var layout = $(document.createElement('div'));
-        layout.addClass("container-fluid");
-        return layout;
+        return this.createjQueryItem('div', undefined, "container-fluid");
+    };
+    TemplatingService.prototype.removeElementFromDOM = function (className) {
+        $(className).remove();
+    };
+    TemplatingService.prototype.createjQueryItem = function (type, attrs, styleClasses, text) {
+        var domElement = $(document.createElement(type));
+        if (styleClasses) {
+            domElement.addClass(styleClasses);
+        }
+        if (attrs) {
+            _.forEach(attrs, function (item) {
+                domElement.attr(item.key, item.value);
+            });
+        }
+        if (text) {
+            domElement.text(text);
+        }
+        return domElement;
     };
     return TemplatingService;
 }());
