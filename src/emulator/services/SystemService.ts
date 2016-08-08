@@ -21,11 +21,20 @@ export class SystemService implements ISystemService{
 
     goPage(name: string) {
         this.removeCurrentPageFromScreen();
-        let page:IPage = _.find(this._stateService.getPages(),function(page:IPage){
-            page.name = name;
-        });
-        $(".emulator").append(page.afterRenderLayout);
-        this.renewCurrentPage(page.name);
+        for (let page of this._stateService.getPages()){
+            if (page.name === name){
+                $(".emulator").append(page.afterRenderLayout);
+                this.renewCurrentPage(page.name);
+            }
+        }
+    }
+
+    renderAllPages(){
+        this._templatingService.createPagesAndSave();
+    }
+
+    goStartPage() {
+        this.goPage(this._stateService.getStartPageName());
     }
 
     renewCurrentPage(name: string) {

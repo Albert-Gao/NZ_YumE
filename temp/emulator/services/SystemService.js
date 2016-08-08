@@ -9,11 +9,19 @@ var SystemService = (function () {
     };
     SystemService.prototype.goPage = function (name) {
         this.removeCurrentPageFromScreen();
-        var page = _.find(this._stateService.getPages(), function (page) {
-            page.name = name;
-        });
-        $(".emulator").append(page.afterRenderLayout);
-        this.renewCurrentPage(page.name);
+        for (var _i = 0, _a = this._stateService.getPages(); _i < _a.length; _i++) {
+            var page = _a[_i];
+            if (page.name === name) {
+                $(".emulator").append(page.afterRenderLayout);
+                this.renewCurrentPage(page.name);
+            }
+        }
+    };
+    SystemService.prototype.renderAllPages = function () {
+        this._templatingService.createPagesAndSave();
+    };
+    SystemService.prototype.goStartPage = function () {
+        this.goPage(this._stateService.getStartPageName());
     };
     SystemService.prototype.renewCurrentPage = function (name) {
         this._stateService.setCurrentPageName(name);

@@ -6,6 +6,8 @@ export interface ISystemService{
     removeCurrentPageFromScreen();
     goPage(name:string);
     renewCurrentPage(name:string);
+    goStartPage();
+    renderAllPages();
     showSplashScreen();
     hideSplashScreen();
     showNotification(text:string);

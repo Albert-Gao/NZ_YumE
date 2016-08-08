@@ -4,7 +4,7 @@ import {IStateService} from "./IStateService";
 export interface ITemplatingService{
     _stateService:IStateService;
     createPage(page:IPage):JQuery;
-    createPages();
+    createPagesAndSave();
     createLayout():JQuery;
     removeElementFromDOM(className:string);
     createjQueryItem(type:string,

@@ -5,38 +5,38 @@ var TemplatingService = (function () {
     }
     TemplatingService.prototype.createPage = function (page) {
         var outDiv = this.createLayout();
-        _.forEach(page.rawLayout, function (element) {
-            var row = this.createjQueryItem("div", undefined, "row", undefined);
+        var _loop_1 = function(element) {
+            var row = this_1.createjQueryItem("div", undefined, "row", undefined);
             switch (element.type) {
                 case "button":
-                    var temp = this.createjQueryItem("button", [{ "id": element.name }], "btn btn-primary btn-lg btn-block", element.define);
+                    var temp = this_1.createjQueryItem("button", [{ key: "id", value: element.name }], "btn btn-primary btn-lg btn-block", element.define);
                     if (element.targetElementID) {
                         var targetText = $(element.targetElementID).text();
-                        temp.click(this._stateService.emulatorCentralCallBack(element, targetText));
+                        temp.click(this_1._stateService.emulatorCentralCallBack(element, targetText));
                     }
                     else {
-                        temp.click(this._stateService.emulatorCentralCallBack(element));
+                        temp.click(this_1._stateService.emulatorCentralCallBack(element));
                     }
                     row.append(temp);
                     break;
                 case "text":
-                    var temp1 = this.createjQueryItem("p", [{ "id": element.name }], undefined, element.define);
+                    var temp1 = this_1.createjQueryItem("p", [{ key: "id", value: element.name }], undefined, element.define);
                     row.append(temp1);
                     break;
                 case "image":
-                    var temp2 = this.createjQueryItem("img", [{ "id": element.name }, { "src": element.define }], "img-fluid");
+                    var temp2 = this_1.createjQueryItem("img", [{ key: "id", value: element.name }, { key: "src", value: element.define }], "img-fluid");
                     row.append(temp2);
                     break;
                 case "input":
-                    var temp3 = this.createjQueryItem("div", undefined, "form-group");
-                    var label = this.createjQueryItem("label", [{ "for": element.name }], "sr-only", element.define);
+                    var temp3 = this_1.createjQueryItem("div", undefined, "form-group");
+                    var label = this_1.createjQueryItem("label", [{ key: "for", value: element.name }], "sr-only", element.define);
                     temp3.append(label);
-                    var input = this.createjQueryItem("input", [{ "type": "text" }, { "id": element.name }, { "for": element.name }, { "placeholder": element.define }], "form-control", element.define);
+                    var input = this_1.createjQueryItem("input", [{ key: "type", value: "text" }, { key: "id", value: element.name }, { key: "for", value: element.name }, { key: "placeholder", value: element.define }], "form-control", element.define);
                     temp3.append(input);
                     row.append(temp3);
                     break;
                 case "list":
-                    var listGroup_1 = this.createjQueryItem("div", undefined, "list-group");
+                    var listGroup_1 = this_1.createjQueryItem("div", undefined, "list-group");
                     var listItemsData = (element.define);
                     _.forEach(listItemsData, function (item) {
                         var a = this.createjQueryItem("a", undefined, "list-group-item list-group-item-action");
@@ -50,15 +50,19 @@ var TemplatingService = (function () {
                     break;
             }
             outDiv.append(row);
-        });
+        };
+        var this_1 = this;
+        for (var _i = 0, _a = page.rawLayout; _i < _a.length; _i++) {
+            var element = _a[_i];
+            _loop_1(element);
+        }
         return outDiv;
     };
-    TemplatingService.prototype.createPages = function () {
-        var result = [];
-        _.forEach(this._stateService.getPages(), function (page) {
-            result.push(this.createPage(page));
-        });
-        return result;
+    TemplatingService.prototype.createPagesAndSave = function () {
+        for (var _i = 0, _a = this._stateService.getPages(); _i < _a.length; _i++) {
+            var page = _a[_i];
+            page.afterRenderLayout = this.createPage(page);
+        }
     };
     TemplatingService.prototype.createLayout = function () {
         return this.createjQueryItem('div', undefined, "container-fluid");
@@ -72,9 +76,10 @@ var TemplatingService = (function () {
             domElement.addClass(styleClasses);
         }
         if (attrs) {
-            _.forEach(attrs, function (item) {
+            for (var _i = 0, attrs_1 = attrs; _i < attrs_1.length; _i++) {
+                var item = attrs_1[_i];
                 domElement.attr(item.key, item.value);
-            });
+            }
         }
         if (text) {
             domElement.text(text);

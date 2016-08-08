@@ -11,6 +11,10 @@ export class StateService implements IStateService{
         this._app = app;
     }
 
+    getStartPageName(): string {
+        return this._app.startPageName;
+    }
+
     getCurrentPageName(): string {
         return this._app.currentPageName;
     }

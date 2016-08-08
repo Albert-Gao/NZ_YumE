@@ -6,6 +6,7 @@ export interface IStateService{
     _app:IApp;
     getCurrentPage():IPage;
     getCurrentPageName():string;
+    getStartPageName():string;
     setCurrentPageName(name:string);
     getPages():Array<IPage>;
     setRenderPage(pageName:string, pageLayouts:Array<JQuery>);

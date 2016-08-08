@@ -22,14 +22,21 @@ export class emulator{
         this._templatingService = new TemplatingService(this._stateService);
         this._systemService = new SystemService(this._templatingService,this._stateService);
         this._actionService = new ActionService(this._systemService);
+        this._app.injectActionService(this._actionService);
+        this._app.startAddingPages();
     }
 
     startEmulator(){
         this._systemService.showSplashScreen();
-
         setTimeout(this._systemService.hideSplashScreen,3900);
+    }
+
+    startRenderApp(){
+        this._systemService.renderAllPages();
+        this._systemService.goStartPage();
     }
 }
 
 let es = new emulator();
 es.startEmulator();
+es.startRenderApp();

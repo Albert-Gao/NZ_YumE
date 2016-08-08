@@ -15,7 +15,8 @@ export class TemplatingService implements ITemplatingService {
 
     createPage(page: IPage): JQuery {
         let outDiv: JQuery = this.createLayout();
-        _.forEach(page.rawLayout, function (element: IElement) {
+
+        for (let element of page.rawLayout){
             let row = this.createjQueryItem("div",
                 undefined,
                 "row",
@@ -23,7 +24,7 @@ export class TemplatingService implements ITemplatingService {
             switch (element.type) {
                 case "button":
                     let temp = this.createjQueryItem("button",
-                        [{"id": element.name}],
+                        [{key:"id", value:element.name}],
                         "btn btn-primary btn-lg btn-block",
                         <string>element.define);
                     if (element.targetElementID) {
@@ -36,14 +37,14 @@ export class TemplatingService implements ITemplatingService {
                     break;
                 case "text":
                     let temp1 = this.createjQueryItem("p",
-                        [{"id": element.name}],
+                        [{key:"id", value:element.name}],
                         undefined,
                         <string>element.define);
                     row.append(temp1);
                     break;
                 case "image":
                     let temp2 = this.createjQueryItem("img",
-                        [{"id": element.name}, {"src": <string>element.define}],
+                        [{key:"id", value:element.name}, {key:"src", value:<string>element.define}],
                         "img-fluid");
                     row.append(temp2);
                     break;
@@ -51,13 +52,13 @@ export class TemplatingService implements ITemplatingService {
                     let temp3 = this.createjQueryItem("div", undefined, "form-group");
 
                     let label = this.createjQueryItem("label",
-                        [{"for": element.name}],
+                        [{key:"for", value:element.name}],
                         "sr-only",
                         <string>element.define);
                     temp3.append(label);
 
                     let input = this.createjQueryItem("input",
-                        [{"type": "text"}, {"id": element.name}, {"for": element.name}, {"placeholder": <string>element.define}],
+                        [{key:"type", value:"text"}, {key:"id", value:element.name}, {key:"for", value:element.name}, {key:"placeholder", value:<string>element.define}],
                         "form-control",
                         <string>element.define);
                     temp3.append(input);
@@ -86,16 +87,15 @@ export class TemplatingService implements ITemplatingService {
                     break;
             }
             outDiv.append(row);
-        });
+        }
+
         return outDiv;
     }
 
-    createPages(): Array<JQuery> {
-        let result: Array<JQuery> = [];
-        _.forEach(this._stateService.getPages(), function (page: IPage) {
-            result.push(this.createPage(page));
-        });
-        return result;
+    createPagesAndSave() {
+        for (let page of this._stateService.getPages()){
+            page.afterRenderLayout = this.createPage(page);
+        }
     }
 
     createLayout(): JQuery {
@@ -115,9 +115,10 @@ export class TemplatingService implements ITemplatingService {
             domElement.addClass(styleClasses);
         }
         if (attrs) {
-            _.forEach(attrs, function (item: {key: string,value: string}) {
+            for (let item of attrs){
                 domElement.attr(item.key, item.value);
-            });
+            }
+
         }
         if (text) {
             domElement.text(text);

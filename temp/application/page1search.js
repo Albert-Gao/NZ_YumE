@@ -12,7 +12,7 @@ var page1search = (function () {
             {
                 type: "image",
                 name: "page1image",
-                define: "./images/YuMe_logo.jpg"
+                define: "./assets/YuMe_logo.jpg"
             },
             {
                 type: "text",

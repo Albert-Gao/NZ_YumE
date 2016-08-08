@@ -3,6 +3,9 @@ var StateService = (function () {
     function StateService(app) {
         this._app = app;
     }
+    StateService.prototype.getStartPageName = function () {
+        return this._app.startPageName;
+    };
     StateService.prototype.getCurrentPageName = function () {
         return this._app.currentPageName;
     };
