@@ -1,6 +1,6 @@
 "use strict";
 var application = (function () {
-    function application(title, currentPageName, pages, CentralCallbackFunc) {
+    function application() {
         this.title = title;
         this.currentPageName = currentPageName;
         this.pages = pages;

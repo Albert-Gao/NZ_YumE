@@ -25,7 +25,7 @@ export class ActionService implements IActionService{
         return localStorage.getItem(key);
     }
 
-    callYelpSearchAPI(keywords:string):any{
+    callYelpSearchAPI(keywords:string):Object{
         function cb(data) {
             console.log("cb: " + JSON.stringify(data));
         }
@@ -34,8 +34,6 @@ export class ActionService implements IActionService{
             consumerKey : "sNul62e6H0We5KJLGYP_Bw",
             consumerSecret : "RxvIBp4BxRvNVxjaPlUWuiPFcYg",
             accessToken : "nguVll4te_e1oDcv2EkS4xKC6GOoQhcN",
-            // This example is a proof of concept, for how to use the Yelp v2 API with javascript.
-            // You wouldn't actually want to expose your access token secret like this in a real application.
             accessTokenSecret : "DrumlhFl5Kwb1ksCpRKEtiW6B58",
             serviceProvider : {
                 signatureMethod : "HMAC-SHA1"
@@ -70,7 +68,8 @@ export class ActionService implements IActionService{
         OAuth.setTimestampAndNonce(message);
         OAuth.SignatureMethod.sign(message, accessor);
 
-        var parameterMap = OAuth.getParameterMap(message.parameters);
+        let parameterMap = OAuth.getParameterMap(message.parameters);
+        let returnObject:Object = {};
 
         $.ajax({
             'url' : message.action,
@@ -79,14 +78,16 @@ export class ActionService implements IActionService{
             'jsonpCallback' : 'cb',
             'cache': true
         })
-            .done(function(data, textStatus, jqXHR) {
-                    console.log('success[' + data + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
-                }
-            )
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                    console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
-                }
-            );
+        .done(function(data, textStatus, jqXHR) {
+                //console.log('success[' + data + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
+                returnObject = data;
+            }
+        )
+        .fail(function(jqXHR, textStatus, errorThrown) {
+                console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
+            }
+        );
 
+        return returnObject;
     }
 }

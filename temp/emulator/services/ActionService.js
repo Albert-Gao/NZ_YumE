@@ -50,6 +50,7 @@ var ActionService = (function () {
         OAuth.setTimestampAndNonce(message);
         OAuth.SignatureMethod.sign(message, accessor);
         var parameterMap = OAuth.getParameterMap(message.parameters);
+        var returnObject = {};
         $.ajax({
             'url': message.action,
             'data': parameterMap,
@@ -58,11 +59,12 @@ var ActionService = (function () {
             'cache': true
         })
             .done(function (data, textStatus, jqXHR) {
-            console.log('success[' + data + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
+            returnObject = data;
         })
             .fail(function (jqXHR, textStatus, errorThrown) {
             console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
         });
+        return returnObject;
     };
     return ActionService;
 }());

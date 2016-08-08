@@ -8,7 +8,7 @@ export class application implements IApp{
     pages: Array<IPage>;
     CentralCallbackFunc: {(pageName: string, elementID?: string):any};
 
-    constructor(title: string, currentPageName: string, pages: Array<IPage>, CentralCallbackFunc: {(pageName: string, elementID?: string): any}) {
+    constructor() {
         this.title = title;
         this.currentPageName = currentPageName;
         this.pages = pages;
