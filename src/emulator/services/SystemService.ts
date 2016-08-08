@@ -34,11 +34,11 @@ export class SystemService implements ISystemService{
 
     showSplashScreen() {
         let backgroundDIV = this._templatingService.createjQueryItem("div",undefined,"splashScreen");
+        let brand = this._templatingService.createjQueryItem("p",undefined,"brand","Smartisan");
         $(".emulator").append(backgroundDIV);
+        backgroundDIV.append(brand);
         backgroundDIV.fadeIn('slow',function(){
-            let brand = this._templatingService.createjQueryItem("p",undefined,"brand","Smartisan");
-            backgroundDIV.append(brand);
-            brand.slideDown('slow').fadeOut('slow').fadeIn('slow');
+            brand.fadeIn('slow').fadeOut('slow').fadeIn('slow');
         });
     }
 
@@ -47,10 +47,7 @@ export class SystemService implements ISystemService{
     }
 
     showNotification(text:string) {
-        let noticeDIV = this._templatingService.createjQueryItem("div",
-                        undefined,
-                        "bg-danger",
-                        text);
+        let noticeDIV = this._templatingService.createjQueryItem("div", undefined, "bg-danger", text);
         $(".emulator").prepend(noticeDIV);
         setTimeout(function(){
             noticeDIV.fadeOut('slow').remove();

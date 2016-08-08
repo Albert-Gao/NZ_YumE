@@ -38,7 +38,10 @@
 - [x] All interfaces design
 - [x] implementing services
 - [x] optimizing the TemplatingService and SystemService for a better decouple
+- [x] Running using Webpack bundle version
+- [x] Running using SystemJS module version
 - [ ] implementing application
+- [ ] Assemble whole architecture
 - [ ] integrating testing library 
 - [ ] documenting
 - [ ] testing

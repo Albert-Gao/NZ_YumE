@@ -20,11 +20,11 @@ var SystemService = (function () {
     };
     SystemService.prototype.showSplashScreen = function () {
         var backgroundDIV = this._templatingService.createjQueryItem("div", undefined, "splashScreen");
+        var brand = this._templatingService.createjQueryItem("p", undefined, "brand", "Smartisan");
         $(".emulator").append(backgroundDIV);
+        backgroundDIV.append(brand);
         backgroundDIV.fadeIn('slow', function () {
-            var brand = this._templatingService.createjQueryItem("p", undefined, "brand", "Smartisan");
-            backgroundDIV.append(brand);
-            brand.slideDown('slow').fadeOut('slow').fadeIn('slow');
+            brand.fadeIn('slow').fadeOut('slow').fadeIn('slow');
         });
     };
     SystemService.prototype.hideSplashScreen = function () {

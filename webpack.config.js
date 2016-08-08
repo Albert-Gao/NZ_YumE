@@ -31,32 +31,36 @@ module.exports = {
 */
 //Below is a configuration for transpile ts directly to js
 module.exports = {
-    context: __dirname + "/src/",
+    context: __dirname+"/src",
     entry: {
-        './scripts/emulator.bundle.js':'./emulator/ui/emulator.ts',
+        './index.bundle.js':'./emulator/ui/emulator.ts',
+        './index.bundle.css':'./emulator/ui/css/index.css'
     },
     output: {
-        path: __dirname+'/dist/',
+        path: __dirname+'/dist',
         filename: '[name]'
     },
     resolve: {
-        extension:['','.ts','.js']
+
+        extensions:['','.css','.ts','.js']
     },
-    devtool: 'cheap-module-eval-source-map',
+    devtool:"source-map",
     module: {
         loaders: [
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract("css-loader")
+                loader: ExtractTextPlugin.extract("css-loader"),
+                exclude: /node_modules/
             },
             {
                 test: /\.ts$/,
-                loader: 'awesome-typescript-loader'
+                loader: 'awesome-typescript-loader',
+                exclude: /node_modules/
             }
         ]
     },
     plugins: [
-        new ExtractTextPlugin('css/index.css',{allChunks:false}),
+        new ExtractTextPlugin('[name]',{allChunks:false}),
         new webpack.optimize.UglifyJsPlugin()
     ]
 }
