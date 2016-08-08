@@ -1,2 +1,0 @@
-!function(t){function r(e){if(n[e])return n[e].exports;var o=n[e]={exports:{},id:e,loaded:!1};return t[e].call(o.exports,o,o.exports,r),o.loaded=!0,o.exports}var n={};return r.m=t,r.c=n,r.p="",r(0)}([function(t,r){"use strict";var n=function(){function t(){}return t.prototype.hi=function(){return"h1i1"},t}();r.test=n}]);
-//# sourceMappingURL=emulator.bundle.js.map

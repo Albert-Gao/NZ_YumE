@@ -32,7 +32,7 @@ export class SystemService implements ISystemService{
         this._stateService.setCurrentPageName(name);
     }
 
-    showSplashScreen(): void {
+    showSplashScreen() {
         let backgroundDIV = this._templatingService.createjQueryItem("div",undefined,"splashScreen");
         $(".emulator").append(backgroundDIV);
         backgroundDIV.fadeIn('slow',function(){
@@ -48,9 +48,9 @@ export class SystemService implements ISystemService{
 
     showNotification(text:string) {
         let noticeDIV = this._templatingService.createjQueryItem("div",
-        undefined,
-        "bg-danger",
-        text);
+                        undefined,
+                        "bg-danger",
+                        text);
         $(".emulator").prepend(noticeDIV);
         setTimeout(function(){
             noticeDIV.fadeOut('slow').remove();
