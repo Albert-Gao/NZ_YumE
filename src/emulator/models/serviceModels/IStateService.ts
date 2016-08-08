@@ -9,7 +9,6 @@ export interface IStateService{
     getStartPageName():string;
     setCurrentPageName(name:string);
     getPages():Array<IPage>;
-    setRenderPage(pageName:string, pageLayouts:Array<JQuery>);
     getPage(name:string ):IPage;
     emulatorCentralCallBack(element:IElement,targetElementInfo?:string);
 }

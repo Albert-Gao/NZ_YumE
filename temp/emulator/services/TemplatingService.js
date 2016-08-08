@@ -49,7 +49,6 @@ var TemplatingService = (function () {
                     });
                     break;
             }
-            outDiv.append(row);
         };
         var this_1 = this;
         for (var _i = 0, _a = page.rawLayout; _i < _a.length; _i++) {

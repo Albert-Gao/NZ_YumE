@@ -26,13 +26,6 @@ var StateService = (function () {
     StateService.prototype.getPages = function () {
         return this._app.pages;
     };
-    StateService.prototype.setRenderPage = function (pageName, pageLayouts) {
-        _.map(this._app.pages, function (page) {
-            _.forEach(pageLayouts, function (singleLayout) {
-                page.afterRenderLayout = singleLayout;
-            });
-        });
-    };
     StateService.prototype.emulatorCentralCallBack = function (element, targetElementInfo) {
         if (targetElementInfo) {
             this._app.CentralCallbackFunc(element.name, targetElementInfo);

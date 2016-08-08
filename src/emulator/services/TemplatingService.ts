@@ -86,7 +86,7 @@ export class TemplatingService implements ITemplatingService {
                     });
                     break;
             }
-            outDiv.append(row);
+            //outDiv.append(row);
         }
 
         return outDiv;

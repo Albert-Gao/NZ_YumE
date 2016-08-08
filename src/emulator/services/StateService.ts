@@ -39,14 +39,14 @@ export class StateService implements IStateService{
     getPages(): Array<IPage> {
         return this._app.pages;
     }
-
-    setRenderPage(pageName:string, pageLayouts:Array<JQuery>) {
-        _.map(this._app.pages, function(page:IPage){
-          _.forEach(pageLayouts,function(singleLayout:JQuery){
-              page.afterRenderLayout = singleLayout;
-          });
-        })
-    }
+    //
+    // setRenderPage(pageName:string, pageLayouts:Array<JQuery>) {
+    //     _.map(this._app.pages, function(page:IPage){
+    //       _.forEach(pageLayouts,function(singleLayout:JQuery){
+    //           page.afterRenderLayout = singleLayout;
+    //       });
+    //     })
+    // }
 
     emulatorCentralCallBack(element: IElement, targetElementInfo?: string) {
         if (targetElementInfo){
