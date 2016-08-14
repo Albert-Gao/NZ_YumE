@@ -3,7 +3,7 @@ import {IElement} from "../emulator/models/dataModels/IElement";
 import {IPage} from "../emulator/models/dataModels/IPage";
 import {IActionService} from "../emulator/models/serviceModels/IActionService";
 
-export class page1search implements IPage{
+export class page2list implements IPage{
     name: string;
     rawLayout: Array<IElement>;
     afterRenderLayout: JQuery;
@@ -11,7 +11,7 @@ export class page1search implements IPage{
     _actionService:IActionService;
 
     constructor(as:IActionService) {
-        this.name = "page1search";
+        this.name = "page2list";
         this.rawLayout = this.returnRawLayout();
         this.afterRenderLayout = null;
         this.callback = this.returnCallbackFuncs();
@@ -23,7 +23,7 @@ export class page1search implements IPage{
             {
                 type:"image",
                 name:"page1image",
-                define:"./assets/YuMe_logo.jpg"
+                define:"./images/YuMe_logo.jpg"
             },
             {
                 type:"text",
@@ -40,7 +40,12 @@ export class page1search implements IPage{
                 name:"page1button",
                 targetElementID:"page1text",
                 define:"YumE it!"
-            }
+            },
+            {
+                type:"button",
+                name:"page1jumpbutton",
+                define:"YumE it!"
+            },
         ];
     }
 

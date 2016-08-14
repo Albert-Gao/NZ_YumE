@@ -10,5 +10,6 @@ export interface IStateService{
     setCurrentPageName(name:string);
     getPages():Array<IPage>;
     getPage(name:string ):IPage;
-    emulatorCentralCallBack(element:IElement,targetElementInfo?:string);
+    getAppCallBack:(element:IElement,targetElementInfo?:string)=>void;
+    emulatorCentralCallBack:(element:IElement,targetElementInfo?:string)=>void;
 }

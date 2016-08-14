@@ -6,6 +6,10 @@ import {ITemplatingService} from "../models/serviceModels/ITemplatingService";
 /**
  * Created by albertgao on 5/08/16.
  */
+
+/**
+ *
+ */
 export class SystemService implements ISystemService{
     _templatingService: ITemplatingService;
     _stateService: IStateService;
@@ -58,7 +62,7 @@ export class SystemService implements ISystemService{
     showNotification(text:string) {
         let noticeDIV = this._templatingService.createjQueryItem("div", undefined, "bg-danger", text);
         $(".emulator").prepend(noticeDIV);
-        setTimeout(function(){
+        setTimeout(()=>{
             noticeDIV.fadeOut('slow').remove();
         },2000);
     }

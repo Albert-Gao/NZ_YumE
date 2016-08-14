@@ -16,7 +16,8 @@ var application = (function () {
     };
     application.prototype.createPageArray = function () {
     };
-    application.prototype.appCallback = function (pageName, elementID) {
+    application.prototype.appCallback = function (elementName, targetElementInfo) {
+        console.log("I am here!");
     };
     return application;
 }());

@@ -27,12 +27,16 @@ var StateService = (function () {
         return this._app.pages;
     };
     StateService.prototype.emulatorCentralCallBack = function (element, targetElementInfo) {
+        console.log("i am here");
         if (targetElementInfo) {
             this._app.CentralCallbackFunc(element.name, targetElementInfo);
         }
         else {
             this._app.CentralCallbackFunc(element.name);
         }
+    };
+    StateService.prototype.getAppCallBack = function () {
+        return this._app.CentralCallbackFunc;
     };
     return StateService;
 }());
