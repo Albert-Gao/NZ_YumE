@@ -1,4 +1,5 @@
 import {ISystemService} from "./ISystemService";
+import {IPage} from "../dataModels/IPage";
 
 /**
  *
@@ -22,16 +23,30 @@ export interface IActionService{
      * [showNotification description]
      * @method showNotification
      * @param  {string}         words [description]
-     * @return {[type]}               [description]
      */
     showNotification(words:string);
+
+    /**
+     *
+     * [callYelpSearchAPI description]
+     * @method callYelpSearchAPI
+     * @param  {string}          keywords [description]
+     * @param  {Function}        callback [description]
+     */
+    callYelpSearchAPI(keywords:string, callback:Function);
+
+    /**
+     * [reRenderPage description]
+     * @method reRenderPage
+     * @param  {IPage}          page [description]
+     */
+    reRenderPage(page:IPage);
 
     /**
      * [saveToLocalStorage description]
      * @method saveToLocalStorage
      * @param  {string}           key   [description]
      * @param  {string}           value [description]
-     * @return {[type]}                 [description]
      */
     saveToLocalStorage(key:string,value:string);
 

@@ -1,5 +1,6 @@
 import {IStateService} from "./IStateService";
 import {ITemplatingService} from "./ITemplatingService";
+import {IPage} from "../dataModels/IPage";
 
 /**
  *
@@ -20,7 +21,6 @@ export interface ISystemService{
     /**
      * [removeCurrentPageFromScreen description]
      * @method removeCurrentPageFromScreen
-     * @return {[type]}                    [description]
      */
     removeCurrentPageFromScreen();
 
@@ -28,7 +28,6 @@ export interface ISystemService{
      * [goPage description]
      * @method goPage
      * @param  {string} name [description]
-     * @return {[type]}      [description]
      */
     goPage(name:string);
 
@@ -36,7 +35,6 @@ export interface ISystemService{
      * [renewCurrentPage description]
      * @method renewCurrentPage
      * @param  {string}         name [description]
-     * @return {[type]}              [description]
      */
     renewCurrentPage(name:string);
 
@@ -50,21 +48,20 @@ export interface ISystemService{
     /**
      * [renderAllPages description]
      * @method renderAllPages
-     * @return {[type]}       [description]
+     * @param  {string}       pageName [description]
+     * @return {[type]}                [description]
      */
-    renderAllPages();
+    renderAllPages(page?:IPage);
 
     /**
      * [startEmulator description]
      * @method showSplashScreen
-     * @return {[type]}         [description]
      */
     startEmulator();
 
     /**
      * [hideSplashScreen description]
      * @method hideSplashScreen
-     * @return {[type]}         [description]
      */
     hideSplashScreen();
 
@@ -72,7 +69,6 @@ export interface ISystemService{
      * [showNotification description]
      * @method showNotification
      * @param  {string}         text [description]
-     * @return {[type]}              [description]
      */
     showNotification(text:string);
 }

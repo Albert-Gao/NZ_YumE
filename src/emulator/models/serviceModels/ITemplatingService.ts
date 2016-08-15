@@ -22,7 +22,6 @@ export interface ITemplatingService{
     /**
      * [createPagesAndSave description]
      * @method createPagesAndSave
-     * @return {[type]}           [description]
      */
     createPagesAndSave();
 
@@ -37,7 +36,6 @@ export interface ITemplatingService{
      * [removeElementFromDOM description]
      * @method removeElementFromDOM
      * @param  {string}             className [description]
-     * @return {[type]}                       [description]
      */
     removeElementFromDOM(className:string);
 

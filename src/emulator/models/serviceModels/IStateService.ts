@@ -37,7 +37,6 @@ export interface IStateService{
      * [setCurrentPageName description]
      * @method setCurrentPageName
      * @param  {string}           name [description]
-     * @return {[type]}                [description]
      */
     setCurrentPageName(name:string);
 
