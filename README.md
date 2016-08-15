@@ -2,6 +2,12 @@
 It is a story about a web application which doesn't directly interact with browser...
 Yes, I mean it.
 
+## UI
+At the first screen, you will see a textblock, you can search for restaurant you like.
+But sorry I modify the final location to a beautiful New Zealand city called Dunedin.
+The returned-json is an array.And I will fetch the 1st item in it and display it to the screen. 
+You can click the go back button to go back to the first screen to do a re-search.
+
 ## Project overview
 * browser -> emulator -> application
 * emulator and application are both web apps
@@ -28,6 +34,11 @@ Yes, I mean it.
 * temp: For debug only, NOT FOR PRODUCTION. Modules loaded by SystemJS. All the js compile via coding-time, we debug from this folder. 
 * src: source codes, yes, it means I dislike the "app" convention...
 * test: test cases
+
+## Workflow
+* The typescript configuration has set to compileOnSave, so after each save, you can check the result immediately via the temp folder
+* You can use "webpack --progress" to build the distribution bundle.
+* You can use "webpack --progress --watch" to build the distribution bundle everytime when you save a file, by this way, you can debug without temp folder.
 
 ## Some files:
 * tsconfig.json: configuration for typescript
@@ -61,8 +72,9 @@ Yes, I mean it.
 - [x] Running using SystemJS module version
 - [x] implementing one page of the application
 - [x] Testing and make it running so the whole design is safe
-- [ ] implementing the rest application
-- [ ] Assemble whole architecture
-- [ ] integrating testing library 
+- [x] implementing the rest application
+- [x] Assemble whole architecture
+- [ ] documenting library integrated
 - [ ] documenting
+- [ ] integrating testing library 
 - [ ] testing
