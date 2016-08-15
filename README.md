@@ -38,13 +38,13 @@ You can click the go back button to go back to the first screen to do a re-searc
 ## Workflow
 * The typescript configuration has set to compileOnSave, so after each save, you can check the result immediately via the temp folder
 * You can use "webpack --progress" to build the distribution bundle.
-* You can use "webpack --progress --watch" to build the distribution bundle everytime when you save a file, by this way, you can debug without temp folder.
+* With this command "webpack --progress --watch", Webpack will monitor the folder, and build the distribution bundle automatically every time when you save a file, by this way, you can debug without temp folder.
 
 ## Some files:
-* tsconfig.json: configuration for typescript
-* package.json: configuration for npm
-* webpack.config.js: configuration for webpack
-* design.txt: 1st edition of architecture design
+* tsconfig.json: typescript configuration file
+* package.json: configuration file for npm
+* webpack.config.js: webpack configuration file
+* design.txt: 1st edition of the architecture design
 
 ## NPM Packages used:
 * Webpack: For code bundling, actually it is so awesome and can replace gulp,browserify and systemjs in a whole.
