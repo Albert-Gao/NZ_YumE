@@ -88,7 +88,12 @@ export class TemplatingService implements ITemplatingService {
                         let a = this.createjQueryItem("a",
                             undefined,
                             "list-group-item list-group-item-action");
-                        a.click(this._stateService.emulatorCentralCallBack(element));
+                        $(".emulator").on(
+                            'click',
+                            "#"+element.name,
+                            ()=>{
+                                this._stateService.emulatorCentralCallBack(element,item.url);
+                            });
                         let h5 = this.createjQueryItem("h5",
                             undefined,
                             "list-group-item-heading",
@@ -138,7 +143,7 @@ export class TemplatingService implements ITemplatingService {
         }
 
         if (text) {
-            domElement.text(text);
+            domElement.html(text);
         }
         return domElement;
     }
