@@ -46,7 +46,7 @@ export class page2list implements IPage{
             {
                 type:"image",
                 name:"page2image",
-                define:"http://s3-media1.fl.yelpcdn.com/photo/_87c-Gu1rjTbPtwHd90vDA/ms.jpg"
+                define:"http://icons.veryicon.com/128/Emoticon/Vista%20Style%20Emoticons/Cry.png"
             },
             {
                 type:"text",
