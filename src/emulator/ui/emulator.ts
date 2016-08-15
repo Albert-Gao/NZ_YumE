@@ -19,7 +19,6 @@ export class emulator{
     /**
      * [constructor description]
      * @method constructor
-     * @return {[type]}    [description]
      */
     constructor() {
         this._app = new application();
@@ -34,7 +33,6 @@ export class emulator{
     /**
      * [startEmulator description]
      * @method startEmulator
-     * @return {[type]}      [description]
      */
     startEmulator(){
         this._systemService.startEmulator();
@@ -43,4 +41,3 @@ export class emulator{
 
 let es = new emulator();
 es.startEmulator();
-//es.startRenderApp();
