@@ -57,7 +57,6 @@ export class StateService implements IStateService {
     }
 
     emulatorCentralCallBack(element: IElement, targetElementInfo?: string) {
-        console.log("i am here");
         let currentPageName:string = this.getStartPageName();
         if (targetElementInfo) {
             this._app.CentralCallbackFunc(currentPageName, element.name, targetElementInfo);
