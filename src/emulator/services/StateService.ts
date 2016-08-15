@@ -25,15 +25,23 @@ export class StateService implements IStateService{
 
     getCurrentPage(): IPage {
         let targetName:string = this._app.currentPageName;
-        return _.find(this._app.pages,function(page:IPage){
-            page.name = targetName;
-        });
+        let returnPage:IPage;
+        for (let page of this._app.pages){
+            if (page.name === targetName){
+                returnPage = page;
+            }
+        }
+        return returnPage;
     }
 
     getPage(name: string): IPage {
-        return _.find(this._app.pages,function(page:IPage){
-            page.name = name;
-        });
+        let returnPage:IPage;
+        for (let page of this._app.pages){
+            if (page.name === name){
+                returnPage = page;
+            }
+        }
+        return returnPage;
     }
 
     getPages(): Array<IPage> {
@@ -48,11 +56,16 @@ export class StateService implements IStateService{
     //     })
     // }
 
-    emulatorCentralCallBack(element: IElement, targetElementInfo?: string) {
+    emulatorCentralCallBack(element: IElement, targetElementInfo?: string)  {
+        console.log("i am here");
         if (targetElementInfo){
             this._app.CentralCallbackFunc(element.name, targetElementInfo);
         } else {
             this._app.CentralCallbackFunc(element.name);
         }
+    }
+
+    getAppCallBack():(pageName:string, elementID?:string)=>void{
+        return this._app.CentralCallbackFunc;
     }
 }

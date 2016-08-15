@@ -14,25 +14,39 @@ var StateService = (function () {
     };
     StateService.prototype.getCurrentPage = function () {
         var targetName = this._app.currentPageName;
-        return _.find(this._app.pages, function (page) {
-            page.name = targetName;
-        });
+        var returnPage;
+        for (var _i = 0, _a = this._app.pages; _i < _a.length; _i++) {
+            var page = _a[_i];
+            if (page.name === targetName) {
+                returnPage = page;
+            }
+        }
+        return returnPage;
     };
     StateService.prototype.getPage = function (name) {
-        return _.find(this._app.pages, function (page) {
-            page.name = name;
-        });
+        var returnPage;
+        for (var _i = 0, _a = this._app.pages; _i < _a.length; _i++) {
+            var page = _a[_i];
+            if (page.name === name) {
+                returnPage = page;
+            }
+        }
+        return returnPage;
     };
     StateService.prototype.getPages = function () {
         return this._app.pages;
     };
     StateService.prototype.emulatorCentralCallBack = function (element, targetElementInfo) {
+        console.log("i am here");
         if (targetElementInfo) {
             this._app.CentralCallbackFunc(element.name, targetElementInfo);
         }
         else {
             this._app.CentralCallbackFunc(element.name);
         }
+    };
+    StateService.prototype.getAppCallBack = function () {
+        return this._app.CentralCallbackFunc;
     };
     return StateService;
 }());

@@ -44,8 +44,8 @@ Yes, I mean it.
 
 ## 3rd party libraries used:
 * Bootstrap v4 RC3: Yes, the latest version.
+    * Tether v1.3: a layout libraries which bootstrap rely on.
 * jQuery v3: Dependency of bootstrap and our app
-* Tether v1.3: a layout libraries which bootstrap rely on.
 * OAuth.js and SHA1.js : Signature generating libraries from Netflix, since we need to make API call to Yelp via OAuth2 protocol.
 
 ## TODO

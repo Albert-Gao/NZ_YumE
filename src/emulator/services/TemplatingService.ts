@@ -1,5 +1,5 @@
 ///<reference path="../ui/types/jquery.d.ts"/>
-///<reference path="../ui/types/lodash.d.ts"/>
+
 import {IPage} from '../models/dataModels/IPage'
 import {ITemplatingService} from "../models/serviceModels/ITemplatingService";
 import {IElement} from "../models/dataModels/IElement";
@@ -16,11 +16,12 @@ export class TemplatingService implements ITemplatingService {
     createPage(page: IPage): JQuery {
         let outDiv: JQuery = this.createLayout();
 
-        for (let element of page.rawLayout){
+        for (let element1 of page.rawLayout){
             let row = this.createjQueryItem("div",
                 undefined,
                 "row",
                 undefined);
+            let element:IElement = element1;
             switch (element.type) {
                 case "button":
                     let temp = this.createjQueryItem("button",
@@ -29,9 +30,19 @@ export class TemplatingService implements ITemplatingService {
                         <string>element.define);
                     if (element.targetElementID) {
                         let targetText = $(element.targetElementID).text();
-                        temp.click(this._stateService.emulatorCentralCallBack(element, targetText));
+                        $(".emulator").on(
+                            'click',
+                            "#"+element.name,
+                            ()=>{
+                                this._stateService.emulatorCentralCallBack(element,targetText);
+                            });
                     } else {
-                        temp.click(this._stateService.emulatorCentralCallBack(element));
+                        $(".emulator").on(
+                            'click',
+                            "#"+element.name,
+                            ()=>{
+                                this._stateService.emulatorCentralCallBack(element);
+                            });
                     }
                     row.append(temp);
                     break;
@@ -67,7 +78,7 @@ export class TemplatingService implements ITemplatingService {
                 case "list":
                     let listGroup = this.createjQueryItem("div", undefined, "list-group");
                     let listItemsData = <Array<IListItem>>(element.define);
-                    _.forEach(listItemsData, function (item: IListItem) {
+                    for (let item of listItemsData){
                         let a = this.createjQueryItem("a",
                             undefined,
                             "list-group-item list-group-item-action");
@@ -83,10 +94,10 @@ export class TemplatingService implements ITemplatingService {
                         a.append(h5);
                         a.append(p);
                         listGroup.append(a);
-                    });
+                    }
                     break;
             }
-            //outDiv.append(row);
+            outDiv.append(row);
         }
 
         return outDiv;
@@ -118,8 +129,8 @@ export class TemplatingService implements ITemplatingService {
             for (let item of attrs){
                 domElement.attr(item.key, item.value);
             }
-
         }
+
         if (text) {
             domElement.text(text);
         }

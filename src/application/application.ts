@@ -32,7 +32,7 @@ export class application implements IApp{
 
     }
 
-    appCallback(pageName:string, elementID?:string){
-
+    appCallback(elementName:string, targetElementInfo?:string){
+        console.log("I am here at application");
     }
 }

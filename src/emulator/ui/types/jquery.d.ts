@@ -936,7 +936,7 @@ interface JQueryStatic {
      * @param context The object to which the context (this) of the function should be set.
      * @param additionalArguments Any number of arguments to be passed to the function referenced in the function argument.
      */
-    proxy(fnction: (...args: any[]) => any, context: Object, ...additionalArguments: any[]): any;
+    //proxy(fnction: (...args: any[]) => any, context: Object, ...additionalArguments: any[]): any;
     /**
      * Takes a function and returns a new one that will always have a particular context.
      *
