@@ -26,7 +26,7 @@ export class page1search implements IPage{
             {
                 type:"text",
                 name:"page1text",
-                define:"Search your favourite, eat your favourite :)"
+                define:"Search better, eat fatter :)"
             },
             {
                 type:"input",
@@ -38,6 +38,16 @@ export class page1search implements IPage{
                 name:"page1button",
                 targetElementID:"page1input",
                 define:"YumE it!"
+            },
+            {
+                type:"text",
+                name:"page1text1",
+                define:" "
+            },
+            {
+                type:"text",
+                name:"page1text2",
+                define:"Try these Dunedin local best:<br/><br/> Mac’s Brewbar / Paasha Turkish Cafe / Etrusco at The Savoy / The Good Oil / Cadbury World / Miga / Hikari Sushi Bar / Velvet Burger"
             }
         ];
     }
@@ -60,3 +70,4 @@ export class page1search implements IPage{
         }
     }
 }
+
