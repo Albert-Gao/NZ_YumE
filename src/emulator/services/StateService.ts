@@ -7,6 +7,12 @@ import {IElement} from "../models/dataModels/IElement";
 export class StateService implements IStateService{
     _app: IApp;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {IApp}      app [description]
+     * @return {[type]}        [description]
+     */
     constructor(app: IApp) {
         this._app = app;
     }
@@ -29,6 +35,7 @@ export class StateService implements IStateService{
         for (let page of this._app.pages){
             if (page.name === targetName){
                 returnPage = page;
+                break;
             }
         }
         return returnPage;
@@ -39,6 +46,7 @@ export class StateService implements IStateService{
         for (let page of this._app.pages){
             if (page.name === name){
                 returnPage = page;
+                break;
             }
         }
         return returnPage;
@@ -47,14 +55,6 @@ export class StateService implements IStateService{
     getPages(): Array<IPage> {
         return this._app.pages;
     }
-    //
-    // setRenderPage(pageName:string, pageLayouts:Array<JQuery>) {
-    //     _.map(this._app.pages, function(page:IPage){
-    //       _.forEach(pageLayouts,function(singleLayout:JQuery){
-    //           page.afterRenderLayout = singleLayout;
-    //       });
-    //     })
-    // }
 
     emulatorCentralCallBack(element: IElement, targetElementInfo?: string)  {
         console.log("i am here");

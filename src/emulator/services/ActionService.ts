@@ -5,6 +5,12 @@ declare var OAuth:any;
 export class ActionService implements IActionService{
     _systemService: ISystemService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {ISystemService} systemService [description]
+     * @return {[type]}                       [description]
+     */
     constructor(systemService: ISystemService) {
         this._systemService = systemService;
     }

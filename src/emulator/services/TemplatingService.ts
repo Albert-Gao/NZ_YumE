@@ -9,6 +9,12 @@ import {IListItem} from "../models/dataModels/IListItem";
 export class TemplatingService implements ITemplatingService {
     _stateService: IStateService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {IStateService} stateService [description]
+     * @return {[type]}                     [description]
+     */
     constructor(stateService: IStateService) {
         this._stateService = stateService;
     }

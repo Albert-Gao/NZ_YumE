@@ -3,17 +3,18 @@ import {IApp} from "../models/dataModels/IApp";
 import {IPage} from "../models/dataModels/IPage";
 import {IStateService} from "../models/serviceModels/IStateService";
 import {ITemplatingService} from "../models/serviceModels/ITemplatingService";
-/**
- * Created by albertgao on 5/08/16.
- */
 
-/**
- *
- */
 export class SystemService implements ISystemService{
     _templatingService: ITemplatingService;
     _stateService: IStateService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {ITemplatingService} templatingService [description]
+     * @param  {IStateService}      stateService      [description]
+     * @return {[type]}                               [description]
+     */
     constructor(templatingService: ITemplatingService, stateService: IStateService) {
         this._templatingService = templatingService;
         this._stateService = stateService;

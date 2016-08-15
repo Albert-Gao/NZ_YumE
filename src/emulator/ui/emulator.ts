@@ -16,6 +16,11 @@ export class emulator{
     _systemService:ISystemService;
     _actionService:IActionService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @return {[type]}    [description]
+     */
     constructor() {
         this._app = new application();
         this._stateService = new StateService(this._app);
@@ -26,11 +31,21 @@ export class emulator{
         this._app.startAddingPages();
     }
 
+    /**
+     * [startEmulator description]
+     * @method startEmulator
+     * @return {[type]}      [description]
+     */
     startEmulator(){
         this._systemService.showSplashScreen();
         setTimeout(this._systemService.hideSplashScreen,3900);
     }
 
+    /**
+     * [startRenderApp description]
+     * @method startRenderApp
+     * @return {[type]}       [description]
+     */
     startRenderApp(){
         this._systemService.renderAllPages();
         this._systemService.goStartPage();
