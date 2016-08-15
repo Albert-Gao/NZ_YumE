@@ -15,10 +15,10 @@ var ActionService = (function () {
     ActionService.prototype.getFromLocalStorage = function (key) {
         return localStorage.getItem(key);
     };
-    ActionService.prototype.callYelpSearchAPI = function (keywords) {
-        function cb(data) {
-            console.log("cb: " + JSON.stringify(data));
-        }
+    ActionService.prototype.reRenderPage = function (page) {
+        this._systemService.renderAllPages(page);
+    };
+    ActionService.prototype.callYelpSearchAPI = function (keywords, callback) {
         var auth = {
             consumerKey: "sNul62e6H0We5KJLGYP_Bw",
             consumerSecret: "RxvIBp4BxRvNVxjaPlUWuiPFcYg",
@@ -50,7 +50,6 @@ var ActionService = (function () {
         OAuth.setTimestampAndNonce(message);
         OAuth.SignatureMethod.sign(message, accessor);
         var parameterMap = OAuth.getParameterMap(message.parameters);
-        var returnObject = {};
         $.ajax({
             'url': message.action,
             'data': parameterMap,
@@ -59,12 +58,11 @@ var ActionService = (function () {
             'cache': true
         })
             .done(function (data, textStatus, jqXHR) {
-            returnObject = data;
+            callback(data.businesses[0]);
         })
             .fail(function (jqXHR, textStatus, errorThrown) {
             console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
         });
-        return returnObject;
     };
     return ActionService;
 }());

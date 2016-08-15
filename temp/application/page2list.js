@@ -9,52 +9,52 @@ var page2list = (function () {
     page2list.prototype.returnRawLayout = function () {
         return [
             {
-                type: "image",
-                name: "page1image",
-                define: "./assets/YuMe_logo.jpg"
+                type: "text",
+                name: "page2placeholder1",
+                define: "  "
             },
             {
                 type: "text",
-                name: "page1text",
-                define: "Search your favourite, eat your favourite :)"
-            },
-            {
-                type: "input",
-                name: "page1input",
-                define: "Enter the name"
+                name: "page2placeholder2",
+                define: "  "
             },
             {
                 type: "button",
-                name: "page1button",
-                targetElementID: "page1input",
-                define: "YumE it!"
+                name: "page2button",
+                define: "go back"
+            },
+            {
+                type: "text",
+                name: "page2placeholder3",
+                define: "  "
+            },
+            {
+                type: "text",
+                name: "page2placeholder4",
+                define: "   "
+            },
+            {
+                type: "image",
+                name: "page2image",
+                define: "http://s3-media1.fl.yelpcdn.com/photo/_87c-Gu1rjTbPtwHd90vDA/ms.jpg"
+            },
+            {
+                type: "text",
+                name: "page2text",
+                define: "I really love it"
             }
         ];
     };
     page2list.prototype.returnCallbackFuncs = function () {
         return [
             {
-                bindToName: "page1button",
-                targetID: "page1text",
-                callbackFunction: this.searchButtonCallBack
-            },
-            {
-                bindToName: "page1jumpbutton",
-                callbackFunction: this.jumpButtonCallBack
+                bindToName: "page2button",
+                callbackFunction: this.goBackButtonCallBack
             }
         ];
     };
-    page2list.prototype.searchButtonCallBack = function (_actionService, info) {
-        console.log("I am at button");
-        if (info && info != "") {
-            _actionService.goPage("page2list");
-        }
-        else {
-            _actionService.showNotification("Please enter the name of restaurant.");
-        }
-    };
-    page2list.prototype.jumpButtonCallBack = function (_actionService) {
-        _actionService.goPage("page4fav");
+    page2list.prototype.goBackButtonCallBack = function (_actionService) {
+        _actionService.goPage("page1search");
     };
     return page2list;
 }());

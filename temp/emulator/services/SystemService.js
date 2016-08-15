@@ -17,8 +17,14 @@ var SystemService = (function () {
             }
         }
     };
-    SystemService.prototype.renderAllPages = function () {
-        this._templatingService.createPagesAndSave();
+    SystemService.prototype.renderAllPages = function (page) {
+        if (page) {
+            var page1 = this._templatingService.createPage(page);
+            this._stateService.getPage(page.name).afterRenderLayout = page1;
+        }
+        else {
+            this._templatingService.createPagesAndSave();
+        }
     };
     SystemService.prototype.goStartPage = function () {
         this.goPage(this._stateService.getStartPageName());

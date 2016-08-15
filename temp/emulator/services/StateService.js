@@ -39,7 +39,6 @@ var StateService = (function () {
         return this._app.pages;
     };
     StateService.prototype.emulatorCentralCallBack = function (element, targetElementInfo) {
-        console.log("i am here");
         var currentPageName = this.getStartPageName();
         if (targetElementInfo) {
             this._app.CentralCallbackFunc(currentPageName, element.name, targetElementInfo);

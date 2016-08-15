@@ -37,24 +37,16 @@ var page1search = (function () {
                 bindToName: "page1button",
                 targetID: "page1text",
                 callbackFunction: this.searchButtonCallBack
-            },
-            {
-                bindToName: "page1jumpbutton",
-                callbackFunction: this.jumpButtonCallBack
             }
         ];
     };
     page1search.prototype.searchButtonCallBack = function (_actionService, info) {
-        console.log("I am at button");
         if (info && info != "") {
             _actionService.goPage("page2list");
         }
         else {
             _actionService.showNotification("Please enter the name of restaurant.");
         }
-    };
-    page1search.prototype.jumpButtonCallBack = function (_actionService) {
-        _actionService.goPage("page4fav");
     };
     return page1search;
 }());
