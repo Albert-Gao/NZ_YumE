@@ -4,7 +4,7 @@ import {IApp} from "../models/dataModels/IApp";
 import {IElement} from "../models/dataModels/IElement";
 
 
-export class StateService implements IStateService{
+export class StateService implements IStateService {
     _app: IApp;
 
     /**
@@ -30,10 +30,10 @@ export class StateService implements IStateService{
     }
 
     getCurrentPage(): IPage {
-        let targetName:string = this._app.currentPageName;
-        let returnPage:IPage;
-        for (let page of this._app.pages){
-            if (page.name === targetName){
+        let targetName: string = this._app.currentPageName;
+        let returnPage: IPage;
+        for (let page of this._app.pages) {
+            if (page.name === targetName) {
                 returnPage = page;
                 break;
             }
@@ -42,9 +42,9 @@ export class StateService implements IStateService{
     }
 
     getPage(name: string): IPage {
-        let returnPage:IPage;
-        for (let page of this._app.pages){
-            if (page.name === name){
+        let returnPage: IPage;
+        for (let page of this._app.pages) {
+            if (page.name === name) {
                 returnPage = page;
                 break;
             }
@@ -56,16 +56,17 @@ export class StateService implements IStateService{
         return this._app.pages;
     }
 
-    emulatorCentralCallBack(element: IElement, targetElementInfo?: string)  {
+    emulatorCentralCallBack(element: IElement, targetElementInfo?: string) {
         console.log("i am here");
-        if (targetElementInfo){
-            this._app.CentralCallbackFunc(element.name, targetElementInfo);
+        let currentPageName:string = this.getStartPageName();
+        if (targetElementInfo) {
+            this._app.CentralCallbackFunc(currentPageName, element.name, targetElementInfo);
         } else {
-            this._app.CentralCallbackFunc(element.name);
+            this._app.CentralCallbackFunc(currentPageName, element.name);
         }
     }
 
-    getAppCallBack():(pageName:string, elementID?:string)=>void{
+    getAppCallBack(): (pageName: string, elementID?: string) => void {
         return this._app.CentralCallbackFunc;
     }
 }

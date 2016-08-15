@@ -3,32 +3,32 @@ import {IActionService} from "../serviceModels/IActionService";
 
 /**
  *
- * 
+ *
  */
-export interface IApp{
+export interface IApp {
     /**
      * [title description]
      * @type {string}
      */
-    title:string;
+    title: string;
 
     /**
      * [currentPageName description]
      * @type {string}
      */
-    currentPageName:string;
+    currentPageName: string;
 
     /**
      * [startPageName description]
      * @type {string}
      */
-    startPageName:string;
+    startPageName: string;
 
     /**
      * [pages description]
      * @type {Array<IPage>}
      */
-    pages:Array<IPage>;
+    pages: Array<IPage>;
 
     /**
      * [injectActionService description]
@@ -36,7 +36,7 @@ export interface IApp{
      * @param  {IActionService}    as [description]
      * @return {[type]}               [description]
      */
-    injectActionService(as:IActionService);
+    injectActionService(as: IActionService);
 
     /**
      * [startAddingPages description]
@@ -52,5 +52,5 @@ export interface IApp{
      * @param  {string}            elementID [description]
      * @return {[type]}                      [description]
      */
-    CentralCallbackFunc(pageName:string, elementID?:string);
+    CentralCallbackFunc(pageName: string, elementID:string, targetElementID?: string);
 }

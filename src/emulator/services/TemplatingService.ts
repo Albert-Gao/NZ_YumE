@@ -35,11 +35,11 @@ export class TemplatingService implements ITemplatingService {
                         "btn btn-primary btn-lg btn-block",
                         <string>element.define);
                     if (element.targetElementID) {
-                        let targetText = $(element.targetElementID).text();
                         $(".emulator").on(
                             'click',
                             "#"+element.name,
                             ()=>{
+                                let targetText = $("#"+element.targetElementID).val();
                                 this._stateService.emulatorCentralCallBack(element,targetText);
                             });
                     } else {

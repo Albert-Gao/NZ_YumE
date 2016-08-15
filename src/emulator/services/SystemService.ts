@@ -28,7 +28,7 @@ export class SystemService implements ISystemService{
         this.removeCurrentPageFromScreen();
         for (let page of this._stateService.getPages()){
             if (page.name === name){
-                $(".emulator").append(page.afterRenderLayout);
+                $(".emulator").prepend(page.afterRenderLayout);
                 this.renewCurrentPage(page.name);
             }
         }
@@ -46,13 +46,19 @@ export class SystemService implements ISystemService{
         this._stateService.setCurrentPageName(name);
     }
 
-    showSplashScreen() {
+    startEmulator() {
         let backgroundDIV = this._templatingService.createjQueryItem("div",undefined,"splashScreen");
         let brand = this._templatingService.createjQueryItem("p",undefined,"brand","Smartisan");
         $(".emulator").append(backgroundDIV);
         backgroundDIV.append(brand);
-        backgroundDIV.fadeIn('slow',function(){
-            brand.fadeIn('slow').fadeOut('slow').fadeIn('slow');
+        backgroundDIV.fadeIn('slow',()=>{
+            brand.fadeIn('slow')
+                .fadeOut('slow')
+                .fadeIn('slow',()=>{
+                    this.hideSplashScreen();
+                    this.renderAllPages();
+                    this.goStartPage();
+                });
         });
     }
 

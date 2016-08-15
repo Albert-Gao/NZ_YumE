@@ -55,11 +55,11 @@ export interface ISystemService{
     renderAllPages();
 
     /**
-     * [showSplashScreen description]
+     * [startEmulator description]
      * @method showSplashScreen
      * @return {[type]}         [description]
      */
-    showSplashScreen();
+    startEmulator();
 
     /**
      * [hideSplashScreen description]

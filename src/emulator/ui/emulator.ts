@@ -37,21 +37,10 @@ export class emulator{
      * @return {[type]}      [description]
      */
     startEmulator(){
-        this._systemService.showSplashScreen();
-        setTimeout(this._systemService.hideSplashScreen,3900);
-    }
-
-    /**
-     * [startRenderApp description]
-     * @method startRenderApp
-     * @return {[type]}       [description]
-     */
-    startRenderApp(){
-        this._systemService.renderAllPages();
-        this._systemService.goStartPage();
+        this._systemService.startEmulator();
     }
 }
 
 let es = new emulator();
 es.startEmulator();
-es.startRenderApp();
+//es.startRenderApp();

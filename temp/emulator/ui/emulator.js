@@ -15,17 +15,11 @@ var emulator = (function () {
         this._app.startAddingPages();
     }
     emulator.prototype.startEmulator = function () {
-        this._systemService.showSplashScreen();
-        setTimeout(this._systemService.hideSplashScreen, 3900);
-    };
-    emulator.prototype.startRenderApp = function () {
-        this._systemService.renderAllPages();
-        this._systemService.goStartPage();
+        this._systemService.startEmulator();
     };
     return emulator;
 }());
 exports.emulator = emulator;
 var es = new emulator();
 es.startEmulator();
-es.startRenderApp();
 //# sourceMappingURL=emulator.js.map

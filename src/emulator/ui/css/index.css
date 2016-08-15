@@ -3,13 +3,18 @@
     height: 630px;
 }
 
+.h1wrapper{
+    margin:0 auto;
+    text-align: center;
+}
+
 .emulator{
     border: 2px solid dodgerblue;
     border-radius: 18px;
     height:620px;
     width:620px;
-    margin-top:20px;
-    margin-left: 50px;
+    margin: 30px auto 0;
+    align-items: center;
 }
 
 .splashScreen{
@@ -28,4 +33,10 @@
     font-size: 90px;
     display: none;
     font-style: italic;
+}
+
+.container-fluid{
+    height:500px;
+    width:500px;
+    margin:0 auto;
 }

@@ -8,14 +8,12 @@ export class page1search implements IPage{
     rawLayout: Array<IElement>;
     afterRenderLayout: JQuery;
     callback: Array<IFunc>;
-    _actionService:IActionService;
 
-    constructor(as:IActionService) {
+    constructor() {
         this.name = "page1search";
         this.rawLayout = this.returnRawLayout();
         this.afterRenderLayout = null;
         this.callback = this.returnCallbackFuncs();
-        this._actionService = as;
     }
 
     returnRawLayout():Array<IElement>{
@@ -38,7 +36,7 @@ export class page1search implements IPage{
             {
                 type:"button",
                 name:"page1button",
-                targetElementID:"page1text",
+                targetElementID:"page1input",
                 define:"YumE it!"
             }
         ];
@@ -58,15 +56,16 @@ export class page1search implements IPage{
         ];
     }
 
-    searchButtonCallBack(info:string){
-        if (info){
-            this._actionService.goPage("page2list");
+    searchButtonCallBack(_actionService:IActionService, info:string){
+        console.log("I am at button");
+        if (info && info != ""){
+            _actionService.goPage("page2list");
         } else{
-            this._actionService.showNotification("Please enter the name of restaurant.");
+            _actionService.showNotification("Please enter the name of restaurant.");
         }
     }
 
-    jumpButtonCallBack(){
-        this._actionService.goPage("page4fav");
+    jumpButtonCallBack(_actionService:IActionService){
+        _actionService.goPage("page4fav");
     }
 }

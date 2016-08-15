@@ -13,9 +13,9 @@ var TemplatingService = (function () {
                 case "button":
                     var temp = this_1.createjQueryItem("button", [{ key: "id", value: element.name }], "btn btn-primary btn-lg btn-block", element.define);
                     if (element.targetElementID) {
-                        var targetText_1 = $(element.targetElementID).text();
                         $(".emulator").on('click', "#" + element.name, function () {
-                            _this._stateService.emulatorCentralCallBack(element, targetText_1);
+                            var targetText = $("#" + element.targetElementID).val();
+                            _this._stateService.emulatorCentralCallBack(element, targetText);
                         });
                     }
                     else {

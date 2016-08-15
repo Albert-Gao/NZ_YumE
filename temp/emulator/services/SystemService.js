@@ -12,7 +12,7 @@ var SystemService = (function () {
         for (var _i = 0, _a = this._stateService.getPages(); _i < _a.length; _i++) {
             var page = _a[_i];
             if (page.name === name) {
-                $(".emulator").append(page.afterRenderLayout);
+                $(".emulator").prepend(page.afterRenderLayout);
                 this.renewCurrentPage(page.name);
             }
         }
@@ -26,13 +26,20 @@ var SystemService = (function () {
     SystemService.prototype.renewCurrentPage = function (name) {
         this._stateService.setCurrentPageName(name);
     };
-    SystemService.prototype.showSplashScreen = function () {
+    SystemService.prototype.startEmulator = function () {
+        var _this = this;
         var backgroundDIV = this._templatingService.createjQueryItem("div", undefined, "splashScreen");
         var brand = this._templatingService.createjQueryItem("p", undefined, "brand", "Smartisan");
         $(".emulator").append(backgroundDIV);
         backgroundDIV.append(brand);
         backgroundDIV.fadeIn('slow', function () {
-            brand.fadeIn('slow').fadeOut('slow').fadeIn('slow');
+            brand.fadeIn('slow')
+                .fadeOut('slow')
+                .fadeIn('slow', function () {
+                _this.hideSplashScreen();
+                _this.renderAllPages();
+                _this.goStartPage();
+            });
         });
     };
     SystemService.prototype.hideSplashScreen = function () {
