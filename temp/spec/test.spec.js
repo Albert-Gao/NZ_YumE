@@ -1,34 +1,33 @@
 "use strict";
 var StateService_1 = require("../src/emulator/services/StateService");
-it('true is true', function () { return expect(true).toEqual(true); });
-describe('Tests for the StateService', function () {
-    var MockPage = (function () {
-        function MockPage() {
-        }
-        return MockPage;
-    }());
-    var page1 = new MockPage();
-    page1.name = "page1";
-    var page2 = new MockPage();
-    page2.name = "page2";
-    var pageName = "page1";
-    var appTitle = "Title";
-    var MockApp = (function () {
-        function MockApp() {
-            this.title = appTitle;
-            this.currentPageName = pageName;
-            this.startPageName = pageName;
-            this.pages = [page1, page2];
-        }
-        MockApp.prototype.injectActionService = function (as) { };
-        ;
-        MockApp.prototype.startAddingPages = function () { };
-        ;
-        MockApp.prototype.CentralCallbackFunc = function (pageName, elementID) { };
-        ;
-        return MockApp;
-    }());
-    var myMockApp = new MockApp();
+var MockPage = (function () {
+    function MockPage() {
+    }
+    return MockPage;
+}());
+var page1 = new MockPage();
+page1.name = "page1";
+var page2 = new MockPage();
+page2.name = "page2";
+var pageName = "page1";
+var appTitle = "Title";
+var MockApp = (function () {
+    function MockApp() {
+        this.title = appTitle;
+        this.currentPageName = pageName;
+        this.startPageName = pageName;
+        this.pages = [page1, page2];
+    }
+    MockApp.prototype.injectActionService = function (as) { };
+    ;
+    MockApp.prototype.startAddingPages = function () { };
+    ;
+    MockApp.prototype.CentralCallbackFunc = function (pageName, elementID) { };
+    ;
+    return MockApp;
+}());
+var myMockApp = new MockApp();
+describe('Tests for StateService', function () {
     var testStateService = new StateService_1.StateService(myMockApp);
     it('getStartPageName() should return the specified string', function () {
         var startPageName = testStateService.getStartPageName();
@@ -78,7 +77,13 @@ describe('Tests for the StateService', function () {
     });
     it("getAppCallBack() should return the correct function", function () {
         var fn = testStateService.getAppCallBack();
-        expect(fn("test", "Test")).toEqual(myMockApp.CentralCallbackFunc("test", "test"));
+        expect(fn("test", "test")).toEqual(myMockApp.CentralCallbackFunc("test", "test"));
     });
+});
+describe('Tests for TemplatingService', function () {
+});
+describe('Tests for SystemService', function () {
+});
+describe('Tests for ActionService', function () {
 });
 //# sourceMappingURL=test.spec.js.map

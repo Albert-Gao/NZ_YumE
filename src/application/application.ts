@@ -25,6 +25,7 @@ export class application implements IApp{
     }
 
     startAddingPages(){
+        console.log("test");
         this.pages.push(new page1search(this._actionService));
     }
 

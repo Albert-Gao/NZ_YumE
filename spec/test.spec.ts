@@ -1,3 +1,5 @@
+///<reference path="../src/emulator/ui/types/jquery.d.ts"/>
+
 import {IStateService} from "../src/emulator/models/serviceModels/IStateService";
 import {IPage} from "../src/emulator/models/dataModels/IPage";
 import {IApp} from "../src/emulator/models/dataModels/IApp";
@@ -7,32 +9,45 @@ import {IFunc} from "../src/emulator/models/dataModels/IFunction";
 import {StateService} from "../src/emulator/services/StateService";
 import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
 
-it('true is true', () => expect(true).toEqual(true));
+class MockPage implements IPage {
+	name: string; 
+	rawLayout:Array<IElement>;
+	//afterRenderLayout?:JQuery;
+	callback:Array<IFunc>;
+}
+let page1 = new MockPage();
+page1.name = "page1";
+let page2 = new MockPage();
+page2.name = "page2";
 
-describe('Tests for the StateService', () => {
-	class MockPage implements IPage {
-		name: string; 
-    	rawLayout:Array<IElement>;
-    	//afterRenderLayout?:JQuery;
-    	callback:Array<IFunc>;
-	}
-	let page1 = new MockPage();
-	page1.name = "page1";
-	let page2 = new MockPage();
-	page2.name = "page2";
+let pageName: string = "page1";
+let appTitle: string = "Title";
+class MockApp implements IApp {
+    title:string = appTitle;
+    currentPageName:string = pageName;
+    startPageName:string = pageName;
+    pages:Array<IPage> = [page1, page2];
+    injectActionService(as:IActionService) {};
+    startAddingPages() {};
+    CentralCallbackFunc(pageName:string, elementID?:string) {};
+}
+let myMockApp = new MockApp();
 
-	let pageName: string = "page1";
-	let appTitle: string = "Title";
-    class MockApp implements IApp {
-        title:string = appTitle;
-	    currentPageName:string = pageName;
-	    startPageName:string = pageName;
-	    pages:Array<IPage> = [page1, page2];
-	    injectActionService(as:IActionService) {};
-	    startAddingPages() {};
-	    CentralCallbackFunc(pageName:string, elementID?:string) {};
-    }
-    let myMockApp = new MockApp();
+/*class MockSystemService implements ISystemService{
+    _stateService:IStateService;
+    _templatingService:ITemplatingService;
+    removeCurrentPageFromScreen();
+    goPage(name:string);
+    renewCurrentPage(name:string);
+    goStartPage();
+    renderAllPages();
+    showSplashScreen();
+    hideSplashScreen();
+    showNotification(text:string);
+}*/
+
+
+describe('Tests for StateService', () => {
     let testStateService: StateService = new StateService(myMockApp);  
     it('getStartPageName() should return the specified string', () => {
         let startPageName: string  = testStateService.getStartPageName();
@@ -86,6 +101,18 @@ describe('Tests for the StateService', () => {
     	let fn = testStateService.getAppCallBack();
     	expect(fn("test", "test")).toEqual(myMockApp.CentralCallbackFunc("test", "test"));
     })
+});
+
+describe('Tests for TemplatingService', () => {
+
+});
+
+describe('Tests for SystemService', () => {
+
+});
+
+describe('Tests for ActionService', () => {
+
 });
 /*Previous tests for reference
 /// <reference path="../typings/jasmine/jasmine.d.ts" />

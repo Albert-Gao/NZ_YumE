@@ -12,6 +12,7 @@ var application = (function () {
         this._actionService = as;
     };
     application.prototype.startAddingPages = function () {
+        console.log("test");
         this.pages.push(new page1search_1.page1search(this._actionService));
     };
     application.prototype.createPageArray = function () {
