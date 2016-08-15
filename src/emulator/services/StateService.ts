@@ -57,7 +57,7 @@ export class StateService implements IStateService{
     // }
 
     emulatorCentralCallBack(element: IElement, targetElementInfo?: string)  {
-        console.log("i am here");
+        //console.log("i am here");
         if (targetElementInfo){
             this._app.CentralCallbackFunc(element.name, targetElementInfo);
         } else {

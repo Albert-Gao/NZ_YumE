@@ -1,18 +1,18 @@
 "use strict";
-var page1search = (function () {
-    function page1search(as) {
-        this.name = "page1search";
+var page2list = (function () {
+    function page2list(as) {
+        this.name = "page2list";
         this.rawLayout = this.returnRawLayout();
         this.afterRenderLayout = null;
         this.callback = this.returnCallbackFuncs();
         this._actionService = as;
     }
-    page1search.prototype.returnRawLayout = function () {
+    page2list.prototype.returnRawLayout = function () {
         return [
             {
                 type: "image",
                 name: "page1image",
-                define: "./assets/YuMe_logo.jpg"
+                define: "./images/YuMe_logo.jpg"
             },
             {
                 type: "text",
@@ -29,10 +29,15 @@ var page1search = (function () {
                 name: "page1button",
                 targetElementID: "page1text",
                 define: "YumE it!"
-            }
+            },
+            {
+                type: "button",
+                name: "page1jumpbutton",
+                define: "YumE it!"
+            },
         ];
     };
-    page1search.prototype.returnCallbackFuncs = function () {
+    page2list.prototype.returnCallbackFuncs = function () {
         return [
             {
                 bindToName: "page1button",
@@ -45,7 +50,7 @@ var page1search = (function () {
             }
         ];
     };
-    page1search.prototype.searchButtonCallBack = function (info) {
+    page2list.prototype.searchButtonCallBack = function (info) {
         if (info) {
             this._actionService.goPage("page2list");
         }
@@ -53,10 +58,10 @@ var page1search = (function () {
             this._actionService.showNotification("Please enter the name of restaurant.");
         }
     };
-    page1search.prototype.jumpButtonCallBack = function () {
+    page2list.prototype.jumpButtonCallBack = function () {
         this._actionService.goPage("page4fav");
     };
-    return page1search;
+    return page2list;
 }());
-exports.page1search = page1search;
-//# sourceMappingURL=page1search.js.map
+exports.page2list = page2list;
+//# sourceMappingURL=page2bridge.js.map
