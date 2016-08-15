@@ -25,15 +25,23 @@ export class StateService implements IStateService{
 
     getCurrentPage(): IPage {
         let targetName:string = this._app.currentPageName;
-        return _.find(this._app.pages,function(page:IPage){
-            page.name = targetName;
-        });
+        let returnPage:IPage;
+        for (let page of this._app.pages){
+            if (page.name === targetName){
+                returnPage = page;
+            }
+        }
+        return returnPage;
     }
 
     getPage(name: string): IPage {
-        return _.find(this._app.pages,function(page:IPage){
-            page.name = name;
-        });
+        let returnPage:IPage;
+        for (let page of this._app.pages){
+            if (page.name === name){
+                returnPage = page;
+            }
+        }
+        return returnPage;
     }
 
     getPages(): Array<IPage> {

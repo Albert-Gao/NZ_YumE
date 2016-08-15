@@ -17,7 +17,7 @@ var application = (function () {
     application.prototype.createPageArray = function () {
     };
     application.prototype.appCallback = function (elementName, targetElementInfo) {
-        console.log("I am here!");
+        console.log("I am here at application");
     };
     return application;
 }());

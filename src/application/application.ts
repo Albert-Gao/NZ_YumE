@@ -33,6 +33,6 @@ export class application implements IApp{
     }
 
     appCallback(elementName:string, targetElementInfo?:string){
-        console.log("I am here!");
+        console.log("I am here at application");
     }
 }
