@@ -48,24 +48,15 @@ export class page1search implements IPage{
                 bindToName:"page1button",
                 targetID:"page1text",
                 callbackFunction:this.searchButtonCallBack
-            },
-            {
-                bindToName:"page1jumpbutton",
-                callbackFunction:this.jumpButtonCallBack
             }
         ];
     }
 
     searchButtonCallBack(_actionService:IActionService, info:string){
-        console.log("I am at button");
         if (info && info != ""){
             _actionService.goPage("page2list");
         } else{
             _actionService.showNotification("Please enter the name of restaurant.");
         }
-    }
-
-    jumpButtonCallBack(_actionService:IActionService){
-        _actionService.goPage("page4fav");
     }
 }
