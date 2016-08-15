@@ -34,8 +34,13 @@ export class SystemService implements ISystemService{
         }
     }
 
-    renderAllPages(){
-        this._templatingService.createPagesAndSave();
+    renderAllPages(page?:IPage){
+        if (page){
+            let page1:JQuery = this._templatingService.createPage(page);
+            this._stateService.getPage(page.name).afterRenderLayout = page1;
+        } else {
+            this._templatingService.createPagesAndSave();
+        }
     }
 
     goStartPage() {
