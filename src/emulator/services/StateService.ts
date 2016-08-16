@@ -56,17 +56,10 @@ export class StateService implements IStateService {
         return this._app.pages;
     }
 
-<<<<<<< HEAD
-    emulatorCentralCallBack(element: IElement, targetElementInfo?: string)  {
-        //console.log("i am here");
-        if (targetElementInfo){
-            this._app.CentralCallbackFunc(element.name, targetElementInfo);
-=======
     emulatorCentralCallBack(element: IElement, targetElementInfo?: string) {
         let currentPageName:string = this.getStartPageName();
         if (targetElementInfo) {
             this._app.CentralCallbackFunc(currentPageName, element.name, targetElementInfo);
->>>>>>> master
         } else {
             this._app.CentralCallbackFunc(currentPageName, element.name);
         }

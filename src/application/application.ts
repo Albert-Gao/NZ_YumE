@@ -27,15 +27,9 @@ export class application implements IApp {
         this._actionService = as;
     }
 
-<<<<<<< HEAD
-    startAddingPages(){
-        console.log("test");
-        this.pages.push(new page1search(this._actionService));
-=======
     startAddingPages() {
         this.pages.push(new page1search());
         this.pages.push(new page2list());
->>>>>>> master
     }
 
     createPageArray() {
