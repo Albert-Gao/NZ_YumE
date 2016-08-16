@@ -111,9 +111,9 @@ export class application implements IApp {
             let category:string = _item.categories?_item.categories[0][0]:"";
             let comment:string = _item.snippet_text?_item.snippet_text:"";
 
-            define ='<br/><br/>'+'Title: ' + title + '<br/><br/>'+'Phone: ' + phone + '<br/><br/>' +'Rating: ' + rating + '<br/><br/>' +'Category: ' + category + '<br/><br/>' +'Comment: ' + comment + '<br/><br/>';
+            define ='<br/>'+'<strong>Title: \</strong>' + title + '<br/>'+'<strong>Phone: \</strong>' + phone + '<br/>' +'<strong>Rating: \</strong>' + rating + '   |  ' +'<strong>Category: \</strong>' + category + '<br/>' +'<strong>Comment: \</strong>' + comment;
         } else {
-            define = '<br/><br/>' + "sorry, Yelp consider your keyword as invalid, please go back and try again."
+            define = '<br/>' + "sorry, Yelp can't recognize your keyword, please go back and search again."
         }
         return define;
     }

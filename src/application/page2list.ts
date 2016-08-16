@@ -20,13 +20,8 @@ export class page2list implements IPage{
         return [
             {
                 type:"text",
-                name:"page2placeholder1",
-                define:"  "
-            },
-            {
-                type:"text",
-                name:"page2placeholder2",
-                define:"  "
+                name:"page2placeholder",
+                define:" "
             },
             {
                 type:"button",
@@ -35,18 +30,13 @@ export class page2list implements IPage{
             },
             {
                 type:"text",
-                name:"page2placeholder3",
-                define:"  "
-            },
-            {
-                type:"text",
-                name:"page2placeholder4",
-                define:"   "
+                name:"page2placeholder",
+                define:" "
             },
             {
                 type:"image",
                 name:"page2image",
-                define:"http://icons.veryicon.com/128/Emoticon/Vista%20Style%20Emoticons/Cry.png"
+                define:"./assets/cry.png"
             },
             {
                 type:"text",

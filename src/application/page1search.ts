@@ -43,11 +43,6 @@ export class page1search implements IPage{
                 type:"text",
                 name:"page1text1",
                 define:" "
-            },
-            {
-                type:"text",
-                name:"page1text2",
-                define:"Try these Dunedin local best:<br/><br/> Mac’s Brewbar / Paasha Turkish Cafe / Etrusco at The Savoy / The Good Oil / Cadbury World / Miga / Hikari Sushi Bar / Velvet Burger"
             }
         ];
     }
