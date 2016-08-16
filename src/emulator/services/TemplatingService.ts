@@ -9,6 +9,12 @@ import {IListItem} from "../models/dataModels/IListItem";
 export class TemplatingService implements ITemplatingService {
     _stateService: IStateService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {IStateService} stateService [description]
+     * @return {[type]}                     [description]
+     */
     constructor(stateService: IStateService) {
         this._stateService = stateService;
     }
@@ -29,11 +35,11 @@ export class TemplatingService implements ITemplatingService {
                         "btn btn-primary btn-lg btn-block",
                         <string>element.define);
                     if (element.targetElementID) {
-                        let targetText = $(element.targetElementID).text();
                         $(".emulator").on(
                             'click',
                             "#"+element.name,
                             ()=>{
+                                let targetText = $("#"+element.targetElementID).val();
                                 this._stateService.emulatorCentralCallBack(element,targetText);
                             });
                     } else {
@@ -82,7 +88,12 @@ export class TemplatingService implements ITemplatingService {
                         let a = this.createjQueryItem("a",
                             undefined,
                             "list-group-item list-group-item-action");
-                        a.click(this._stateService.emulatorCentralCallBack(element));
+                        $(".emulator").on(
+                            'click',
+                            "#"+element.name,
+                            ()=>{
+                                this._stateService.emulatorCentralCallBack(element,item.url);
+                            });
                         let h5 = this.createjQueryItem("h5",
                             undefined,
                             "list-group-item-heading",
@@ -132,7 +143,7 @@ export class TemplatingService implements ITemplatingService {
         }
 
         if (text) {
-            domElement.text(text);
+            domElement.html(text);
         }
         return domElement;
     }

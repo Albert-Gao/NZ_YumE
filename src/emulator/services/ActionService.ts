@@ -1,10 +1,18 @@
 import {IActionService} from "../models/serviceModels/IActionService";
 import {ISystemService} from "../models/serviceModels/ISystemService";
+import {IPage} from "../models/dataModels/IPage";
+
 declare var OAuth:any;
 
 export class ActionService implements IActionService{
     _systemService: ISystemService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {ISystemService} systemService [description]
+     * @return {[type]}                       [description]
+     */
     constructor(systemService: ISystemService) {
         this._systemService = systemService;
     }
@@ -25,11 +33,11 @@ export class ActionService implements IActionService{
         return localStorage.getItem(key);
     }
 
-    callYelpSearchAPI(keywords:string):Object{
-        function cb(data) {
-            console.log("cb: " + JSON.stringify(data));
-        }
+    reRenderPage(page:IPage){
+        this._systemService.renderAllPages(page);
+    }
 
+    callYelpSearchAPI(keywords:string, callback:Function){
         let auth = {
             consumerKey : "sNul62e6H0We5KJLGYP_Bw",
             consumerSecret : "RxvIBp4BxRvNVxjaPlUWuiPFcYg",
@@ -69,7 +77,6 @@ export class ActionService implements IActionService{
         OAuth.SignatureMethod.sign(message, accessor);
 
         let parameterMap = OAuth.getParameterMap(message.parameters);
-        let returnObject:Object = {};
 
         $.ajax({
             'url' : message.action,
@@ -78,16 +85,13 @@ export class ActionService implements IActionService{
             'jsonpCallback' : 'cb',
             'cache': true
         })
-        .done(function(data, textStatus, jqXHR) {
-                //console.log('success[' + data + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
-                returnObject = data;
+        .done((data, textStatus, jqXHR) => {
+                callback(data.businesses[0]);
             }
         )
-        .fail(function(jqXHR, textStatus, errorThrown) {
+        .fail((jqXHR, textStatus, errorThrown) => {
                 console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
             }
         );
-
-        return returnObject;
     }
 }

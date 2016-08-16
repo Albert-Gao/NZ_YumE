@@ -1,11 +1,10 @@
 "use strict";
 var page1search = (function () {
-    function page1search(as) {
+    function page1search() {
         this.name = "page1search";
         this.rawLayout = this.returnRawLayout();
         this.afterRenderLayout = null;
         this.callback = this.returnCallbackFuncs();
-        this._actionService = as;
     }
     page1search.prototype.returnRawLayout = function () {
         return [
@@ -17,7 +16,7 @@ var page1search = (function () {
             {
                 type: "text",
                 name: "page1text",
-                define: "Search your favourite, eat your favourite :)"
+                define: "Search better, eat fatter :)"
             },
             {
                 type: "input",
@@ -27,8 +26,13 @@ var page1search = (function () {
             {
                 type: "button",
                 name: "page1button",
-                targetElementID: "page1text",
+                targetElementID: "page1input",
                 define: "YumE it!"
+            },
+            {
+                type: "text",
+                name: "page1text1",
+                define: " "
             }
         ];
     };
@@ -38,23 +42,16 @@ var page1search = (function () {
                 bindToName: "page1button",
                 targetID: "page1text",
                 callbackFunction: this.searchButtonCallBack
-            },
-            {
-                bindToName: "page1jumpbutton",
-                callbackFunction: this.jumpButtonCallBack
             }
         ];
     };
-    page1search.prototype.searchButtonCallBack = function (info) {
-        if (info) {
-            this._actionService.goPage("page2list");
+    page1search.prototype.searchButtonCallBack = function (_actionService, info) {
+        if (info && info != "") {
+            _actionService.goPage("page2list");
         }
         else {
-            this._actionService.showNotification("Please enter the name of restaurant.");
+            _actionService.showNotification("Please enter the name of restaurant.");
         }
-    };
-    page1search.prototype.jumpButtonCallBack = function () {
-        this._actionService.goPage("page4fav");
     };
     return page1search;
 }());

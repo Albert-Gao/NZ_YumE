@@ -8,14 +8,12 @@ export class page1search implements IPage{
     rawLayout: Array<IElement>;
     afterRenderLayout: JQuery;
     callback: Array<IFunc>;
-    _actionService:IActionService;
 
-    constructor(as:IActionService) {
+    constructor() {
         this.name = "page1search";
         this.rawLayout = this.returnRawLayout();
         this.afterRenderLayout = null;
         this.callback = this.returnCallbackFuncs();
-        this._actionService = as;
     }
 
     returnRawLayout():Array<IElement>{
@@ -28,7 +26,7 @@ export class page1search implements IPage{
             {
                 type:"text",
                 name:"page1text",
-                define:"Search your favourite, eat your favourite :)"
+                define:"Search better, eat fatter :)"
             },
             {
                 type:"input",
@@ -38,8 +36,13 @@ export class page1search implements IPage{
             {
                 type:"button",
                 name:"page1button",
-                targetElementID:"page1text",
+                targetElementID:"page1input",
                 define:"YumE it!"
+            },
+            {
+                type:"text",
+                name:"page1text1",
+                define:" "
             }
         ];
     }
@@ -50,23 +53,16 @@ export class page1search implements IPage{
                 bindToName:"page1button",
                 targetID:"page1text",
                 callbackFunction:this.searchButtonCallBack
-            },
-            {
-                bindToName:"page1jumpbutton",
-                callbackFunction:this.jumpButtonCallBack
             }
         ];
     }
 
-    searchButtonCallBack(info:string){
-        if (info){
-            this._actionService.goPage("page2list");
+    searchButtonCallBack(_actionService:IActionService, info:string){
+        if (info && info != ""){
+            _actionService.goPage("page2list");
         } else{
-            this._actionService.showNotification("Please enter the name of restaurant.");
+            _actionService.showNotification("Please enter the name of restaurant.");
         }
     }
-
-    jumpButtonCallBack(){
-        this._actionService.goPage("page4fav");
-    }
 }
+

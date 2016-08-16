@@ -16,6 +16,10 @@ export class emulator{
     _systemService:ISystemService;
     _actionService:IActionService;
 
+    /**
+     * [constructor description]
+     * @method constructor
+     */
     constructor() {
         this._app = new application();
         this._stateService = new StateService(this._app);
@@ -26,17 +30,14 @@ export class emulator{
         this._app.startAddingPages();
     }
 
+    /**
+     * [startEmulator description]
+     * @method startEmulator
+     */
     startEmulator(){
-        this._systemService.showSplashScreen();
-        setTimeout(this._systemService.hideSplashScreen,3900);
-    }
-
-    startRenderApp(){
-        this._systemService.renderAllPages();
-        this._systemService.goStartPage();
+        this._systemService.startEmulator();
     }
 }
 
 let es = new emulator();
 es.startEmulator();
-es.startRenderApp();

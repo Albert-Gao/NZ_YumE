@@ -19,6 +19,7 @@ var StateService = (function () {
             var page = _a[_i];
             if (page.name === targetName) {
                 returnPage = page;
+                break;
             }
         }
         return returnPage;
@@ -29,6 +30,7 @@ var StateService = (function () {
             var page = _a[_i];
             if (page.name === name) {
                 returnPage = page;
+                break;
             }
         }
         return returnPage;
@@ -37,12 +39,12 @@ var StateService = (function () {
         return this._app.pages;
     };
     StateService.prototype.emulatorCentralCallBack = function (element, targetElementInfo) {
-        console.log("i am here");
+        var currentPageName = this.getStartPageName();
         if (targetElementInfo) {
-            this._app.CentralCallbackFunc(element.name, targetElementInfo);
+            this._app.CentralCallbackFunc(currentPageName, element.name, targetElementInfo);
         }
         else {
-            this._app.CentralCallbackFunc(element.name);
+            this._app.CentralCallbackFunc(currentPageName, element.name);
         }
     };
     StateService.prototype.getAppCallBack = function () {
