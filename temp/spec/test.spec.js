@@ -7,7 +7,10 @@ var MockElement = (function () {
     return MockElement;
 }());
 var aMockElement = new MockElement();
+aMockElement.type = "text";
 aMockElement.name = "testName";
+var testText = "Some text to test with";
+aMockElement.define = testText;
 var MockPage = (function () {
     function MockPage() {
     }
@@ -103,9 +106,30 @@ var MockStateService = (function () {
 var myMockStateService = new MockStateService();
 describe('Tests for TemplatingService', function () {
     var testTemplatingService = new TemplatingService_1.TemplatingService(myMockStateService);
-    it('createPage() should return a jQuery object', function () {
-        var aJQObject = testTemplatingService.createPage(page1);
+    describe('createPage() should return a jQuery object', function () {
+        it('that for text type contains right ID, p and text elements', function () {
+            var aJQObject = testTemplatingService.createPage(page1);
+            expect($("#testName", aJQObject)).toExist();
+            expect($("p", aJQObject)).toHaveText(testText);
+        });
+    });
+    it('createPagesAndSave() should call createPage the right number of times', function () {
+        spyOn(testTemplatingService, 'createPage');
+        testTemplatingService.createPagesAndSave();
+        expect(testTemplatingService.createPage.calls.count()).toBe(2);
+    });
+    it('createLayout() should return a jQuery object with a div of class conatiner-fluid', function () {
+        var aJQObject = testTemplatingService.createLayout();
+        expect($(aJQObject)).toHaveClass("container-fluid");
+        expect($(aJQObject)).toEqual("div");
+    });
+    it('removeElementFromDOM() should remove the specified element from the DOM', function () {
         expect(true).toEqual(true);
+    });
+    it('createjQueryItem() should return the correct jQuery object', function () {
+        var aJQItem = testTemplatingService.createjQueryItem("div", [{ key: "id", value: "testID" }], "testClass", "testString");
+        expect($(aJQItem)).toHaveId("testID");
+        expect($(aJQItem)).toHaveClass("testClass");
     });
 });
 describe('Tests for SystemService', function () {

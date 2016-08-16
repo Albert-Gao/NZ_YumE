@@ -12,6 +12,12 @@ import {StateService} from "../src/emulator/services/StateService";
 import {TemplatingService} from "../src/emulator/services/TemplatingService";
 import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
 
+jasmine.getFixtures().fixturesPath = "../spec/";
+//need to launch Chrome/Chromium with --allow-file-access-from-files option
+//for fixtures to work. Works in standard FireFox.
+//see https://github.com/velesin/jasmine-jquery#cross-domain-policy-problems-under-chrome
+//can load a fixture with loadFixtures('myFixture.html');
+
 class MockElement implements IElement {
 	type;
     name:string;
@@ -27,7 +33,7 @@ aMockElement.define = testText;
 class MockPage implements IPage {
 	name: string; 
 	rawLayout:Array<IElement>;
-	//afterRenderLayout?:JQuery;
+	afterRenderLayout: JQuery;
 	callback:Array<IFunc>;
 }
 let page1 = new MockPage();
@@ -121,23 +127,30 @@ describe('Tests for TemplatingService', () => {
 	    });
 	});
     it('createPagesAndSave() should call createPage the right number of times', () => {
-        expect(true).toEqual(true);
+    	spyOn(testTemplatingService, 'createPage');
+    	testTemplatingService.createPagesAndSave();
+        expect(testTemplatingService.createPage.calls.count()).toBe(2);
     });
-    it('createLayout() should return a jQuery object', () => {
-        expect(true).toEqual(true);
+    it('createLayout() should return a jQuery object with a div of class conatiner-fluid', () => {
+    	let aJQObject: JQuery  = testTemplatingService.createLayout();
+        expect($(aJQObject)).toHaveClass("container-fluid");
+    	expect($(aJQObject)).toEqual("div");
     });
     it('removeElementFromDOM() should remove the specified element from the DOM', () => {
-        expect(true).toEqual(true);
+    	setFixtures("<div class='container-fluid'></div>");
+    	expect($(".container-fluid")).toExist();
+        testTemplatingService.removeElementFromDOM(".container-fluid");
+        expect($(".container-fluid")).not.toExist();
     });
     it('createjQueryItem() should return the correct jQuery object', () => {
     	let aJQItem: JQuery = testTemplatingService.createjQueryItem("div",
     		 [{key:"id", value:"testID"}], "testClass", "testString");
-        //note that for below, don't need a selector, as the object is just one element
-        //when pass a selector and context, only searches within that context, not including
+        //Note that for below, don't need a selector, as the object is just one element.
+        //When passing a selector and context, only searches within that context, not including
         //the parent, so $(#testID, aJQItem) will return an empty jQuery object
         expect($(aJQItem)).toHaveId("testID");
         expect($(aJQItem)).toHaveClass("testClass");
-        //below is just a reminder on how to see the acutal html for debugging as needed
+        //below is just a reminder on how to see the actual html for debugging as needed
         //expect(aJQItem[0].outerHTML).toHaveId("testID");
     });
 });
