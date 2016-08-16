@@ -10,13 +10,8 @@ var page2list = (function () {
         return [
             {
                 type: "text",
-                name: "page2placeholder1",
-                define: "  "
-            },
-            {
-                type: "text",
-                name: "page2placeholder2",
-                define: "  "
+                name: "page2placeholder",
+                define: " "
             },
             {
                 type: "button",
@@ -25,18 +20,13 @@ var page2list = (function () {
             },
             {
                 type: "text",
-                name: "page2placeholder3",
-                define: "  "
-            },
-            {
-                type: "text",
-                name: "page2placeholder4",
-                define: "   "
+                name: "page2placeholder",
+                define: " "
             },
             {
                 type: "image",
                 name: "page2image",
-                define: "http://s3-media1.fl.yelpcdn.com/photo/_87c-Gu1rjTbPtwHd90vDA/ms.jpg"
+                define: "./assets/cry.png"
             },
             {
                 type: "text",
