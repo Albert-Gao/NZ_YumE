@@ -34,7 +34,8 @@ module.exports = {
     context: __dirname+"/src",
     entry: {
         './index.bundle.js':'./emulator/ui/emulator.ts',
-        './index.bundle.css':'./emulator/ui/css/index.css'
+        './index.bundle.css':'./emulator/ui/css/index.css',
+        './spec/test.spec.js':'../spec/test.spec.ts'
     },
     output: {
         path: __dirname+'/dist',

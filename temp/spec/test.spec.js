@@ -1,5 +1,13 @@
 "use strict";
 var StateService_1 = require("../src/emulator/services/StateService");
+var TemplatingService_1 = require("../src/emulator/services/TemplatingService");
+var MockElement = (function () {
+    function MockElement() {
+    }
+    return MockElement;
+}());
+var aMockElement = new MockElement();
+aMockElement.name = "testName";
 var MockPage = (function () {
     function MockPage() {
     }
@@ -7,6 +15,7 @@ var MockPage = (function () {
 }());
 var page1 = new MockPage();
 page1.name = "page1";
+page1.rawLayout = [aMockElement];
 var page2 = new MockPage();
 page2.name = "page2";
 var pageName = "page1";
@@ -63,13 +72,6 @@ describe('Tests for StateService', function () {
     });
     it("emulatorCentralCallBack() to call CentralCallbackFunc()", function () {
         spyOn(myMockApp, 'CentralCallbackFunc');
-        var MockElement = (function () {
-            function MockElement() {
-            }
-            return MockElement;
-        }());
-        var aMockElement = new MockElement();
-        aMockElement.name = "testName";
         testStateService.emulatorCentralCallBack(aMockElement);
         expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith("testName");
         testStateService.emulatorCentralCallBack(aMockElement, "test");
@@ -80,7 +82,31 @@ describe('Tests for StateService', function () {
         expect(fn("test", "test")).toEqual(myMockApp.CentralCallbackFunc("test", "test"));
     });
 });
+var MockStateService = (function () {
+    function MockStateService() {
+        this._app = myMockApp;
+    }
+    MockStateService.prototype.getCurrentPage = function () { return page1; };
+    ;
+    MockStateService.prototype.getCurrentPageName = function () { return page1.name; };
+    ;
+    MockStateService.prototype.getStartPageName = function () { return page1.name; };
+    ;
+    MockStateService.prototype.setCurrentPageName = function (name) { page1.name = name; };
+    ;
+    MockStateService.prototype.getPages = function () { return myMockApp.pages; };
+    ;
+    MockStateService.prototype.getPage = function (name) { return page1; };
+    ;
+    return MockStateService;
+}());
+var myMockStateService = new MockStateService();
 describe('Tests for TemplatingService', function () {
+    var testTemplatingService = new TemplatingService_1.TemplatingService(myMockStateService);
+    it('createPage() should return a jQuery object', function () {
+        var aJQObject = testTemplatingService.createPage(page1);
+        expect(true).toEqual(true);
+    });
 });
 describe('Tests for SystemService', function () {
 });

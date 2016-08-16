@@ -1,13 +1,28 @@
-///<reference path="../src/emulator/ui/types/jquery.d.ts"/>
+///<reference path="../src/emulator/ui/types/jquery.d.ts" />
+///<reference path="typings/jasmine-jquery.d.ts" />
 
 import {IStateService} from "../src/emulator/models/serviceModels/IStateService";
+import {ITemplatingService} from "../src/emulator/models/serviceModels/ITemplatingService";
 import {IPage} from "../src/emulator/models/dataModels/IPage";
 import {IApp} from "../src/emulator/models/dataModels/IApp";
 import {IElement} from "../src/emulator/models/dataModels/IElement";
 import {IListItem} from "../src/emulator/models/dataModels/IListItem";
 import {IFunc} from "../src/emulator/models/dataModels/IFunction";
 import {StateService} from "../src/emulator/services/StateService";
+import {TemplatingService} from "../src/emulator/services/TemplatingService";
 import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
+
+class MockElement implements IElement {
+	type;
+    name:string;
+    //targetElementID?:string;
+    define:string|Array<IListItem>;
+}
+let aMockElement = new MockElement();
+aMockElement.type = "text";
+aMockElement.name = "testName";
+let testText: string = "Some text to test with";
+aMockElement.define = testText;
 
 class MockPage implements IPage {
 	name: string; 
@@ -17,6 +32,7 @@ class MockPage implements IPage {
 }
 let page1 = new MockPage();
 page1.name = "page1";
+page1.rawLayout = [aMockElement];
 let page2 = new MockPage();
 page2.name = "page2";
 
@@ -32,20 +48,6 @@ class MockApp implements IApp {
     CentralCallbackFunc(pageName:string, elementID?:string) {};
 }
 let myMockApp = new MockApp();
-
-/*class MockSystemService implements ISystemService{
-    _stateService:IStateService;
-    _templatingService:ITemplatingService;
-    removeCurrentPageFromScreen();
-    goPage(name:string);
-    renewCurrentPage(name:string);
-    goStartPage();
-    renderAllPages();
-    showSplashScreen();
-    hideSplashScreen();
-    showNotification(text:string);
-}*/
-
 
 describe('Tests for StateService', () => {
     let testStateService: StateService = new StateService(myMockApp);  
@@ -84,14 +86,6 @@ describe('Tests for StateService', () => {
     });
     it("emulatorCentralCallBack() to call CentralCallbackFunc()", () => {
     	spyOn(myMockApp, 'CentralCallbackFunc');
-	    class MockElement implements IElement {
-	    	type: "image";
-		    name:string;
-		    //targetElementID?:string;
-		    define:string|Array<IListItem>;
-	    }
-	    let aMockElement = new MockElement();
-	    aMockElement.name = "testName";
     	testStateService.emulatorCentralCallBack(aMockElement);
     	expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith("testName");
     	testStateService.emulatorCentralCallBack(aMockElement, "test");
@@ -103,8 +97,49 @@ describe('Tests for StateService', () => {
     })
 });
 
-describe('Tests for TemplatingService', () => {
+class MockStateService implements IStateService{
+    _app:IApp = myMockApp;
+    getCurrentPage():IPage {return page1};
+    getCurrentPageName():string {return page1.name};
+    getStartPageName():string {return page1.name};
+    setCurrentPageName(name:string) {page1.name = name};
+    getPages():Array<IPage> {return myMockApp.pages};
+    getPage(name:string ):IPage {return page1};
+    getAppCallBack:(element:IElement,targetElementInfo?:string)=>void;
+    emulatorCentralCallBack:(element:IElement,targetElementInfo?:string)=>void;
+}
+let myMockStateService = new MockStateService();
 
+describe('Tests for TemplatingService', () => {
+	let testTemplatingService: TemplatingService = new TemplatingService(myMockStateService);
+	describe('createPage() should return a jQuery object', () => {
+	    it('that for text type contains right ID, p and text elements', () => {
+	        let aJQObject: JQuery  = testTemplatingService.createPage(page1);
+	        expect($("#testName", aJQObject)).toExist();
+	        expect($("p", aJQObject)).toHaveText(testText);
+	        //console.log($("#testName", aJQObject)[0].outerHTML)
+	    });
+	});
+    it('createPagesAndSave() should call createPage the right number of times', () => {
+        expect(true).toEqual(true);
+    });
+    it('createLayout() should return a jQuery object', () => {
+        expect(true).toEqual(true);
+    });
+    it('removeElementFromDOM() should remove the specified element from the DOM', () => {
+        expect(true).toEqual(true);
+    });
+    it('createjQueryItem() should return the correct jQuery object', () => {
+    	let aJQItem: JQuery = testTemplatingService.createjQueryItem("div",
+    		 [{key:"id", value:"testID"}], "testClass", "testString");
+        //note that for below, don't need a selector, as the object is just one element
+        //when pass a selector and context, only searches within that context, not including
+        //the parent, so $(#testID, aJQItem) will return an empty jQuery object
+        expect($(aJQItem)).toHaveId("testID");
+        expect($(aJQItem)).toHaveClass("testClass");
+        //below is just a reminder on how to see the acutal html for debugging as needed
+        //expect(aJQItem[0].outerHTML).toHaveId("testID");
+    });
 });
 
 describe('Tests for SystemService', () => {

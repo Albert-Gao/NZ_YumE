@@ -1,4 +1,4 @@
-///<reference path="../ui/types/jquery.d.ts"/>
+///<reference path="../ui/types/jquery.d.ts" />
 
 import {IPage} from '../models/dataModels/IPage'
 import {ITemplatingService} from "../models/serviceModels/ITemplatingService";
