@@ -10,6 +10,7 @@ import {IListItem} from "../src/emulator/models/dataModels/IListItem";
 import {IFunc} from "../src/emulator/models/dataModels/IFunction";
 import {StateService} from "../src/emulator/services/StateService";
 import {TemplatingService} from "../src/emulator/services/TemplatingService";
+import {SystemService} from "../src/emulator/services/SystemService";
 import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
 
 jasmine.getFixtures().fixturesPath = "../spec/";
@@ -93,9 +94,9 @@ describe('Tests for StateService', () => {
     it("emulatorCentralCallBack() to call CentralCallbackFunc()", () => {
     	spyOn(myMockApp, 'CentralCallbackFunc');
     	testStateService.emulatorCentralCallBack(aMockElement);
-    	expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith("testName");
+    	expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith(page1.name, "testName");
     	testStateService.emulatorCentralCallBack(aMockElement, "test");
-    	expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith("testName", "test");
+    	expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith(page1.name, "testName", "test");
     });
     it("getAppCallBack() should return the correct function", () => {
     	let fn = testStateService.getAppCallBack();
@@ -155,12 +156,106 @@ describe('Tests for TemplatingService', () => {
     });
 });
 
-describe('Tests for SystemService', () => {
+class MockTemplatingService implements ITemplatingService{
+	_stateService:IStateService;
+    createPage(page:IPage):JQuery {return $(document.createElement("div"))};
+    createPagesAndSave() {};
+    createLayout():JQuery {return $(document.createElement("div"))};
+    removeElementFromDOM(className:string) {};
+    createjQueryItem(type:string,
+                     attrs?:Array<{key:string,value:string}>,
+                     styleClasses?:string,
+                     text?:string): JQuery {return $(document.createElement("div"))
+    												.addClass("testingClass")};
+}
 
+let myMockTemplatingService = new MockTemplatingService();
+
+describe('Tests for SystemService', () => {
+	let testSystemService: SystemService = new SystemService(myMockTemplatingService, 
+															 myMockStateService); 
+	it('removeCurrentPageFromScreen() should remove the current page from the DOM', () => {
+    	spyOn(myMockTemplatingService, "removeElementFromDOM");
+    	testSystemService.removeCurrentPageFromScreen();
+    	expect(myMockTemplatingService.removeElementFromDOM)
+    					.toHaveBeenCalledWith(".container-fluid");
+    });
+	it('goPage() should ...', () => {
+
+    });
+    it('renderAllPages() should ...', () => {
+
+    });
+    it('goStartPage() should ...', () => {
+
+    });
+    it('renewCurrentPage() should ...', () => {
+
+    });
+    it('startEmulator() should ...', (done) => {
+    	spyOn(testSystemService, "hideSplashScreen");
+    	spyOn(testSystemService, "renderAllPages");
+    	spyOn(testSystemService, "goStartPage");
+    	testSystemService.startEmulator();
+
+    	let POLL_TIME = 10;
+    	let endTime = new Date().getTime() + 10000;
+    	let checkCondition = function() {
+        	if (new Date().getTime() <= endTime && 
+        		testSystemService.goStartPage.calls.count() < 1) {
+            	setTimeout(checkCondition, POLL_TIME);
+            } else {   
+		    	expect(testSystemService.hideSplashScreen).toHaveBeenCalled();
+		    	expect(testSystemService.renderAllPages).toHaveBeenCalled();
+		    	expect(testSystemService.goStartPage).toHaveBeenCalled();
+                done();
+            }
+        };
+        checkCondition();
+    }, 10000);
+    it('hideSplashScreen() should hide the splash screen', () => {
+    	setFixtures("<div class='splashScreen'></div>");
+    	expect($(".splashScreen")).toBeVisible();
+        testSystemService.hideSplashScreen();
+        expect($(".splashScreen")).not.toBeVisible();
+    });
+    it('showNotification() should show a notification, and then fade it out', (done) => {
+    	setFixtures("<div class='emulator'></div>");
+    	expect($(".testingClass")).not.toBeVisible();
+    	testSystemService.showNotification("blah");
+    	expect($(".testingClass")).toBeVisible();
+
+    	let POLL_TIME = 10;
+    	let endTime = new Date().getTime() + 5000;
+    	let checkCondition = function() {
+        	if (new Date().getTime() <= endTime && 
+        		$(".testingClass").is(":visible")) {
+            	setTimeout(checkCondition, POLL_TIME);
+            } else {
+				expect($(".testingClass")).not.toBeVisible();
+                done();
+            }
+        };
+        checkCondition();
+    }, 5000);
 });
 
 describe('Tests for ActionService', () => {
+	it('goPage() should ...', () => {
 
+    });
+    it('renderAllPages() should ...', () => {
+
+    });
+    it('goStartPage() should ...', () => {
+
+    });
+    it('renewCurrentPage() should ...', () => {
+
+    });
+    it('startEmulator() should ...', () => {
+
+    });
 });
 /*Previous tests for reference
 /// <reference path="../typings/jasmine/jasmine.d.ts" />
