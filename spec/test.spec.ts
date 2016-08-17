@@ -3,6 +3,8 @@
 
 import {IStateService} from "../src/emulator/models/serviceModels/IStateService";
 import {ITemplatingService} from "../src/emulator/models/serviceModels/ITemplatingService";
+import {ISystemService} from "../src/emulator/models/serviceModels/ISystemService";
+import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
 import {IPage} from "../src/emulator/models/dataModels/IPage";
 import {IApp} from "../src/emulator/models/dataModels/IApp";
 import {IElement} from "../src/emulator/models/dataModels/IElement";
@@ -11,7 +13,7 @@ import {IFunc} from "../src/emulator/models/dataModels/IFunction";
 import {StateService} from "../src/emulator/services/StateService";
 import {TemplatingService} from "../src/emulator/services/TemplatingService";
 import {SystemService} from "../src/emulator/services/SystemService";
-import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
+import {ActionService} from "../src/emulator/services/ActionService";
 
 jasmine.getFixtures().fixturesPath = "../spec/";
 //need to launch Chrome/Chromium with --allow-file-access-from-files option
@@ -22,7 +24,7 @@ jasmine.getFixtures().fixturesPath = "../spec/";
 class MockElement implements IElement {
 	type;
     name:string;
-    //targetElementID?:string;
+    targetElementID:string;
     define:string|Array<IListItem>;
 }
 let aMockElement = new MockElement();
@@ -62,7 +64,7 @@ describe('Tests for StateService', () => {
         let startPageName: string  = testStateService.getStartPageName();
         expect(startPageName).toEqual(pageName);
     });
-    it('getStartPageName() should return a string', () => {
+    it('getCurrentPageName() should return the correct string', () => {
         let currentPageName: string = testStateService.getCurrentPageName();
         expect(currentPageName).toEqual(pageName);
     });
@@ -112,19 +114,74 @@ class MockStateService implements IStateService{
     setCurrentPageName(name:string) {page1.name = name};
     getPages():Array<IPage> {return myMockApp.pages};
     getPage(name:string ):IPage {return page1};
-    getAppCallBack:(element:IElement,targetElementInfo?:string)=>void;
-    emulatorCentralCallBack:(element:IElement,targetElementInfo?:string)=>void;
+    getAppCallBack:(element:IElement,targetElementInfo?:string) => void;
+    emulatorCentralCallBack(element:IElement,targetElementInfo?:string) {};
 }
 let myMockStateService = new MockStateService();
 
 describe('Tests for TemplatingService', () => {
 	let testTemplatingService: TemplatingService = new TemplatingService(myMockStateService);
 	describe('createPage() should return a jQuery object', () => {
+		let testPage = new MockPage();
+		testPage.name = "testPage";
+		it('that for button type contains right ID, classes, definition', () => {
+			let buttonElement = new MockElement();
+			buttonElement.type = "button"; buttonElement.name = "buttonElement";
+	    	buttonElement.define = "buttonElementDefinition";
+	    	testPage.rawLayout = [buttonElement];
+	    	let aJQObject: JQuery  = testTemplatingService.createPage(testPage);
+	    	expect($("button", aJQObject).attr("id")).toEqual(buttonElement.name);
+	    	expect($(".btn", aJQObject)).toHaveText(<string>buttonElement.define);
+	    });
 	    it('that for text type contains right ID, p and text elements', () => {
-	        let aJQObject: JQuery  = testTemplatingService.createPage(page1);
-	        expect($("#testName", aJQObject)).toExist();
-	        expect($("p", aJQObject)).toHaveText(testText);
-	        //console.log($("#testName", aJQObject)[0].outerHTML)
+	    	let textElement = new MockElement();
+	    	textElement.type = "text"; textElement.name = "textElement";
+	    	textElement.define = "textElementDefinition";
+	    	testPage.rawLayout = [textElement];
+	        let aJQObject: JQuery  = testTemplatingService.createPage(testPage);
+	        expect($("#textElement", aJQObject)).toExist();
+	        expect($("p", aJQObject)).toHaveText(<string>textElement.define);
+	    });
+	    it('that for image type contains right ID, class, img attr and img source', () => {
+	    	let imageElement = new MockElement();
+	    	imageElement.type = "image"; imageElement.name = "imageElement";
+	    	imageElement.define = "imageElementDefinition";
+	    	testPage.rawLayout = [imageElement];
+	    	let aJQObject: JQuery  = testTemplatingService.createPage(testPage);
+	    	expect($("#imageElement", aJQObject)).toExist();
+	    	expect($(".img-fluid", aJQObject)).toExist();
+	        expect($("img", aJQObject).attr("src")).toEqual(imageElement.define);
+	    });
+	    it('that for input type contains the right classes, attributes and text', () => {
+	    	let inputElement = new MockElement();
+	    	inputElement.type = "input"; inputElement.name = "inputElement";
+	    	inputElement.define = "inputElementDefinition";
+	    	testPage.rawLayout = [inputElement];
+	    	let aJQObject: JQuery  = testTemplatingService.createPage(testPage);
+	    	expect($(".form-group", aJQObject)).toExist();
+	    	expect($(".sr-only", aJQObject)).toExist();
+	    	expect($(".form-control", aJQObject)).toExist();
+	    	expect($("label", aJQObject).attr("for")).toEqual(inputElement.name);
+	    	expect($("input", aJQObject).attr("type")).toEqual("text");
+	    	expect($("input", aJQObject).attr("id")).toEqual(inputElement.name);
+	    	expect($("input", aJQObject).attr("for")).toEqual(inputElement.name);
+	    	expect($("input", aJQObject).attr("placeholder")).toEqual(inputElement.define);
+	    	expect($("input", aJQObject)).toHaveText(<string>inputElement.define);
+	    });
+	    it('that for list type contains the right classes and descriptions', () => {
+	    	let listElement = new MockElement();
+	    	listElement.type = "list"; listElement.name = "listElement";
+	    	listElement.define = 
+	    	[{title: "item1", description: "item1Desc", url: "item1url"},
+	    	 {title: "item2", description: "item2Desc", url: "item2url"}];
+	    	testPage.rawLayout = [listElement];
+	    	let aJQObject: JQuery  = testTemplatingService.createPage(testPage);
+	    	expect($(".list-group", aJQObject)).toExist();
+	    	expect($("h5", aJQObject)).toHaveHtml("item1");
+	    	expect($("h5:nth(1)", aJQObject)).toHaveHtml("item2");
+	    	expect($("p", aJQObject)).toHaveHtml("item1Desc");
+	    	expect($("p:nth(1)", aJQObject)).toHaveHtml("item2Desc");
+	    	//console.log($("h5:nth(1)", aJQObject)[0].outerHTML);
 	    });
 	});
     it('createPagesAndSave() should call createPage the right number of times', () => {
@@ -158,7 +215,8 @@ describe('Tests for TemplatingService', () => {
 
 class MockTemplatingService implements ITemplatingService{
 	_stateService:IStateService;
-    createPage(page:IPage):JQuery {return $(document.createElement("div"))};
+    createPage(page:IPage):JQuery {return $(document.createElement("div"))
+    												.addClass("testingClass")};
     createPagesAndSave() {};
     createLayout():JQuery {return $(document.createElement("div"))};
     removeElementFromDOM(className:string) {};
@@ -171,7 +229,7 @@ class MockTemplatingService implements ITemplatingService{
 
 let myMockTemplatingService = new MockTemplatingService();
 
-describe('Tests for SystemService', () => {
+describe('Tests for SystemService method', () => {
 	let testSystemService: SystemService = new SystemService(myMockTemplatingService, 
 															 myMockStateService); 
 	it('removeCurrentPageFromScreen() should remove the current page from the DOM', () => {
@@ -180,19 +238,49 @@ describe('Tests for SystemService', () => {
     	expect(myMockTemplatingService.removeElementFromDOM)
     					.toHaveBeenCalledWith(".container-fluid");
     });
-	it('goPage() should ...', () => {
-
+	it('goPage() should remove the current page, and show the new one', () => {
+		page2.afterRenderLayout = $(document.createElement("div")).addClass("second")
+		setFixtures("<div class='emulator'></div>");
+		expect($(".second")).not.toExist();
+        spyOn(testSystemService, "removeCurrentPageFromScreen");
+        spyOn(testSystemService, "renewCurrentPage");
+        testSystemService.goPage("page2");
+        expect(testSystemService.removeCurrentPageFromScreen).toHaveBeenCalled();
+        expect(testSystemService.renewCurrentPage).toHaveBeenCalledWith("page2");
+        expect($(".second")).toExist();
     });
-    it('renderAllPages() should ...', () => {
-
+    describe('renderAllPages() should', () => {
+	    it('if called with a page, should rerender the page', () => {
+            spyOn(myMockTemplatingService, "createPage").and.callThrough();
+            spyOn(myMockStateService, "getPage").and.callThrough();
+            expect($(page1.afterRenderLayout)).not.toExist();
+            testSystemService.renderAllPages(page1);
+            expect(myMockTemplatingService.createPage).toHaveBeenCalledWith(page1);
+            expect(myMockStateService.getPage).toHaveBeenCalledWith(page1.name);
+            expect($(page1.afterRenderLayout)).toExist();
+	    });
+	    it('if called with no arguments, call createPagesAndSave()', () => {
+	    	spyOn(myMockTemplatingService, "createPagesAndSave");
+	    	testSystemService.renderAllPages();
+	    	expect(myMockTemplatingService.createPagesAndSave).toHaveBeenCalledWith();
+	    });
     });
-    it('goStartPage() should ...', () => {
-
+    it('goStartPage() should call getStartPageName and goPage', () => {
+    	//this.goPage(this._stateService.getStartPageName());
+    	spyOn(myMockStateService, "getStartPageName");
+    	spyOn(testSystemService, "goPage");
+    	testSystemService.goStartPage();
+    	expect(myMockStateService.getStartPageName).toHaveBeenCalled();
+    	expect(testSystemService.goPage).toHaveBeenCalled();
     });
-    it('renewCurrentPage() should ...', () => {
-
+    it('renewCurrentPage() should call setCurrentPageName from StateService', () => {
+        spyOn(myMockStateService, "setCurrentPageName");
+        testSystemService.renewCurrentPage("testName");
+        expect(myMockStateService.setCurrentPageName)
+        						 .toHaveBeenCalledWith("testName");	
     });
-    it('startEmulator() should ...', (done) => {
+    it('startEmulator() should call hideSplashScreen,' + 
+    		'renderAllPages and goStartPage', (done) => {
     	spyOn(testSystemService, "hideSplashScreen");
     	spyOn(testSystemService, "renderAllPages");
     	spyOn(testSystemService, "goStartPage");
@@ -200,7 +288,7 @@ describe('Tests for SystemService', () => {
 
     	let POLL_TIME = 10;
     	let endTime = new Date().getTime() + 10000;
-    	let checkCondition = function() {
+    	let checkCondition = () => {
         	if (new Date().getTime() <= endTime && 
         		testSystemService.goStartPage.calls.count() < 1) {
             	setTimeout(checkCondition, POLL_TIME);
@@ -227,7 +315,7 @@ describe('Tests for SystemService', () => {
 
     	let POLL_TIME = 10;
     	let endTime = new Date().getTime() + 5000;
-    	let checkCondition = function() {
+    	let checkCondition = () => {
         	if (new Date().getTime() <= endTime && 
         		$(".testingClass").is(":visible")) {
             	setTimeout(checkCondition, POLL_TIME);
@@ -241,58 +329,23 @@ describe('Tests for SystemService', () => {
 });
 
 describe('Tests for ActionService', () => {
-	it('goPage() should ...', () => {
-
+	//don't need a proper mock for SystemService here, as shadowing all its required
+	//functions with spies
+	let myMockSystemService = new SystemService(myMockTemplatingService, myMockStateService);
+	let testActionService = new ActionService(myMockSystemService);
+	it('goPage() should call goPage from SystemService', () => {
+		spyOn(myMockSystemService, "goPage");
+		testActionService.goPage("page1");
+		expect(myMockSystemService.goPage).toHaveBeenCalledWith("page1");
     });
-    it('renderAllPages() should ...', () => {
-
+    it('showNotification() should call showNotification from SystemService', () => {
+    	spyOn(myMockSystemService, "showNotification");
+		testActionService.showNotification("showNotification");
+		expect(myMockSystemService.showNotification).toHaveBeenCalledWith("showNotification");
     });
-    it('goStartPage() should ...', () => {
-
-    });
-    it('renewCurrentPage() should ...', () => {
-
-    });
-    it('startEmulator() should ...', () => {
-
-    });
-});
-/*Previous tests for reference
-/// <reference path="../typings/jasmine/jasmine.d.ts" />
-
-describe('Tests for the FindViewModel', () => {
-    it('getKeyword() should return a string', () => {
-        let returnValue: string = (new FindViewModel()).getKeyword();
-        expect(returnValue).toEqual(jasmine.any(String));
-    });
-
-    it('getKeywordByVoice() should return a string', () => {
-        let checkThisValue: string;
-        class mockSpeech implements ISpeechService {
-            recognize(): string {
-                return checkThisValue;
-            }
-        }
-
-        let testFindViewModel = new FindViewModel();
-        let findKeywordByVoice = testFindViewModel.getKeywordByVoice(new mockSpeech());
-        expect(findKeywordByVoice).toEqual(checkThisValue);
+    it('reRenderPage() should renderAllPages from SystemService', () => {
+    	spyOn(myMockSystemService, "renderAllPages");
+		testActionService.reRenderPage(page1);
+		expect(myMockSystemService.renderAllPages).toHaveBeenCalledWith(page1);
     });
 });
-
-describe('Test for the HistoryViewModel', () => {
-    it('getHistoryList() should return something', () => {
-        let vm = new HistoryViewModel(new StorageService());
-        let returnValue: IListItem[] = vm.getHistoryList();
-        expect(returnValue).not.toBeNull();
-    });
-});
-
-describe('Test for the RecommendViewModel', () => {
-    it('getHistoryList() should return something', () => {
-        let vm = new RecommendViewModel(new StorageService());
-        let returnValue: IListItem[] = vm.getHistoryList();
-        expect(returnValue).not.toBeNull();
-    });
-});
-*/
