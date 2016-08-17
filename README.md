@@ -75,7 +75,6 @@ You can click the go back button to go back to the first screen to do a re-searc
 - [x] implementing the rest application
 - [x] Assemble whole architecture
 - [x] Report
-- [ ] documenting library integrated
-- [ ] documenting
+- [x] documenting
 - [ ] integrating testing library 
 - [ ] testing
