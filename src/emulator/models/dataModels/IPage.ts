@@ -2,31 +2,31 @@ import {IFunc} from "./IFunction";
 import {IElement} from "./IElement";
 
 /**
- *
- * 
+ * This represents the page requested.
+ * Provides the page requested. 
  */
 export interface IPage{
     /**
-     * [name description]
-     * @type {string}
+     * Gives the name of the page requested
+     * @type {string} - provides the name of the page
      */
     name:string;
 
     /**
-     * [rawLayout description]
-     * @type {Array<IElement>}
+     * Gives the overall structure of the elements
+     * @type {Array<IElement>} - provides the array of needed elements
      */
     rawLayout:Array<IElement>;
 
     /**
-     * [JQuery description]
-     * @type {[type]}
+     * Provides the JQuery after the rawLayout is done
+     * @type {[type]} - provides the appropriate JQuery when needed
      */
     afterRenderLayout?:JQuery;
 
     /**
-     * [callback description]
-     * @type {Array<IFunc>}
+     * Provides a callback to the functions needed to interact with the page
+     * @type {Array<IFunc>} - provides the array of needed functions
      */
     callback:Array<IFunc>;
 }

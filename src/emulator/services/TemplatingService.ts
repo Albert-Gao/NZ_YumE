@@ -10,10 +10,10 @@ export class TemplatingService implements ITemplatingService {
     _stateService: IStateService;
 
     /**
-     * [constructor description]
+     * Constructs the service state
      * @method constructor
-     * @param  {IStateService} stateService [description]
-     * @return {[type]}                     [description]
+     * @param  {IStateService} stateService - provides the service state
+     * @return {[type]}                     - returns service template
      */
     constructor(stateService: IStateService) {
         this._stateService = stateService;

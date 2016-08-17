@@ -2,51 +2,51 @@ import {IPage} from './../dataModels/IPage'
 import {IStateService} from "./IStateService";
 
 /**
- *
+ * Provides the template to provide page and state of service
  */
 export interface ITemplatingService{
     /**
-     * [_stateService description]
+     * Gives the current status of the service
      * @type {IStateService}
      */
     _stateService:IStateService;
 
     /**
-     * [createPage description]
+     * Create the page 
      * @method createPage
-     * @param  {IPage}    page [description]
-     * @return {JQuery}        [description]
+     * @param  {IPage}    page - gives the IPage
+     * @return {JQuery}        - returns a JQuery object with IPage
      */
     createPage(page:IPage):JQuery;
 
     /**
-     * [createPagesAndSave description]
+     * Saves the pages that are searched for, easier access later on
      * @method createPagesAndSave
      */
     createPagesAndSave();
 
     /**
-     * [createLayout description]
+     * Creates an object of the page layout
      * @method createLayout
-     * @return {JQuery}     [description]
+     * @return {JQuery}     - returns a JQuery object of the page layout
      */
     createLayout():JQuery;
 
     /**
-     * [removeElementFromDOM description]
+     * Removes the selected element from the DOM
      * @method removeElementFromDOM
-     * @param  {string}             className [description]
+     * @param  {string}             className - removes element
      */
     removeElementFromDOM(className:string);
 
     /**
-     * [createjQueryItem description]
+     * Uses all given information to be presented in a JQuery object
      * @method createjQueryItem
-     * @param  {string}         type         [description]
-     * @param  {string>}}       attrs        [description]
-     * @param  {string}         styleClasses [description]
-     * @param  {string}         text         [description]
-     * @return {JQuery}                      [description]
+     * @param  {string}         type         - provides the page/services
+     * @param  {string>}}       attrs        - provides requested information
+     * @param  {string}         styleClasses - provides class presentation
+     * @param  {string}         text         - provides text of object
+     * @return {JQuery}                      - returns a JQuery object
      */
     createjQueryItem(type:string,
                      attrs?:Array<{key:string,value:string}>,

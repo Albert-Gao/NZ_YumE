@@ -17,7 +17,7 @@ export class emulator{
     _actionService:IActionService;
 
     /**
-     * [constructor description]
+     * Constructs all information needed for the application
      * @method constructor
      */
     constructor() {
@@ -31,7 +31,7 @@ export class emulator{
     }
 
     /**
-     * [startEmulator description]
+     * Starts the emulator to allow the application to be executed
      * @method startEmulator
      */
     startEmulator(){

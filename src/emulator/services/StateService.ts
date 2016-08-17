@@ -8,10 +8,10 @@ export class StateService implements IStateService {
     _app: IApp;
 
     /**
-     * [constructor description]
+     * Constructs the application
      * @method constructor
-     * @param  {IApp}      app [description]
-     * @return {[type]}        [description]
+     * @param  {IApp}      app - retrieves required information
+     * @return {[type]}        - returns the application information
      */
     constructor(app: IApp) {
         this._app = app;
