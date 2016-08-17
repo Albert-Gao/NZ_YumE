@@ -106,6 +106,7 @@ export class TemplatingService implements ITemplatingService {
                         a.append(p);
                         listGroup.append(a);
                     }
+                    row.append(listGroup);
                     break;
             }
             outDiv.append(row);
