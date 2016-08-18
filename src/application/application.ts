@@ -51,11 +51,12 @@ export class application implements IApp {
                                     if (e.type === 'text'&&e.name==='page2text'){
                                         e.define = list;
                                     } else if (e.type === 'image') {
-                                        if (typeof json !== 'undefined' && typeof json.image_url !== 'undefined'){
-                                            //e.define = <string>json.snippet_image_url;
-                                            e.define = <string>json.image_url; //better image
-                                        } else {
-                                            e.define = "assets/food.png"; //default if no image found
+                                        if (typeof json !== 'undefined') { 
+                                            if (typeof json.image_url !== 'undefined'){
+                                                e.define = <string>json.image_url; //better image
+                                            } else {
+                                                e.define = "assets/food.png"; //default if no image found
+                                            }
                                         }
                                     }
                                 }
