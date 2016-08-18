@@ -30,7 +30,12 @@ export class page3Map implements IPage{
             {
                 type:"button",
                 name:"backToResults",
-                define:"go back"
+                define:"Back"
+            },
+            {
+                type:"button",
+                name:"home",
+                define:"Search"
             },
             {
                 type:"text",
@@ -50,11 +55,19 @@ export class page3Map implements IPage{
             {
                 bindToName:"backToResults",
                 callbackFunction:this.goBackButtonCallBack
+            },
+            {    
+                bindToName:"home",
+                callbackFunction:this.goHomeCallBack
             }
         ];
     }
 
     goBackButtonCallBack(_actionService:IActionService){
         _actionService.goPage("page2list");
+    }
+
+    goHomeCallBack(_actionService:IActionService){
+        _actionService.goPage("page1search");
     }
 }

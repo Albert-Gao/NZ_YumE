@@ -50,11 +50,11 @@ export class TemplatingService implements ITemplatingService {
                                 this._stateService.emulatorCentralCallBack(element);
                             });
                     }
-                    if($(".btn", outDiv).length) { //is there already a button on the page
+                    if($(".btn", outDiv).length) { //if there already a button on the page
                         var buttons = $(".btn", outDiv);
                         let width  = 12 / (buttons.length + 1);
                         buttons.after(temp);
-                        buttons = $(".btn", outDiv); //to captrue new button too
+                        buttons = $(".btn", outDiv); //to capture new button too
                         buttons.removeClass("btn-block");
                         buttons.addClass("col-sm-" + width);
                     } else {

@@ -26,7 +26,7 @@ export class page2list implements IPage{
             {
                 type:"button",
                 name:"home",
-                define:"go back"
+                define:"Back"
             },
             {
                 type:"text",
@@ -46,7 +46,7 @@ export class page2list implements IPage{
             {
                 type:"button",
                 name:"mapButton",
-                define:"map"
+                define:"Map"
             }
         ];
     }
