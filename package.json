@@ -30,6 +30,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
+    "typedoc": "^0.4.4",
     "webpack": "^1.13.1"
   }
 }

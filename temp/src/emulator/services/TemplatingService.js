@@ -13,9 +13,9 @@ var TemplatingService = (function () {
                 case "button":
                     var temp = this_1.createjQueryItem("button", [{ key: "id", value: element.name }], "btn btn-primary btn-lg btn-block", element.define);
                     if (element.targetElementID) {
-                        var targetText_1 = $(element.targetElementID).text();
                         $(".emulator").on('click', "#" + element.name, function () {
-                            _this._stateService.emulatorCentralCallBack(element, targetText_1);
+                            var targetText = $("#" + element.targetElementID).val();
+                            _this._stateService.emulatorCentralCallBack(element, targetText);
                         });
                     }
                     else {
@@ -23,7 +23,19 @@ var TemplatingService = (function () {
                             _this._stateService.emulatorCentralCallBack(element);
                         });
                     }
-                    row.append(temp);
+                    if ($(".btn", outDiv).length) {
+                        buttons = $(".btn", outDiv);
+                        var width = 12 / (buttons.length + 1);
+                        console.log("length is" + width);
+                        buttons.after(temp);
+                        buttons = $(".btn", outDiv);
+                        buttons.removeClass("btn-block");
+                        buttons.addClass("col-sm-" + width);
+                        console.log("got here");
+                    }
+                    else {
+                        row.append(temp);
+                    }
                     break;
                 case "text":
                     var temp1 = this_1.createjQueryItem("p", [{ key: "id", value: element.name }], undefined, element.define);
@@ -44,21 +56,28 @@ var TemplatingService = (function () {
                 case "list":
                     var listGroup = this_1.createjQueryItem("div", undefined, "list-group");
                     var listItemsData = (element.define);
-                    for (var _i = 0, listItemsData_1 = listItemsData; _i < listItemsData_1.length; _i++) {
-                        var item = listItemsData_1[_i];
+                    var _loop_2 = function(item) {
                         var a = this_1.createjQueryItem("a", undefined, "list-group-item list-group-item-action");
-                        a.click(this_1._stateService.emulatorCentralCallBack(element));
+                        $(".emulator").on('click', "#" + element.name, function () {
+                            _this._stateService.emulatorCentralCallBack(element, item.url);
+                        });
                         var h5 = this_1.createjQueryItem("h5", undefined, "list-group-item-heading", item.title);
                         var p = this_1.createjQueryItem("p", undefined, "list-group-item-text", item.description);
                         a.append(h5);
                         a.append(p);
                         listGroup.append(a);
+                    };
+                    for (var _i = 0, listItemsData_1 = listItemsData; _i < listItemsData_1.length; _i++) {
+                        var item = listItemsData_1[_i];
+                        _loop_2(item);
                     }
+                    row.append(listGroup);
                     break;
             }
             outDiv.append(row);
         };
         var this_1 = this;
+        var buttons;
         for (var _a = 0, _b = page.rawLayout; _a < _b.length; _a++) {
             var element1 = _b[_a];
             _loop_1(element1);
@@ -89,7 +108,7 @@ var TemplatingService = (function () {
             }
         }
         if (text) {
-            domElement.text(text);
+            domElement.html(text);
         }
         return domElement;
     };

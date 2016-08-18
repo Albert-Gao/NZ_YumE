@@ -1,6 +1,9 @@
 "use strict";
 var StateService_1 = require("../src/emulator/services/StateService");
 var TemplatingService_1 = require("../src/emulator/services/TemplatingService");
+var SystemService_1 = require("../src/emulator/services/SystemService");
+var ActionService_1 = require("../src/emulator/services/ActionService");
+jasmine.getFixtures().fixturesPath = "../spec/";
 var MockElement = (function () {
     function MockElement() {
     }
@@ -45,7 +48,7 @@ describe('Tests for StateService', function () {
         var startPageName = testStateService.getStartPageName();
         expect(startPageName).toEqual(pageName);
     });
-    it('getStartPageName() should return a string', function () {
+    it('getCurrentPageName() should return the correct string', function () {
         var currentPageName = testStateService.getCurrentPageName();
         expect(currentPageName).toEqual(pageName);
     });
@@ -76,9 +79,9 @@ describe('Tests for StateService', function () {
     it("emulatorCentralCallBack() to call CentralCallbackFunc()", function () {
         spyOn(myMockApp, 'CentralCallbackFunc');
         testStateService.emulatorCentralCallBack(aMockElement);
-        expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith("testName");
+        expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith(page1.name, "testName");
         testStateService.emulatorCentralCallBack(aMockElement, "test");
-        expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith("testName", "test");
+        expect(myMockApp.CentralCallbackFunc).toHaveBeenCalledWith(page1.name, "testName", "test");
     });
     it("getAppCallBack() should return the correct function", function () {
         var fn = testStateService.getAppCallBack();
@@ -101,16 +104,78 @@ var MockStateService = (function () {
     ;
     MockStateService.prototype.getPage = function (name) { return page1; };
     ;
+    MockStateService.prototype.emulatorCentralCallBack = function (element, targetElementInfo) { };
+    ;
     return MockStateService;
 }());
 var myMockStateService = new MockStateService();
 describe('Tests for TemplatingService', function () {
     var testTemplatingService = new TemplatingService_1.TemplatingService(myMockStateService);
     describe('createPage() should return a jQuery object', function () {
+        var testPage = new MockPage();
+        testPage.name = "testPage";
+        it('that for button type contains right ID, classes, definition', function () {
+            var buttonElement = new MockElement();
+            buttonElement.type = "button";
+            buttonElement.name = "buttonElement";
+            buttonElement.define = "buttonElementDefinition";
+            testPage.rawLayout = [buttonElement];
+            var aJQObject = testTemplatingService.createPage(testPage);
+            expect($("button", aJQObject).attr("id")).toEqual(buttonElement.name);
+            expect($(".btn", aJQObject)).toHaveText(buttonElement.define);
+        });
         it('that for text type contains right ID, p and text elements', function () {
-            var aJQObject = testTemplatingService.createPage(page1);
-            expect($("#testName", aJQObject)).toExist();
-            expect($("p", aJQObject)).toHaveText(testText);
+            var textElement = new MockElement();
+            textElement.type = "text";
+            textElement.name = "textElement";
+            textElement.define = "textElementDefinition";
+            testPage.rawLayout = [textElement];
+            var aJQObject = testTemplatingService.createPage(testPage);
+            expect($("#textElement", aJQObject)).toExist();
+            expect($("p", aJQObject)).toHaveText(textElement.define);
+        });
+        it('that for image type contains right ID, class, img attr and img source', function () {
+            var imageElement = new MockElement();
+            imageElement.type = "image";
+            imageElement.name = "imageElement";
+            imageElement.define = "imageElementDefinition";
+            testPage.rawLayout = [imageElement];
+            var aJQObject = testTemplatingService.createPage(testPage);
+            expect($("#imageElement", aJQObject)).toExist();
+            expect($(".img-fluid", aJQObject)).toExist();
+            expect($("img", aJQObject).attr("src")).toEqual(imageElement.define);
+        });
+        it('that for input type contains the right classes, attributes and text', function () {
+            var inputElement = new MockElement();
+            inputElement.type = "input";
+            inputElement.name = "inputElement";
+            inputElement.define = "inputElementDefinition";
+            testPage.rawLayout = [inputElement];
+            var aJQObject = testTemplatingService.createPage(testPage);
+            expect($(".form-group", aJQObject)).toExist();
+            expect($(".sr-only", aJQObject)).toExist();
+            expect($(".form-control", aJQObject)).toExist();
+            expect($("label", aJQObject).attr("for")).toEqual(inputElement.name);
+            expect($("input", aJQObject).attr("type")).toEqual("text");
+            expect($("input", aJQObject).attr("id")).toEqual(inputElement.name);
+            expect($("input", aJQObject).attr("for")).toEqual(inputElement.name);
+            expect($("input", aJQObject).attr("placeholder")).toEqual(inputElement.define);
+            expect($("input", aJQObject)).toHaveText(inputElement.define);
+        });
+        it('that for list type contains the right classes and descriptions', function () {
+            var listElement = new MockElement();
+            listElement.type = "list";
+            listElement.name = "listElement";
+            listElement.define =
+                [{ title: "item1", description: "item1Desc", url: "item1url" },
+                    { title: "item2", description: "item2Desc", url: "item2url" }];
+            testPage.rawLayout = [listElement];
+            var aJQObject = testTemplatingService.createPage(testPage);
+            expect($(".list-group", aJQObject)).toExist();
+            expect($("h5", aJQObject)).toHaveHtml("item1");
+            expect($("h5:nth(1)", aJQObject)).toHaveHtml("item2");
+            expect($("p", aJQObject)).toHaveHtml("item1Desc");
+            expect($("p:nth(1)", aJQObject)).toHaveHtml("item2Desc");
         });
     });
     it('createPagesAndSave() should call createPage the right number of times', function () {
@@ -124,7 +189,10 @@ describe('Tests for TemplatingService', function () {
         expect($(aJQObject)).toEqual("div");
     });
     it('removeElementFromDOM() should remove the specified element from the DOM', function () {
-        expect(true).toEqual(true);
+        setFixtures("<div class='container-fluid'></div>");
+        expect($(".container-fluid")).toExist();
+        testTemplatingService.removeElementFromDOM(".container-fluid");
+        expect($(".container-fluid")).not.toExist();
     });
     it('createjQueryItem() should return the correct jQuery object', function () {
         var aJQItem = testTemplatingService.createjQueryItem("div", [{ key: "id", value: "testID" }], "testClass", "testString");
@@ -132,8 +200,141 @@ describe('Tests for TemplatingService', function () {
         expect($(aJQItem)).toHaveClass("testClass");
     });
 });
-describe('Tests for SystemService', function () {
+var MockTemplatingService = (function () {
+    function MockTemplatingService() {
+    }
+    MockTemplatingService.prototype.createPage = function (page) {
+        return $(document.createElement("div"))
+            .addClass("testingClass");
+    };
+    ;
+    MockTemplatingService.prototype.createPagesAndSave = function () { };
+    ;
+    MockTemplatingService.prototype.createLayout = function () { return $(document.createElement("div")); };
+    ;
+    MockTemplatingService.prototype.removeElementFromDOM = function (className) { };
+    ;
+    MockTemplatingService.prototype.createjQueryItem = function (type, attrs, styleClasses, text) {
+        return $(document.createElement("div"))
+            .addClass("testingClass");
+    };
+    ;
+    return MockTemplatingService;
+}());
+var myMockTemplatingService = new MockTemplatingService();
+describe('Tests for SystemService method', function () {
+    var testSystemService = new SystemService_1.SystemService(myMockTemplatingService, myMockStateService);
+    it('removeCurrentPageFromScreen() should remove the current page from the DOM', function () {
+        spyOn(myMockTemplatingService, "removeElementFromDOM");
+        testSystemService.removeCurrentPageFromScreen();
+        expect(myMockTemplatingService.removeElementFromDOM)
+            .toHaveBeenCalledWith(".container-fluid");
+    });
+    it('goPage() should remove the current page, and show the new one', function () {
+        page2.afterRenderLayout = $(document.createElement("div")).addClass("second");
+        setFixtures("<div class='emulator'></div>");
+        expect($(".second")).not.toExist();
+        spyOn(testSystemService, "removeCurrentPageFromScreen");
+        spyOn(testSystemService, "renewCurrentPage");
+        testSystemService.goPage("page2");
+        expect(testSystemService.removeCurrentPageFromScreen).toHaveBeenCalled();
+        expect(testSystemService.renewCurrentPage).toHaveBeenCalledWith("page2");
+        expect($(".second")).toExist();
+    });
+    describe('renderAllPages() should', function () {
+        it('if called with a page, should rerender the page', function () {
+            spyOn(myMockTemplatingService, "createPage").and.callThrough();
+            spyOn(myMockStateService, "getPage").and.callThrough();
+            expect($(page1.afterRenderLayout)).not.toExist();
+            testSystemService.renderAllPages(page1);
+            expect(myMockTemplatingService.createPage).toHaveBeenCalledWith(page1);
+            expect(myMockStateService.getPage).toHaveBeenCalledWith(page1.name);
+            expect($(page1.afterRenderLayout)).toExist();
+        });
+        it('if called with no arguments, call createPagesAndSave()', function () {
+            spyOn(myMockTemplatingService, "createPagesAndSave");
+            testSystemService.renderAllPages();
+            expect(myMockTemplatingService.createPagesAndSave).toHaveBeenCalledWith();
+        });
+    });
+    it('goStartPage() should call getStartPageName and goPage', function () {
+        spyOn(myMockStateService, "getStartPageName");
+        spyOn(testSystemService, "goPage");
+        testSystemService.goStartPage();
+        expect(myMockStateService.getStartPageName).toHaveBeenCalled();
+        expect(testSystemService.goPage).toHaveBeenCalled();
+    });
+    it('renewCurrentPage() should call setCurrentPageName from StateService', function () {
+        spyOn(myMockStateService, "setCurrentPageName");
+        testSystemService.renewCurrentPage("testName");
+        expect(myMockStateService.setCurrentPageName)
+            .toHaveBeenCalledWith("testName");
+    });
+    it('startEmulator() should call hideSplashScreen,' +
+        'renderAllPages and goStartPage', function (done) {
+        spyOn(testSystemService, "hideSplashScreen");
+        spyOn(testSystemService, "renderAllPages");
+        spyOn(testSystemService, "goStartPage");
+        testSystemService.startEmulator();
+        var POLL_TIME = 10;
+        var endTime = new Date().getTime() + 10000;
+        var checkCondition = function () {
+            if (new Date().getTime() <= endTime &&
+                testSystemService.goStartPage.calls.count() < 1) {
+                setTimeout(checkCondition, POLL_TIME);
+            }
+            else {
+                expect(testSystemService.hideSplashScreen).toHaveBeenCalled();
+                expect(testSystemService.renderAllPages).toHaveBeenCalled();
+                expect(testSystemService.goStartPage).toHaveBeenCalled();
+                done();
+            }
+        };
+        checkCondition();
+    }, 10000);
+    it('hideSplashScreen() should hide the splash screen', function () {
+        setFixtures("<div class='splashScreen'></div>");
+        expect($(".splashScreen")).toBeVisible();
+        testSystemService.hideSplashScreen();
+        expect($(".splashScreen")).not.toBeVisible();
+    });
+    it('showNotification() should show a notification, and then fade it out', function (done) {
+        setFixtures("<div class='emulator'></div>");
+        expect($(".testingClass")).not.toBeVisible();
+        testSystemService.showNotification("blah");
+        expect($(".testingClass")).toBeVisible();
+        var POLL_TIME = 10;
+        var endTime = new Date().getTime() + 5000;
+        var checkCondition = function () {
+            if (new Date().getTime() <= endTime &&
+                $(".testingClass").is(":visible")) {
+                setTimeout(checkCondition, POLL_TIME);
+            }
+            else {
+                expect($(".testingClass")).not.toBeVisible();
+                done();
+            }
+        };
+        checkCondition();
+    }, 5000);
 });
 describe('Tests for ActionService', function () {
+    var myMockSystemService = new SystemService_1.SystemService(myMockTemplatingService, myMockStateService);
+    var testActionService = new ActionService_1.ActionService(myMockSystemService);
+    it('goPage() should call goPage from SystemService', function () {
+        spyOn(myMockSystemService, "goPage");
+        testActionService.goPage("page1");
+        expect(myMockSystemService.goPage).toHaveBeenCalledWith("page1");
+    });
+    it('showNotification() should call showNotification from SystemService', function () {
+        spyOn(myMockSystemService, "showNotification");
+        testActionService.showNotification("showNotification");
+        expect(myMockSystemService.showNotification).toHaveBeenCalledWith("showNotification");
+    });
+    it('reRenderPage() should renderAllPages from SystemService', function () {
+        spyOn(myMockSystemService, "renderAllPages");
+        testActionService.reRenderPage(page1);
+        expect(myMockSystemService.renderAllPages).toHaveBeenCalledWith(page1);
+    });
 });
 //# sourceMappingURL=test.spec.js.map
