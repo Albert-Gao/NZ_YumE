@@ -113,7 +113,7 @@ export class application implements IApp {
         if (json) {
             let _item:any = json;
 
-            //Curse you yelp, we need to these shit coding,
+            //Curse you yelp, we need these shit coding,
             //to cover your bad non-consistent API design.
             let title:string = _item.name?_item.name:"";
             let phone:string = _item.phone?_item.phone:"";
