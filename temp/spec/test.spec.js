@@ -33,7 +33,12 @@ var MockApp = (function () {
         this.startPageName = pageName;
         this.pages = [page1, page2];
     }
-    MockApp.prototype.injectActionService = function (as) { };
+    MockApp.prototype.getActionService = function () {
+        return this._as;
+    };
+    MockApp.prototype.injectActionService = function (as) {
+        this._as = as;
+    };
     ;
     MockApp.prototype.startAddingPages = function () { };
     ;
@@ -335,6 +340,14 @@ describe('Tests for ActionService', function () {
         spyOn(myMockSystemService, "renderAllPages");
         testActionService.reRenderPage(page1);
         expect(myMockSystemService.renderAllPages).toHaveBeenCalledWith(page1);
+    });
+});
+describe('Tests for Application part', function () {
+    var myMockSystemService = new SystemService_1.SystemService(myMockTemplatingService, myMockStateService);
+    var testActionService = new ActionService_1.ActionService(myMockSystemService);
+    it('inActionService() shoule store the service to MockApp object', function () {
+        spyOn(myMockApp, 'getActionService');
+        expect(myMockApp.getActionService()).toBe(testActionService);
     });
 });
 //# sourceMappingURL=test.spec.js.map
