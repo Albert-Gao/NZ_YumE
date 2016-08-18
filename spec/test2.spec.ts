@@ -17,7 +17,7 @@ import {ActionService} from "../src/emulator/services/ActionService";
 
 jasmine.getFixtures().fixturesPath = "../spec/";
 
-class anApp implements IApp {
+/*class anApp implements IApp {
     title:string = "test";
     currentPageName:string = "test";
     startPageName:string = "test";
@@ -25,10 +25,10 @@ class anApp implements IApp {
     injectActionService(as:IActionService) {};
     startAddingPages() {};
     CentralCallbackFunc(pageName:string, elementID?:string) {};
-}
+}*/
 
-let myApp = new anApp();
-let myStateService = new StateService(myApp);
+//let myApp = new anApp();
+//let myStateService = new StateService(myApp);
 
 describe('Tests for ActionService', () => {
     it('goPage() should call goPage from SystemService', () => {

@@ -14,6 +14,7 @@ import {StateService} from "../src/emulator/services/StateService";
 import {TemplatingService} from "../src/emulator/services/TemplatingService";
 import {SystemService} from "../src/emulator/services/SystemService";
 import {ActionService} from "../src/emulator/services/ActionService";
+import {application} from "../src/application/application";
 
 jasmine.getFixtures().fixturesPath = "../spec/";
 //need to launch Chrome/Chromium with --allow-file-access-from-files option
@@ -66,20 +67,7 @@ class MockApp implements IApp {
 		this.pages.push(page1);
 		this.pages.push(page2);
 	};
-    CentralCallbackFunc(pageName:string, elementID?:string) {
-		// let findpage:IPage;
-		// for (let page of this.pages){
-		// 	if (page.name ==='pageName'){
-		// 		findpage = page;
-		// 		break
-		// 	}
-		// }
-		// for (let func of findpage.callback){
-		// 	if (func.bindToName == elementID){
-		// 		func.callbackFunction();
-		// 	}
-		// }
-	};
+    CentralCallbackFunc(pageName:string, elementID?:string) {};
 }
 let myMockApp = new MockApp();
 
@@ -170,7 +158,7 @@ describe('Tests for TemplatingService', () => {
 	    it('that for image type contains right ID, class, img attr and img source', () => {
 	    	let imageElement = new MockElement();
 	    	imageElement.type = "image"; imageElement.name = "imageElement";
-	    	imageElement.define = "imageElementDefinition";
+	    	imageElement.define = "../dist/assets/food.png";
 	    	testPage.rawLayout = [imageElement];
 	    	let aJQObject: JQuery  = testTemplatingService.createPage(testPage);
 	    	expect($("#imageElement", aJQObject)).toExist();
@@ -375,23 +363,89 @@ describe('Tests for ActionService', () => {
     });
 });
 
-describe('Tests for Application part', ()=>{
-    let testStateService: StateService = new StateService(myMockApp);  	
-	let myMockSystemService = new SystemService(myMockTemplatingService, myMockStateService);	
-	let testActionService = new ActionService(myMockSystemService);
+class MockActionService implements IActionService{
+    _systemService:ISystemService = new SystemService(myMockTemplatingService, myMockStateService);
+    goPage(name:string) {};
+    showNotification(words:string) {};
+    callYelpSearchAPI(keywords:string, callback:Function) {};
+    reRenderPage(page:IPage) {};
+    saveToLocalStorage(key:string,value:string) {};
+    getFromLocalStorage(key:string):string {return ""};
+}
+
+let myMockActionService = new MockActionService();
+
+describe('Tests for Application', () => {
+	let testApplication = new application();
 	
-	it('inActionService() shoule store the service to MockApp object', ()=>{
-		myMockApp.injectActionService(testActionService);
-		expect(myMockApp._as).toBe(testActionService);
+	it('injectActionService() should store the injected ActionService', () => {
+		testApplication.injectActionService(myMockActionService);
+		expect(testApplication._actionService).toBe(myMockActionService);
 	});
 
-	it('startAddingPages() should add page1,page2 objects into pages property',()=>{
-		myMockApp.startAddingPages();
-		expect(myMockApp.pages).toContain(page1);
+	testApplication.startAddingPages(); //here so that other functions have access to the pages
+	it('startAddingPages() should add three objects into the apps pages array', () => {
+		expect(testApplication.pages.length).toEqual(3);
 	});
 
-	it('CentralCallbackFunc should find the proper function and invoke it',()=>{
-		let fn = testStateService.getAppCallBack();
-    	expect(fn("test", "test")).toEqual(myMockApp.CentralCallbackFunc("test", "test"));
+	describe("appCallBack() when called with", () => {
+		it('page1button to call callYelpSearchAPI (in ActionService)', () => {
+			spyOn(myMockActionService, "callYelpSearchAPI");
+			testApplication.appCallback("test", "page1button", "searchTerm");
+			expect(myMockActionService.callYelpSearchAPI).toHaveBeenCalled();
+		});
+		it('home to call getMatchedFunctino with the right arguments', () => {
+			spyOn(testApplication, "getMatchedFunction");
+			testApplication.getMatchedFunction("test", "home");
+			expect(testApplication.getMatchedFunction).toHaveBeenCalledWith("test", "home");
+		});
+		it('mapButton to call getMatchedFunctino with the right arguments', () => {
+			spyOn(testApplication, "getMatchedFunction");
+			testApplication.getMatchedFunction("test", "mapButton");
+			expect(testApplication.getMatchedFunction).toHaveBeenCalledWith("test", "mapButton");
+		});
+		it('backToResults to call getMatchedFunctino with the right arguments', () => {
+			spyOn(testApplication, "getMatchedFunction");
+			testApplication.getMatchedFunction("test", "backToResults");
+			expect(testApplication.getMatchedFunction).toHaveBeenCalledWith("test", "backToResults");
+		});
 	});
+	it('getMatchedFunction() should return the correct function', () => {
+		let testFunc = testApplication.getMatchedFunction("page3Map", "backToResults");
+		expect(testFunc).toEqual(testApplication.pages[2].callback[0].callbackFunction);
+	});
+	describe("tailorYelpResult() should", () => {
+		let testString = testApplication.tailorYelpResult(undefined);
+		let jsonOb = {};
+		it('return the the error message when called with undefined', () => {
+			expect(testString.indexOf("Sorry")).toBeGreaterThan(-1);
+		});
+		it('return the a string with appropriate contents if called with an empty json object', () => {
+			testString = testApplication.tailorYelpResult(jsonOb);
+			expect(testString.indexOf("Rating")).toBeGreaterThan(-1);
+		});
+		jsonOb = {"location":{ "address":[ "150 Stuart St"],
+	        					   "coordinate":{ "latitude":-45.8744,
+	            								  "longitude":170.504
+	        									}
+	    					 }
+	    		 }
+		it('return a string with appropriate details when called with a populated json object', () => {
+	    	testString = testApplication.tailorYelpResult(jsonOb);
+	    	expect(testString.indexOf("150 Stuart St")).toBeGreaterThan(-1);
+	    });
+		it('call googleMapsHelper with the coords if called with a json object containing them', () => {
+	    	spyOn(testApplication, "googleMapsHelper");
+	    	testString = testApplication.tailorYelpResult(jsonOb);
+	    	expect(testApplication.googleMapsHelper).toHaveBeenCalledWith("-45.8744,170.504");
+		});
+	});
+	it('googleMapsHelper() should return the correct string', () => {
+		let coords: string = "45.00,45.00";
+		let url: string = testApplication.googleMapsHelper(coords);
+		expect(url.indexOf(coords)).toEqual(186); //should always be in that position
+		coords = "asdfasdf";
+		url = testApplication.googleMapsHelper(coords);
+		expect(url.indexOf(coords)).toEqual(186);
+	});	
 });

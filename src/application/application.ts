@@ -110,28 +110,38 @@ export class application implements IApp {
     }
 
     tailorYelpResult(json:Object):string{
-        console.log(json);
         let define:string;
 
         //Yelp API suck even for v2 version.
         if (json) {
             let _item:any = json;
 
-            //Curse you yelp, we need these shit coding,
-            //to cover your bad non-consistent API design.
-            let title:string = _item.name?_item.name:"";
-            let phone:string = _item.phone?_item.phone:"";
-            let rating:string = _item.rating?_item.rating:"";
-            let category:string = _item.categories?_item.categories[0][0]:"";
-            let comment:string = _item.snippet_text?_item.snippet_text:"";
-            let address:string = _item.location.address[0]?_item.location.address[0]:"";
+            //Need this weird coding, to cover yelp's bad non-consistent API design.
+            let title:string = _item.name ? _item.name : "";
+            let phone:string = _item.phone ? _item.phone :"";
+            let rating:string = _item.rating ? _item.rating : "";
+            let category:string = _item.categories ? _item.categories[0][0] : "";
+            let comment:string = _item.snippet_text ? _item.snippet_text : "";
 
-            let latitude: number = _item.location.coordinate.latitude?_item.location.coordinate.latitude:0;
-            let longitude: number = _item.location.coordinate.longitude?_item.location.coordinate.longitude:0;
+            let address:string;
+            let lat:number;
+            let long:number
+            if(_item.location){
+                address = _item.location.address ? _item.location.address[0] : "";
+                if(_item.location.coordinate){
+                    lat = _item.location.coordinate.latitude;
+                    long = _item.location.coordinate.longitude;
+                } else {
+                    lat = long = 0;
+                }
+            } else {
+                address = "";
+                lat = long = 0;
+            }
             for(let e of this.pages[2].rawLayout){
                 if(e.type === 'image'){
-                    let address = ""+latitude + "," + longitude;
-                    e.define = this.googleMapsHelper(address);
+                    let coords = ""+lat + "," + long;
+                    e.define = this.googleMapsHelper(coords);
                     break;
                 }
             }
@@ -143,17 +153,18 @@ export class application implements IApp {
                      + '<br/>' +'<strong>Comment: \</strong>' + comment;
         } else {
             define = '<br/>' + "Sorry, Yelp can't recognize your keyword, please go back and search again."
-            this.pages[1] = new page2list(); //so that crying image returns after successful then failed search
+            //so that sad image returns if successful then failed search
+            this.pages[1].rawLayout[3].define = "./assets/cry.png";
         }
         return define;
     }
 
-    googleMapsHelper(address: string): string{
+    googleMapsHelper(coords: string): string{
         let mapURL: string = "https://maps.googleapis.com/maps/api/staticmap?&size=300x230&maptype=roadmap" +
                      "&visible=Octagon,Dunedin,NZ" +
                      "&markers=color:yellow%7Clabel:U%7C-45.8743,170.5036" + 
                      "&markers=color:blue%7Clabel:F%7C";
         let apiKey: string = "&key=AIzaSyDHTnM42xU_IGgOk0OGswZGOAtDRr8e66I";
-        return mapURL + address + apiKey;
+        return mapURL + coords + apiKey;
     }
 }

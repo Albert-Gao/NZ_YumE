@@ -92,7 +92,8 @@ export class ActionService implements IActionService{
             }
         )
         .fail((jqXHR, textStatus, errorThrown) => {
-                console.log('error[' + errorThrown + '], status[' + textStatus + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
+                console.log('error[' + errorThrown + '], status[' + textStatus
+                                     + '], jqXHR[' + JSON.stringify(jqXHR) + ']');
             }
         );
     }
