@@ -50,7 +50,7 @@ export class ActionService implements IActionService{
 
         let terms = keywords;
         let near = 'Dunedin';
-        let category = 'restaurants,food'
+        let category = 'restaurants,food,bars'
 
         let accessor = {
             consumerSecret : auth.consumerSecret,
