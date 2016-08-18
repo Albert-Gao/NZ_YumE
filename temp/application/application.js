@@ -18,8 +18,6 @@ var application = (function () {
         this.pages.push(new page2list_1.page2list());
         this.pages.push(new page3Map_1.page3Map());
     };
-    application.prototype.createPageArray = function () {
-    };
     application.prototype.appCallback = function (pageName, elementName, targetElementInfo) {
         var _this = this;
         var func;

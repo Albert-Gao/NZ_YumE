@@ -3,6 +3,7 @@ import {IActionService} from "../serviceModels/IActionService";
 
 /**
  * This represents the application interface.
+ * Any app should implement this interface for the emulator to recognize.
  * Creates the interactive part of the application.
  */
 export interface IApp {
@@ -13,19 +14,23 @@ export interface IApp {
     title: string;
 
     /**
-     * Provides the current page number that the user is currently on
-     * @type {string} - gives the current page number
+     * Provides the current page name that is shown on the screen
+     * @type {string} - gives the current page name
      */
     currentPageName: string;
 
     /**
-     * Provides a starting page for the user
+     * Provides a starting page to the emulator
+     * This is the first page which will be rendered when
+     * the emulator starts.
      * @type {string} - gives the starting page name
      */
     startPageName: string;
 
     /**
-     * Provides the information for the searched page/restaurant
+     * Provides the Array of IPage objects
+     * It holds all the pages in the app.
+     * Emulator will use this property to travel through page to page
      * @type {Array<IPage>} - gives relevant page information from the array
      */
     pages: Array<IPage>;
