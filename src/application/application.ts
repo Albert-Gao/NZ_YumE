@@ -34,10 +34,6 @@ export class application implements IApp {
         this.pages.push(new page3Map());
     }
 
-    createPageArray() {
-
-    }
-
     appCallback(pageName:string, elementName: string, targetElementInfo?: string) {
         let func:Function;
         switch (elementName){
