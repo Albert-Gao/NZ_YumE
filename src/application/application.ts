@@ -50,7 +50,8 @@ export class application implements IApp {
                                         e.define = list;
                                     } else if (e.type === 'image') {
                                         if (typeof json != 'undefined'){
-                                            e.define = <string>json.snippet_image_url;
+                                            //e.define = <string>json.snippet_image_url;
+                                            e.define = <string>json.image_url;
                                         }
                                     }
                                 }
@@ -110,10 +111,12 @@ export class application implements IApp {
             let rating:string = _item.rating?_item.rating:"";
             let category:string = _item.categories?_item.categories[0][0]:"";
             let comment:string = _item.snippet_text?_item.snippet_text:"";
+            //let comment:string = _item.location.address[0]?_item.location.address[0]:"";
 
             define ='<br/>'+'<strong>Title: \</strong>' + title + '<br/>'+'<strong>Phone: \</strong>' + phone + '<br/>' +'<strong>Rating: \</strong>' + rating + '   |  ' +'<strong>Category: \</strong>' + category + '<br/>' +'<strong>Comment: \</strong>' + comment;
         } else {
             define = '<br/>' + "sorry, Yelp can't recognize your keyword, please go back and search again."
+            this.pages[1] = new page2list(); //so that crying image returns after successful then failed search
         }
         return define;
     }
