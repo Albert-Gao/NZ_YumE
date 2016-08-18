@@ -33,7 +33,8 @@ module.exports = {
 module.exports = {
     context: __dirname+"/src",
     entry: {
-        './index.bundle.js':'./emulator/ui/emulator.ts',
+        './index.bundle.js':['./emulator/ui/emulator.ts'],
+        //in [] as workaround so can import for tests, see https://github.com/webpack/webpack/issues/300
         './index.bundle.css':'./emulator/ui/css/index.css',
         './spec/test.spec.js':'../spec/test.spec.ts',
         './spec/test2.spec.js':'../spec/test2.spec.ts'
