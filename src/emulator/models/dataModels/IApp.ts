@@ -31,26 +31,23 @@ export interface IApp {
     pages: Array<IPage>;
 
     /**
-     * Provides a relay back to the application from the browser
+     * inject the ActionService to the application in the runtime via emulator
      * @method injectActionService
-     * @param  {IActionService}    as - allows the service to be executed
-     * @return {[type]}               - returns the service
+     * @param  {IActionService}    as - actions expose to application by the emulator
      */
     injectActionService(as: IActionService);
 
     /**
      * Adds pages to the interface
      * @method startAddingPages
-     * @return {[type]}         - returns the pages to the interface
      */
     startAddingPages();
 
     /**
-     * Provides the interaction between the application and the browser
+     * Provides the interaction between the application and the emulator
      * @method CentralCallbackFunc
      * @param  {string}         pageName  - provides the page name
      * @param  {string}         elementID - provides specific element requested
-     * @return {[type]}                   - return information to the browser
      */
     CentralCallbackFunc(pageName: string, elementID:string, targetElementID?: string);
 }

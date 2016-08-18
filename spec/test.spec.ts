@@ -42,6 +42,12 @@ class MockPage implements IPage {
 let page1 = new MockPage();
 page1.name = "page1";
 page1.rawLayout = [aMockElement];
+page1.callback = [{
+	bindToName : "testName",
+	callbackFunction : function(){
+		console.log("OK");
+	}
+}];
 let page2 = new MockPage();
 page2.name = "page2";
 
@@ -52,9 +58,28 @@ class MockApp implements IApp {
     currentPageName:string = pageName;
     startPageName:string = pageName;
     pages:Array<IPage> = [page1, page2];
-    injectActionService(as:IActionService) {};
-    startAddingPages() {};
-    CentralCallbackFunc(pageName:string, elementID?:string) {};
+	_as:IActionService;
+    injectActionService(as:IActionService) {
+		this._as = as;
+	};
+    startAddingPages() {
+		this.pages.push(page1);
+		this.pages.push(page2);
+	};
+    CentralCallbackFunc(pageName:string, elementID?:string) {
+		// let findpage:IPage;
+		// for (let page of this.pages){
+		// 	if (page.name ==='pageName'){
+		// 		findpage = page;
+		// 		break
+		// 	}
+		// }
+		// for (let func of findpage.callback){
+		// 	if (func.bindToName == elementID){
+		// 		func.callbackFunction();
+		// 	}
+		// }
+	};
 }
 let myMockApp = new MockApp();
 
@@ -348,4 +373,25 @@ describe('Tests for ActionService', () => {
 		testActionService.reRenderPage(page1);
 		expect(myMockSystemService.renderAllPages).toHaveBeenCalledWith(page1);
     });
+});
+
+describe('Tests for Application part', ()=>{
+    let testStateService: StateService = new StateService(myMockApp);  	
+	let myMockSystemService = new SystemService(myMockTemplatingService, myMockStateService);	
+	let testActionService = new ActionService(myMockSystemService);
+	
+	it('inActionService() shoule store the service to MockApp object', ()=>{
+		myMockApp.injectActionService(testActionService);
+		expect(myMockApp._as).toBe(testActionService);
+	});
+
+	it('startAddingPages() should add page1,page2 objects into pages property',()=>{
+		myMockApp.startAddingPages();
+		expect(myMockApp.pages).toContain(page1);
+	});
+
+	it('CentralCallbackFunc should find the proper function and invoke it',()=>{
+		let fn = testStateService.getAppCallBack();
+    	expect(fn("test", "test")).toEqual(myMockApp.CentralCallbackFunc("test", "test"));
+	});
 });
