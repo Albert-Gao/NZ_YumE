@@ -14,17 +14,22 @@ var page3Map = (function () {
         return [
             {
                 type: "text",
-                name: "page2placeholder",
+                name: "page3placeholder",
                 define: " "
             },
             {
                 type: "button",
+                name: "backToResults",
+                define: "Back"
+            },
+            {
+                type: "button",
                 name: "home",
-                define: "go back"
+                define: "Search"
             },
             {
                 type: "text",
-                name: "page2placeholder",
+                name: "page3placeholder",
                 define: " "
             },
             {
@@ -37,12 +42,19 @@ var page3Map = (function () {
     page3Map.prototype.returnCallbackFuncs = function () {
         return [
             {
-                bindToName: "home",
+                bindToName: "backToResults",
                 callbackFunction: this.goBackButtonCallBack
+            },
+            {
+                bindToName: "home",
+                callbackFunction: this.goHomeCallBack
             }
         ];
     };
     page3Map.prototype.goBackButtonCallBack = function (_actionService) {
+        _actionService.goPage("page2list");
+    };
+    page3Map.prototype.goHomeCallBack = function (_actionService) {
         _actionService.goPage("page1search");
     };
     return page3Map;

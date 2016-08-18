@@ -3,6 +3,7 @@ var StateService_1 = require("../src/emulator/services/StateService");
 var TemplatingService_1 = require("../src/emulator/services/TemplatingService");
 var SystemService_1 = require("../src/emulator/services/SystemService");
 var ActionService_1 = require("../src/emulator/services/ActionService");
+var application_1 = require("../src/application/application");
 jasmine.getFixtures().fixturesPath = "../spec/";
 var MockElement = (function () {
     function MockElement() {
@@ -22,6 +23,12 @@ var MockPage = (function () {
 var page1 = new MockPage();
 page1.name = "page1";
 page1.rawLayout = [aMockElement];
+page1.callback = [{
+        bindToName: "testName",
+        callbackFunction: function () {
+            console.log("OK");
+        }
+    }];
 var page2 = new MockPage();
 page2.name = "page2";
 var pageName = "page1";
@@ -33,14 +40,14 @@ var MockApp = (function () {
         this.startPageName = pageName;
         this.pages = [page1, page2];
     }
-    MockApp.prototype.getActionService = function () {
-        return this._as;
-    };
     MockApp.prototype.injectActionService = function (as) {
         this._as = as;
     };
     ;
-    MockApp.prototype.startAddingPages = function () { };
+    MockApp.prototype.startAddingPages = function () {
+        this.pages.push(page1);
+        this.pages.push(page2);
+    };
     ;
     MockApp.prototype.CentralCallbackFunc = function (pageName, elementID) { };
     ;
@@ -143,7 +150,7 @@ describe('Tests for TemplatingService', function () {
             var imageElement = new MockElement();
             imageElement.type = "image";
             imageElement.name = "imageElement";
-            imageElement.define = "imageElementDefinition";
+            imageElement.define = "../dist/assets/food.png";
             testPage.rawLayout = [imageElement];
             var aJQObject = testTemplatingService.createPage(testPage);
             expect($("#imageElement", aJQObject)).toExist();
@@ -342,12 +349,94 @@ describe('Tests for ActionService', function () {
         expect(myMockSystemService.renderAllPages).toHaveBeenCalledWith(page1);
     });
 });
-describe('Tests for Application part', function () {
-    var myMockSystemService = new SystemService_1.SystemService(myMockTemplatingService, myMockStateService);
-    var testActionService = new ActionService_1.ActionService(myMockSystemService);
-    it('inActionService() shoule store the service to MockApp object', function () {
-        spyOn(myMockApp, 'getActionService');
-        expect(myMockApp.getActionService()).toBe(testActionService);
+var MockActionService = (function () {
+    function MockActionService() {
+        this._systemService = new SystemService_1.SystemService(myMockTemplatingService, myMockStateService);
+    }
+    MockActionService.prototype.goPage = function (name) { };
+    ;
+    MockActionService.prototype.showNotification = function (words) { };
+    ;
+    MockActionService.prototype.callYelpSearchAPI = function (keywords, callback) { };
+    ;
+    MockActionService.prototype.reRenderPage = function (page) { };
+    ;
+    MockActionService.prototype.saveToLocalStorage = function (key, value) { };
+    ;
+    MockActionService.prototype.getFromLocalStorage = function (key) { return ""; };
+    ;
+    return MockActionService;
+}());
+var myMockActionService = new MockActionService();
+describe('Tests for Application', function () {
+    var testApplication = new application_1.application();
+    it('injectActionService() should store the injected ActionService', function () {
+        testApplication.injectActionService(myMockActionService);
+        expect(testApplication._actionService).toBe(myMockActionService);
+    });
+    testApplication.startAddingPages();
+    it('startAddingPages() should add three objects into the apps pages array', function () {
+        expect(testApplication.pages.length).toEqual(3);
+    });
+    describe("appCallBack() when called with", function () {
+        it('page1button to call callYelpSearchAPI (in ActionService)', function () {
+            spyOn(myMockActionService, "callYelpSearchAPI");
+            testApplication.appCallback("test", "page1button", "searchTerm");
+            expect(myMockActionService.callYelpSearchAPI).toHaveBeenCalled();
+        });
+        it('home to call getMatchedFunctino with the right arguments', function () {
+            spyOn(testApplication, "getMatchedFunction");
+            testApplication.getMatchedFunction("test", "home");
+            expect(testApplication.getMatchedFunction).toHaveBeenCalledWith("test", "home");
+        });
+        it('mapButton to call getMatchedFunctino with the right arguments', function () {
+            spyOn(testApplication, "getMatchedFunction");
+            testApplication.getMatchedFunction("test", "mapButton");
+            expect(testApplication.getMatchedFunction).toHaveBeenCalledWith("test", "mapButton");
+        });
+        it('backToResults to call getMatchedFunctino with the right arguments', function () {
+            spyOn(testApplication, "getMatchedFunction");
+            testApplication.getMatchedFunction("test", "backToResults");
+            expect(testApplication.getMatchedFunction).toHaveBeenCalledWith("test", "backToResults");
+        });
+    });
+    it('getMatchedFunction() should return the correct function', function () {
+        var testFunc = testApplication.getMatchedFunction("page3Map", "backToResults");
+        expect(testFunc).toEqual(testApplication.pages[2].callback[0].callbackFunction);
+    });
+    describe("tailorYelpResult() should", function () {
+        var testString = testApplication.tailorYelpResult(undefined);
+        var jsonOb = {};
+        it('return the the error message when called with undefined', function () {
+            expect(testString.indexOf("Sorry")).toBeGreaterThan(-1);
+        });
+        it('return the a string with appropriate contents if called with an empty json object', function () {
+            testString = testApplication.tailorYelpResult(jsonOb);
+            expect(testString.indexOf("Rating")).toBeGreaterThan(-1);
+        });
+        jsonOb = { "location": { "address": ["150 Stuart St"],
+                "coordinate": { "latitude": -45.8744,
+                    "longitude": 170.504
+                }
+            }
+        };
+        it('return a string with appropriate details when called with a populated json object', function () {
+            testString = testApplication.tailorYelpResult(jsonOb);
+            expect(testString.indexOf("150 Stuart St")).toBeGreaterThan(-1);
+        });
+        it('call googleMapsHelper with the coords if called with a json object containing them', function () {
+            spyOn(testApplication, "googleMapsHelper");
+            testString = testApplication.tailorYelpResult(jsonOb);
+            expect(testApplication.googleMapsHelper).toHaveBeenCalledWith("-45.8744,170.504");
+        });
+    });
+    it('googleMapsHelper() should return the correct string', function () {
+        var coords = "45.00,45.00";
+        var url = testApplication.googleMapsHelper(coords);
+        expect(url.indexOf(coords)).toEqual(186);
+        coords = "asdfasdf";
+        url = testApplication.googleMapsHelper(coords);
+        expect(url.indexOf(coords)).toEqual(186);
     });
 });
 //# sourceMappingURL=test.spec.js.map
