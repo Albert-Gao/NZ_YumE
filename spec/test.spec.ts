@@ -1,5 +1,6 @@
 ///<reference path="../src/emulator/ui/types/jquery.d.ts" />
 ///<reference path="typings/jasmine-jquery.d.ts" />
+///<reference path="typings/other.d.ts" />
 
 import {IStateService} from "../src/emulator/models/serviceModels/IStateService";
 import {ITemplatingService} from "../src/emulator/models/serviceModels/ITemplatingService";
