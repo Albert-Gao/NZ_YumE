@@ -53,12 +53,10 @@ export class TemplatingService implements ITemplatingService {
                     if($(".btn", outDiv).length) { //is there already a button on the page
                         var buttons = $(".btn", outDiv);
                         let width  = 12 / (buttons.length + 1);
-                        console.log("length is" + width);
                         buttons.after(temp);
                         buttons = $(".btn", outDiv); //to captrue new button too
                         buttons.removeClass("btn-block");
                         buttons.addClass("col-sm-" + width);
-                        console.log("got here");
                     } else {
                         row.append(temp);
                     }

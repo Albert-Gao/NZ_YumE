@@ -39,9 +39,9 @@ export class application implements IApp {
     }
 
     appCallback(pageName:string, elementName: string, targetElementInfo?: string) {
+        let func:Function;
         switch (elementName){
             case "page1button":
-                let func:Function;
                 if (targetElementInfo){
                     this._actionService.callYelpSearchAPI(targetElementInfo,(json:any)=>{
                         let list = this.tailorYelpResult(json);
@@ -51,11 +51,12 @@ export class application implements IApp {
                                     if (e.type === 'text'&&e.name==='page2text'){
                                         e.define = list;
                                     } else if (e.type === 'image') {
-                                        if (typeof json !== 'undefined') { 
-                                            if (typeof json.image_url !== 'undefined'){
+                                        if (typeof json !== 'undefined') {
+                                            if (typeof json.image_url !== 'undefined'){ 
                                                 e.define = <string>json.image_url; //better image
                                             } else {
-                                                e.define = "assets/food.png"; //default if no image found
+                                                //set default image only if valid json, but no image
+                                                e.define = "assets/food.png";
                                             }
                                         }
                                     }
@@ -73,14 +74,17 @@ export class application implements IApp {
 
                 break;
             case "home":
-                //OK, Sorry, just want to get rid of it soon...it works,
-                //since I know the exact place.
-                this.pages[1].callback[0].callbackFunction(this._actionService);
+                func = this.getMatchedFunction("page2list",elementName)
+                func(this._actionService);
                 break;
             case "mapButton":
                 this._actionService.reRenderPage(this.pages[2]);
-                this.pages[1].callback[1].callbackFunction(this._actionService);
+                func = this.getMatchedFunction("page2list",elementName)
+                func(this._actionService);
                 break;
+            case "backToResults":
+                func = this.getMatchedFunction("page3Map",elementName)
+                func(this._actionService);
         }
     }
 

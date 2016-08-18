@@ -24,17 +24,17 @@ export class page3Map implements IPage{
         return [
             {
                 type:"text",
-                name:"page2placeholder",
+                name:"page3placeholder",
                 define:" "
             },
             {
                 type:"button",
-                name:"home",
+                name:"backToResults",
                 define:"go back"
             },
             {
                 type:"text",
-                name:"page2placeholder",
+                name:"page3placeholder",
                 define:" "
             },
             {
@@ -48,13 +48,13 @@ export class page3Map implements IPage{
     returnCallbackFuncs():Array<IFunc>{
         return [
             {
-                bindToName:"home",
+                bindToName:"backToResults",
                 callbackFunction:this.goBackButtonCallBack
             }
         ];
     }
 
     goBackButtonCallBack(_actionService:IActionService){
-        _actionService.goPage("page1search");
+        _actionService.goPage("page2list");
     }
 }
