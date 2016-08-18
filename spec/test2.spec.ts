@@ -1,19 +1,6 @@
 ///<reference path="../src/emulator/ui/types/jquery.d.ts" />
 ///<reference path="typings/jasmine-jquery.d.ts" />
 
-/*import {IStateService} from "../src/emulator/models/serviceModels/IStateService";
-import {ITemplatingService} from "../src/emulator/models/serviceModels/ITemplatingService";
-import {ISystemService} from "../src/emulator/models/serviceModels/ISystemService";
-import {IActionService} from "../src/emulator/models/serviceModels/IActionService";
-import {IPage} from "../src/emulator/models/dataModels/IPage";
-import {IApp} from "../src/emulator/models/dataModels/IApp";
-import {IElement} from "../src/emulator/models/dataModels/IElement";
-import {IListItem} from "../src/emulator/models/dataModels/IListItem";
-import {IFunc} from "../src/emulator/models/dataModels/IFunction";
-import {StateService} from "../src/emulator/services/StateService";
-import {TemplatingService} from "../src/emulator/services/TemplatingService";
-import {SystemService} from "../src/emulator/services/SystemService";
-import {ActionService} from "../src/emulator/services/ActionService";*/
 import {application} from "../src/application/application";
 import {emulator} from "../src/emulator/ui/emulator";
 
@@ -68,7 +55,7 @@ describe('Tests for starting of the emulator', () => {
     it('Splash Screen should display the brand', () => {
         expect($(".splashScreen")).toHaveText("Smartisan");
     });
-    it('Splash Screen should be hidden after a few seconds', (done) => {
+    it('Splash Screen should be hidden after a few seconds, and first page shown', (done) => {
         let POLL_TIME = 10;
         let endTime = new Date().getTime() + 10000;
         let checkCondition = () => {
@@ -76,6 +63,7 @@ describe('Tests for starting of the emulator', () => {
                 setTimeout(checkCondition, POLL_TIME);
             } else {   
                 expect($(".splashScreen")).not.toBeVisible();
+                expect(es._app.currentPageName).toEqual(es._app.startPageName);
                 done();
             }
         };
