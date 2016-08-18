@@ -9,11 +9,11 @@ export class SystemService implements ISystemService{
     _stateService: IStateService;
 
     /**
-     * [constructor description]
+     * Constructs the template and services
      * @method constructor
-     * @param  {ITemplatingService} templatingService [description]
-     * @param  {IStateService}      stateService      [description]
-     * @return {[type]}                               [description]
+     * @param  {ITemplatingService} templatingService - provides the template
+     * @param  {IStateService}      stateService      - provides service state
+     * @return {[type]}                               - returns system service
      */
     constructor(templatingService: ITemplatingService, stateService: IStateService) {
         this._templatingService = templatingService;

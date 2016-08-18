@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>COSC 345 Assignment 3</title>
+</head>
+
+<body>
+    <h1 style="text-align: center;">COSC345 Report</h1>
+    <h1 style="text-align: center;">Assignment 3</h1>
+    <h2>Team members:</h2>
+    <table>
+        <tbody>
+            <tr>
+                <td>Brock Fairweather</td>
+                <td>brockdf@gmail.com</td>
+                <td>702438</td>
+            </tr>
+            <tr>
+                <td>Haoyang Gao</td>
+                <td>albertgaohy@gmail.com</td>
+                <td>3970509</td>
+            </tr>
+            <tr>
+                <td>Sonny Lim</td>
+                <td>Sonnylim92@gmail.com</td>
+                <td>4144848</td>
+            </tr>
+            <tr>
+                <td>Thomas Scott</td>
+                <td>emailthomasscott@gmail.com</td>
+                <td>1879620</td>
+            </tr>
+        </tbody>
+    </table>
+    <h2>1. About the app</h2>
+    <p>This App will enable you to search the great restaurants in Dunedin. The backend service is supported by Yelp.com. Every time you search, this app will send the keyword to the REST API from Yelp.com, retrieve the result from it, tailor the information,
+        and finally render it on the browser. You can click the "go back" button to return to the search page to start a new search.</p>
+
+    <h2>2. About the architecture</h2>
+    <h3>2.1 brief</h3>
+    <p>The application sits on top of emulator, and it implements an interface called IApp, the implementation will contain the information of the app and its pages, something like the UI description and callback function. So the application basically describe
+        itself via the IApp interface. During runtime, the emulator will create an instance of this interface using the application implementation,handle its callback, translate and render its UI to the browser.</p>
+    <p><strong>The application and emulator is well decoupled via this way,</strong> anytime, you want create a new application, you just need to implement this IApp interface and the emulator will do the rest work for you. And you can just feel free to
+        modify anything in your application as long as you implement the IApp interface. No according modification needed in the emulator side. And vice versa.</p>
+    <p>Furthermore,<strong> the page of the application and the application itself is decoupled too</strong>, in a same manner as the above via the IPage interface.</p>
+
+    <h3>2.2 Some more details</h3>
+    <h4>2.2.1 application:</h4>
+    <p>When you look into the IApp interface, besides normal properties. The key function is the function called The application has a CentralCallbackFunc(), it acts like a dispatcher, every time when the user triggers an event in the browser. The browser
+        will first pass back to a callback function inside the emulator, it will wrap some information according to the proper implementation of IApp interface, then pass back this CentralCallbackFunc(), then this function will dispatch this event to
+        the actual handler function in the IPage's implementation.</p>
+
+    <h4>2.2.2 emulator</h4>
+    <p>Like the application side, <strong>the emulator part has a inside-decouple too.</strong> It contains the following parts.</p>
+
+    <ul>
+        <li><strong>emulator class:</strong>
+            <ul>
+                <li>This class is the only class in this project which doesn't implement any interfaces since its job is scaffolding. It will assemble all the services class and the application during runtime and booting the emulator.</li>
+            </ul>
+        </li>
+        <li><strong>IActionService</strong>
+            <ul>
+                <li>This is a service which the emulator used to expose some actions to the application. So any time the application want to trigger something like showNotification(). goPage() or FetchAPI(). It will just call this API, and then the emulator will
+                    handle them for it.</li>
+            </ul>
+        </li>
+        <li><strong>IStateService</strong>
+            <ul>
+                <li>This is a wrapper class wrap around the implementation class of IApp interface. When any services try to access the application object, they don't access it directly, instead, they call this IStateService, it will handle all the request.
+                    So anytime we have some modification to the IApp interface, we only have to change the IStateService, otherwise, we need to modify every class which tries to access application object.</li>
+            </ul>
+        </li>
+        <li><strong>ISystemService</strong>
+            <ul>
+                <li>This service provides all the functionality that the emulator want, and when the emulator wants to invoke some function, it just simply call the methods from this service. By this way, the actual emulator class only need to assemble
+                    the architecture without concerning the actual logic implementation.</li>
+            </ul>
+        </li>
+        <li><strong>ITemplatingService</strong>
+            <ul>
+                <li>This service contains all the operations related to DOM. It has a wrapper method called createjQueryItem() around jQuery to deliever a clean way to create a DOM element via a single function call. And it will render the application into
+                    HTML elements, and having methods to delete them as well.</li>
+            </ul>
+        </li>
+    </ul>
+    <h4>2.2.3 System processing</h4>
+    <p>When the projects starts, it will first create a new instance of the emulator class, and inside the constructor, the emulator will assemble all the services and application via dependency injection. Then it will call the startEmulator() method. Then
+        the following steps will occur:</p>
+
+    <ol>
+        <li>To show the splash screen of the emulator to indicate the system has started.</li>
+        <li>To hide the splash screen</li>
+        <li>To translate all the pages to jQuery objects and store them back to the application object</li>
+        <li>To find the start page and render it to the emulator.</li>
+        <li>Then the first screen of the application gets displayed.</li>
+        <li>Whenever the user triggers a event like click:
+            <ul>
+                <li>The browser will pass the information to the emulator's call back function</li>
+                <li>The emulator will operates the information and pass back to the central dispatcher in the application</li>
+                <li>The application will do some business logic here then pass back to the handler in the according page.</li>
+            </ul>
+        </li>
+    </ol>
+    <h2>3. About the folder structure:</h2> All the following naming follows the industry's convention.
+    <ul>
+        <li><strong>dist:</strong>
+            <ul>
+                <li>This distribution folder contains the builds for the final release. We use webpack to build. You will notice that webpack has bundled all our multiple source code files into one single index.bundle.js file along with its sourcemap for
+                    debugging. So this version will provide a faster loading speed due to the decreasing file downloading requesting.</li>
+            </ul>
+        </li>
+        <li><strong>temp</strong>
+            <ul>
+                <li>We use the "compileOnSave" feature via typescript's compiler.  Every time we save, the compiler will compile the .ts file and store the result javascript file into this folder, convenient for debugging.</li>
+            </ul>
+        </li>
+        <li><strong>src</strong>
+            <ul>
+                <li>This folder contains all our source code. It has the following sub-folders.</li>
+                <li><strong>application: </strong>Source codes for applications.</li>
+                <li><strong>emulator:</strong>
+                    <ul>
+                        <li><strong>models:</strong>
+                            <ul>
+                                <li><strong>dataModels: </strong>Interfaces for application sides like IApp, IPage, etc.</li>
+                                <li><strong>serviceModels: </strong>Interfaces for service class.</li>
+                            </ul>
+                        </li>
+                        <li><strong>services: </strong>Actual implementations of the service class.</li>
+                        <li><strong>UI</strong>
+                            <ul>
+                                <li><strong>css : </strong>Stylesheet for the emulator.</li>
+                                <li><strong>js: </strong>Third party libraries.</li>
+                                <li><strong>types: </strong>Type definition files for typescript.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><strong>spec: </strong>The test cases for this projects. Developed by jasmine.</li>
+        <li><strong>doc: </strong>The documentations for this projects. Generated by typedoc.</li>
+    </ul>
+    <h2>4. About the work flow:</h2>
+    <p>This project take advantages of the modern frond end toolchain a lot. We have configured all the node packages and provides the auto build system:</p>
+
+    <ul>
+        <li><strong>Auto build to dist folder:</strong> Using this command "webpack --progress --watch"</li>
+        <li><strong>Auto build to temp folder:</strong> just save the ts file while you editing. And you can also manually compile with the command "tsc".</li>
+        <li><strong>Sourcemap:</strong> With this feature,You can debug typescript directly in the browser.</li>
+    </ul>
+    <p><strong>5. About the team communication</strong></p>
+    <p>We cooperate as a team in a well-organized way. Everyone contributes to the final projects via their own way, coding, testing, documenting, reporting, proof-reading. And we held meetings for each milestone. Communicates with each other of the architecture
+        design to make sure everyone is on the same boat.</p>
+
+    <h2>6. About the thoughts</h2>
+    <ul>
+        <li><strong>Architecture design matters:</strong>
+            <ul>
+                <li>It took us a long time to discuss the whole architecture design. We try to decouple things in a meaningful and decent manner. And it really makes the final coding a great experiences. Since whenever we need to refactor, it won't be a pain.</li>
+            </ul>
+        </li>
+        <li><strong>Testing matters:</strong>
+            <ul>
+                <li>The testing part is really important since It can find some bugs which the compiler won't tell you. We have found bug in the testing phase but confuse us a lot during runtime. It explains how we love to see the testing result via the command line. It gives us confidence. So we heavily used dependency injection during the whole design. It makes the testing part a bit easier since the loosely coupling. And it enables us to programming
+                    in a very fast pace. Since we are programming to an interface, not an implementation.</li>
+            </ul>
+        </li>
+        <li><strong>Type matters:</strong>
+            <ul>
+                <li>Typescript has played a crucial role during the development phase. We are happy with this choice. The typing system along with the interfaces declarations provides us great productivity. And it has a complete toolchain support. So most
+                    of the time, we just need to handle the actual business logic. Yes, compare to the javascript or ES6, the typescript surely lost some flexibility. But it worth.</li>
+            </ul>
+        </li>
+    </ul>
+    <h2>7. Third party libraries used:</h2>
+    <h3>7.1 NPM Packages used:</h3>
+    <ul>
+        <li>Webpack: For code bundling, actually it is so awesome and can replace gulp, browserify and systemjs in a whole.
+            <ul>
+                <li>css-loader: to load the css so webpack can interpret it.</li>
+                <li>extract-text-webpack-plugin: to save the bundled css in a file rather than create inline-styles.</li>
+                <li>awesome-typescript-loader: load .ts files and compiles to js so Webpack can bundle them.</li>
+            </ul>
+        </li>
+        <li>Typescript: to compile the code file on the fly to do some checking</li>
+    </ul>
+    <h3><a id="user-content-3rd-party-libraries-used" class="anchor" href="https://github.com/Mr-Binary/NZ_YumE#3rd-party-libraries-used"></a>7.2 3rd party libraries used:</h3>
+    <ul>
+        <li>Bootstrap v4 RC3: Yes, the latest version.
+            <ul>
+                <li>Tether v1.3: a layout libraries which bootstrap rely on.</li>
+            </ul>
+        </li>
+        <li>jQuery v3: Dependency of bootstrap and our app</li>
+        <li>OAuth.js and SHA1.js : Signature generating libraries from Netflix, since we need to make API call to Yelp via OAuth2 protocol.</li>
+    </ul>
+</body>
+
+</html>

@@ -8,10 +8,10 @@ export class ActionService implements IActionService{
     _systemService: ISystemService;
 
     /**
-     * [constructor description]
+     * Constructs the services provided to the application
      * @method constructor
-     * @param  {ISystemService} systemService [description]
-     * @return {[type]}                       [description]
+     * @param  {ISystemService} systemService - retrieves required information
+     * @return {[type]}                       - returns service of page request
      */
     constructor(systemService: ISystemService) {
         this._systemService = systemService;

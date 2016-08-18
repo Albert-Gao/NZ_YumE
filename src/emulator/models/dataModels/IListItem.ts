@@ -1,23 +1,23 @@
 /**
- *
- * 
+ * This represents the listed items presented.
+ * Provides the items requested by the user.
  */
 export interface IListItem{
     /**
-     * [title description]
-     * @type {string}
+     * Gives the title of the serached item
+     * @type {string} - Provides the title
      */
     title:string;
 
     /**
-     * [description description]
-     * @type {string}
+     * Gives the description of the searched item
+     * @type {string} - Provides the description
      */
     description:string;
 
     /**
-     * [url description]
-     * @type {string}
+     * Gives the hyperlink to the searched item
+     * @type {string} - Provides a hyperlink
      */
     url:string;
 }

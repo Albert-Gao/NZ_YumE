@@ -74,7 +74,7 @@ You can click the go back button to go back to the first screen to do a re-searc
 - [x] Testing and make it running so the whole design is safe
 - [x] implementing the rest application
 - [x] Assemble whole architecture
-- [ ] documenting library integrated
-- [ ] documenting
+- [x] Report
+- [x] documenting
 - [ ] integrating testing library 
 - [ ] testing
