@@ -16,12 +16,6 @@ import {SystemService} from "../src/emulator/services/SystemService";
 import {ActionService} from "../src/emulator/services/ActionService";
 import {application} from "../src/application/application";
 
-jasmine.getFixtures().fixturesPath = "../spec/";
-//need to launch Chrome/Chromium with --allow-file-access-from-files option
-//for fixtures to work. Works in standard FireFox.
-//see https://github.com/velesin/jasmine-jquery#cross-domain-policy-problems-under-chrome
-//can load a fixture with loadFixtures('myFixture.html');
-
 class MockElement implements IElement {
 	type;
     name:string;
