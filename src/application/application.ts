@@ -2,6 +2,7 @@ import {IApp} from "../emulator/models/dataModels/IApp";
 import {IPage} from "../emulator/models/dataModels/IPage";
 import {page1search} from "./page1search";
 import {page2list} from "./page2list";
+import {page3Map} from "./page3Map";
 import {IActionService} from "../emulator/models/serviceModels/IActionService";
 import {IFunc} from "../emulator/models/dataModels/IFunction"
 import {IListItem} from "../emulator/models/dataModels/IListItem";
@@ -30,6 +31,7 @@ export class application implements IApp {
     startAddingPages() {
         this.pages.push(new page1search());
         this.pages.push(new page2list());
+        this.pages.push(new page3Map());
     }
 
     createPageArray() {
@@ -49,9 +51,11 @@ export class application implements IApp {
                                     if (e.type === 'text'&&e.name==='page2text'){
                                         e.define = list;
                                     } else if (e.type === 'image') {
-                                        if (typeof json != 'undefined'){
+                                        if (typeof json !== 'undefined' && typeof json.image_url !== 'undefined'){
                                             //e.define = <string>json.snippet_image_url;
-                                            e.define = <string>json.image_url;
+                                            e.define = <string>json.image_url; //better image
+                                        } else {
+                                            e.define = "assets/food.png"; //default if no image found
                                         }
                                     }
                                 }
@@ -67,10 +71,14 @@ export class application implements IApp {
                 }
 
                 break;
-            case "page2button":
+            case "home":
                 //OK, Sorry, just want to get rid of it soon...it works,
                 //since I know the exact place.
                 this.pages[1].callback[0].callbackFunction(this._actionService);
+                break;
+            case "mapButton":
+                this._actionService.reRenderPage(this.pages[2]);
+                this.pages[1].callback[1].callbackFunction(this._actionService);
                 break;
         }
     }
@@ -111,13 +119,36 @@ export class application implements IApp {
             let rating:string = _item.rating?_item.rating:"";
             let category:string = _item.categories?_item.categories[0][0]:"";
             let comment:string = _item.snippet_text?_item.snippet_text:"";
-            //let comment:string = _item.location.address[0]?_item.location.address[0]:"";
+            let address:string = _item.location.address[0]?_item.location.address[0]:"";
 
-            define ='<br/>'+'<strong>Title: \</strong>' + title + '<br/>'+'<strong>Phone: \</strong>' + phone + '<br/>' +'<strong>Rating: \</strong>' + rating + '   |  ' +'<strong>Category: \</strong>' + category + '<br/>' +'<strong>Comment: \</strong>' + comment;
+            let latitude: number = _item.location.coordinate.latitude?_item.location.coordinate.latitude:0;
+            let longitude: number = _item.location.coordinate.longitude?_item.location.coordinate.longitude:0;
+            for(let e of this.pages[2].rawLayout){
+                if(e.type === 'image'){
+                    let address = ""+latitude + "," + longitude;
+                    e.define = this.googleMapsHelper(address);
+                    break;
+                }
+            }
+
+            define ='<br/>'+'<strong>Title: \</strong>' + title + '<br/>'+'<strong>Phone: \</strong>'
+                     + phone + '   |  '  + '<strong\>Address: \</strong>' + address
+                     + '<br/>' +'<strong>Rating: \</strong>' + rating
+                     + '   |  ' +'<strong>Category: \</strong>' + category
+                     + '<br/>' +'<strong>Comment: \</strong>' + comment;
         } else {
-            define = '<br/>' + "sorry, Yelp can't recognize your keyword, please go back and search again."
+            define = '<br/>' + "Sorry, Yelp can't recognize your keyword, please go back and search again."
             this.pages[1] = new page2list(); //so that crying image returns after successful then failed search
         }
         return define;
+    }
+
+    googleMapsHelper(address: string): string{
+        let mapURL: string = "https://maps.googleapis.com/maps/api/staticmap?&size=300x230&maptype=roadmap" +
+                     "&visible=Octagon,Dunedin,NZ" +
+                     "&markers=color:yellow%7Clabel:U%7C-45.8743,170.5036" + 
+                     "&markers=color:blue%7Clabel:F%7C";
+        let apiKey: string = "&key=AIzaSyDHTnM42xU_IGgOk0OGswZGOAtDRr8e66I";
+        return mapURL + address + apiKey;
     }
 }

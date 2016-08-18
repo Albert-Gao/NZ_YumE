@@ -50,7 +50,7 @@ export class ActionService implements IActionService{
 
         let terms = keywords;
         let near = 'Dunedin';
-        //let category = 'restaurants,food'
+        let category = 'restaurants,food'
 
         let accessor = {
             consumerSecret : auth.consumerSecret,
@@ -60,7 +60,7 @@ export class ActionService implements IActionService{
         let parameters = [];
         parameters.push(['term', terms]);
         parameters.push(['location', near]);
-        //parameters.push(['category_filter', category]);
+        parameters.push(['category_filter', category]);
         parameters.push(['callback', 'cb']);
         parameters.push(['oauth_consumer_key', auth.consumerKey]);
         parameters.push(['oauth_consumer_secret', auth.consumerSecret]);

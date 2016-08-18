@@ -3,14 +3,18 @@ import {IElement} from "../emulator/models/dataModels/IElement";
 import {IPage} from "../emulator/models/dataModels/IPage";
 import {IActionService} from "../emulator/models/serviceModels/IActionService";
 
-export class page2list implements IPage{
+export class page3Map implements IPage{
     name: string;
     rawLayout: Array<IElement>;
     afterRenderLayout: JQuery;
     callback: Array<IFunc>;
+    defaultMap: string = "https://maps.googleapis.com/maps/api/staticmap?&size=300x230&maptype=roadmap" +
+                     "&visible=Octagon,Dunedin,NZ" +
+                     "&markers=color:yellow%7Clabel:U%7C-45.8743,170.5036" +
+                     "&key=AIzaSyDHTnM42xU_IGgOk0OGswZGOAtDRr8e66I";
 
     constructor() {
-        this.name = "page2list";
+        this.name = "page3Map";
         this.rawLayout = this.returnRawLayout();
         this.afterRenderLayout = null;
         this.callback = this.returnCallbackFuncs();
@@ -35,18 +39,8 @@ export class page2list implements IPage{
             },
             {
                 type:"image",
-                name:"page2image",
-                define:"./assets/cry.png"
-            },
-            {
-                type:"text",
-                name:"page2text",
-                define:"I really love it"
-            },
-            {
-                type:"button",
-                name:"mapButton",
-                define:"map"
+                name:"page3image",
+                define: this.defaultMap
             }
         ];
     }
@@ -56,18 +50,11 @@ export class page2list implements IPage{
             {
                 bindToName:"home",
                 callbackFunction:this.goBackButtonCallBack
-            },
-            {
-                bindToName:"mapButton",
-                callbackFunction:this.goMapCallBack
             }
         ];
     }
 
     goBackButtonCallBack(_actionService:IActionService){
         _actionService.goPage("page1search");
-    }
-    goMapCallBack(_actionService:IActionService){
-        _actionService.goPage("page3Map");
     }
 }

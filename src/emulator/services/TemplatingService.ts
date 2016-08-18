@@ -32,7 +32,7 @@ export class TemplatingService implements ITemplatingService {
                 case "button":
                     let temp = this.createjQueryItem("button",
                         [{key:"id", value:element.name}],
-                        "btn btn-primary btn-lg btn-block",
+                        "btn btn-primary btn-lg btn-block", //btn-block
                         <string>element.define);
                     if (element.targetElementID) {
                         $(".emulator").on(
@@ -50,7 +50,18 @@ export class TemplatingService implements ITemplatingService {
                                 this._stateService.emulatorCentralCallBack(element);
                             });
                     }
-                    row.append(temp);
+                    if($(".btn", outDiv).length) { //is there already a button on the page
+                        var buttons = $(".btn", outDiv);
+                        let width  = 12 / (buttons.length + 1);
+                        console.log("length is" + width);
+                        buttons.after(temp);
+                        buttons = $(".btn", outDiv); //to captrue new button too
+                        buttons.removeClass("btn-block");
+                        buttons.addClass("col-sm-" + width);
+                        console.log("got here");
+                    } else {
+                        row.append(temp);
+                    }
                     break;
                 case "text":
                     let temp1 = this.createjQueryItem("p",
