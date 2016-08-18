@@ -1,5 +1,12 @@
+///<reference path="../ui/types/jquery.d.ts" />
 "use strict";
 var TemplatingService = (function () {
+    /**
+     * Constructs the service state
+     * @method constructor
+     * @param  {IStateService} stateService - provides the service state
+     * @return {[type]}                     - returns service template
+     */
     function TemplatingService(stateService) {
         this._stateService = stateService;
     }
@@ -11,7 +18,8 @@ var TemplatingService = (function () {
             var element = element1;
             switch (element.type) {
                 case "button":
-                    var temp = this_1.createjQueryItem("button", [{ key: "id", value: element.name }], "btn btn-primary btn-lg btn-block", element.define);
+                    var temp = this_1.createjQueryItem("button", [{ key: "id", value: element.name }], "btn btn-primary btn-lg btn-block", //btn-block
+                    element.define);
                     if (element.targetElementID) {
                         $(".emulator").on('click', "#" + element.name, function () {
                             var targetText = $("#" + element.targetElementID).val();
@@ -23,7 +31,17 @@ var TemplatingService = (function () {
                             _this._stateService.emulatorCentralCallBack(element);
                         });
                     }
-                    row.append(temp);
+                    if ($(".btn", outDiv).length) {
+                        buttons = $(".btn", outDiv);
+                        var width = 12 / (buttons.length + 1);
+                        buttons.after(temp);
+                        buttons = $(".btn", outDiv); //to capture new button too
+                        buttons.removeClass("btn-block");
+                        buttons.addClass("col-sm-" + width);
+                    }
+                    else {
+                        row.append(temp);
+                    }
                     break;
                 case "text":
                     var temp1 = this_1.createjQueryItem("p", [{ key: "id", value: element.name }], undefined, element.define);
@@ -59,11 +77,13 @@ var TemplatingService = (function () {
                         var item = listItemsData_1[_i];
                         _loop_2(item);
                     }
+                    row.append(listGroup);
                     break;
             }
             outDiv.append(row);
         };
         var this_1 = this;
+        var buttons;
         for (var _a = 0, _b = page.rawLayout; _a < _b.length; _a++) {
             var element1 = _b[_a];
             _loop_1(element1);

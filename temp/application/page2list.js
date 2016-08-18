@@ -15,8 +15,8 @@ var page2list = (function () {
             },
             {
                 type: "button",
-                name: "page2button",
-                define: "go back"
+                name: "home",
+                define: "Back"
             },
             {
                 type: "text",
@@ -32,19 +32,31 @@ var page2list = (function () {
                 type: "text",
                 name: "page2text",
                 define: "I really love it"
+            },
+            {
+                type: "button",
+                name: "mapButton",
+                define: "Map"
             }
         ];
     };
     page2list.prototype.returnCallbackFuncs = function () {
         return [
             {
-                bindToName: "page2button",
+                bindToName: "home",
                 callbackFunction: this.goBackButtonCallBack
+            },
+            {
+                bindToName: "mapButton",
+                callbackFunction: this.goMapCallBack
             }
         ];
     };
     page2list.prototype.goBackButtonCallBack = function (_actionService) {
         _actionService.goPage("page1search");
+    };
+    page2list.prototype.goMapCallBack = function (_actionService) {
+        _actionService.goPage("page3Map");
     };
     return page2list;
 }());

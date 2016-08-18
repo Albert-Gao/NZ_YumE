@@ -1,5 +1,12 @@
 "use strict";
 var SystemService = (function () {
+    /**
+     * Constructs the template and services
+     * @method constructor
+     * @param  {ITemplatingService} templatingService - provides the template
+     * @param  {IStateService}      stateService      - provides service state
+     * @return {[type]}                               - returns system service
+     */
     function SystemService(templatingService, stateService) {
         this._templatingService = templatingService;
         this._stateService = stateService;

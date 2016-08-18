@@ -5,6 +5,10 @@ var TemplatingService_1 = require("../services/TemplatingService");
 var SystemService_1 = require("../services/SystemService");
 var ActionService_1 = require("../services/ActionService");
 var emulator = (function () {
+    /**
+     * Constructs all information needed for the application
+     * @method constructor
+     */
     function emulator() {
         this._app = new application_1.application();
         this._stateService = new StateService_1.StateService(this._app);
@@ -14,6 +18,10 @@ var emulator = (function () {
         this._app.injectActionService(this._actionService);
         this._app.startAddingPages();
     }
+    /**
+     * Starts the emulator to allow the application to be executed
+     * @method startEmulator
+     */
     emulator.prototype.startEmulator = function () {
         this._systemService.startEmulator();
     };

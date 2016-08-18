@@ -1,5 +1,11 @@
 "use strict";
 var StateService = (function () {
+    /**
+     * Constructs the application
+     * @method constructor
+     * @param  {IApp}      app - retrieves required information
+     * @return {[type]}        - returns the application information
+     */
     function StateService(app) {
         this._app = app;
     }
