@@ -3,7 +3,8 @@ import {ITemplatingService} from "./ITemplatingService";
 import {IPage} from "../dataModels/IPage";
 
 /**
- * This is the services provided by the system.
+ * This is the services provided for the system.
+ * It provides all the features that the emulator needs.
  */
 export interface ISystemService{
     /**
@@ -19,7 +20,8 @@ export interface ISystemService{
     _templatingService:ITemplatingService;
 
     /**
-     * Removes current page
+     * Removes current page from screen.
+     * It is the first step to go to a new page.
      * @method removeCurrentPageFromScreen
      */
     removeCurrentPageFromScreen();
@@ -40,13 +42,21 @@ export interface ISystemService{
 
     /**
      * Sets the first page to start/homescreen
+     * It will retrieve IApp.startPageName,
+     * then find the very page in IApp.pages using that name
+     * then show it on the screen.
      * @method goStartPage
      * @return {[type]}    - returns the startup page
      */
     goStartPage();
 
     /**
-     * Gives the structure of the pages to be presented
+     * It will render all the pages (now show, just render)
+     * the result will be jQuery objects.
+     * It will iterate through the IApp.pages:Array<IPage>.
+     * For each IPage object stored in that list,
+     * It will first fetch the IPage.rawLayout, render it,
+     * then stored in IPage.afterRenderLayout.
      * @method renderAllPages
      * @param  {string}       pageName - provides the page name
      * @return {[type]}                - returns rendered page
@@ -66,7 +76,7 @@ export interface ISystemService{
     hideSplashScreen();
 
     /**
-     * Gives the notification when an error occurs
+     * Gives the notification when something occurs
      * @method showNotification
      * @param  {string}         text - error message
      */

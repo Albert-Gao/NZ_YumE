@@ -19,13 +19,13 @@ export interface IPage{
     rawLayout:Array<IElement>;
 
     /**
-     * Provides the JQuery after the rawLayout is done
+     * Provides the JQuery after the rendering the rawLayout property
      * @type {[type]} - provides the appropriate JQuery when needed
      */
     afterRenderLayout?:JQuery;
 
     /**
-     * Provides a callback to the functions needed to interact with the page
+     * Provides a callback functions needed to interact with this page
      * @type {Array<IFunc>} - provides the array of needed functions
      */
     callback:Array<IFunc>;

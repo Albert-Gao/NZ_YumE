@@ -4,6 +4,9 @@ import {IElement} from "../dataModels/IElement";
 
 /**
  * This represents the current state of the application.
+ * It is a wrapper class around the IApp
+ * Whenever you need to interact with the IApp object,
+ * just call this service
  */
 export interface IStateService{
     /**
@@ -13,7 +16,7 @@ export interface IStateService{
     _app:IApp;
 
     /**
-     * Provides the current page from IPage
+     * Provides the current page
      * @method getCurrentPage
      * @return {IPage}        - returns values/layout of Ipage
      */
@@ -27,9 +30,9 @@ export interface IStateService{
     getCurrentPageName():string;
 
     /**
-     * Provides the current page name
+     * Provides the name of the start page
      * @method getStartPageName
-     * @return {string}         - returns the name of start/home page
+     * @return {string}         - returns the name of start page
      */
     getStartPageName():string;
 
@@ -41,14 +44,14 @@ export interface IStateService{
     setCurrentPageName(name:string);
 
     /**
-     * Gets the page from the array of Ipages
+     * Gets all pages from IApp.pages
      * @method getPages
      * @return {Array<IPage>} - returns the page that is retrieved from IPages
      */
     getPages():Array<IPage>;
 
     /**
-     * Provides the name of the retrieved Ipage
+     * get a specific page with the given name
      * @method getPage
      * @param  {string} name - gives the name to what was retrieved
      * @return {IPage}       - returns the IPage with the name
@@ -56,13 +59,16 @@ export interface IStateService{
     getPage(name:string ):IPage;
 
     /**
-     * Provides elements needed for application
+     * get the callback function of the application
      * @type {IElement} - provides elements from IElement to the application
      */
     getAppCallBack:(element:IElement,targetElementInfo?:string)=>void;
 
     /**
-     * Provides elements needed for emulator
+     * This is the central place to manage the callback
+     * every event trigger in the browser will first hit this method
+     * Then after some operations, check targetElementInfo etc,
+     * it will pass back to IApp.CentralCallbackFunc
      * @type {IElement} - provides elements from IElement
      */
     emulatorCentralCallBack:(element:IElement,targetElementInfo?:string)=>void;

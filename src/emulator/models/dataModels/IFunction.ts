@@ -1,5 +1,5 @@
 /**
- * This represents the functional elements.
+ * This represents the callback functions of the elements.
  * Provides the functionality of the elements.
  */
 export interface IFunc {
@@ -11,12 +11,13 @@ export interface IFunc {
 
     /**
      * Provides the specific string name depending on the target ID
+     * which is linked to the IElement.targetElementID
      * @type {[type]} - Provides the target ID for the elements if needed
      */
     targetID?: string;
 
     /**
-     * Provides the functionality for the elements
+     * Provides the callback function for the elements
      * @type {Function} - Provides functionality to elements
      */
     callbackFunction:Function;
