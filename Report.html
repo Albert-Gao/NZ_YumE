@@ -66,24 +66,22 @@
     </ol>
 
     <h2>2. About the architecture</h2>
-    <h3>2.1 brief</h3>
+    <h3>2.1 Brief</h3>
     <p>The application sits on top of an emulator, and it implements an interface called IApp The implementation will contain the app's information and its pages, something like a UI description and callback function. Basically the application describes itself via the IApp interface. During runtime, the emulator will create an instance of this interface using the provided application implementation, handle its callback, and translate/render its UI to the browser.</p>
     <p><strong>The application and emulator is decoupled in this way,</strong> so anytime you want create a new application, you just need to implement this IApp interface and the emulator will do the rest of the work for you. You're free to modify anything in your application as long as you implement the IApp interface. No corresponding modification is needed on the emulator side and vice versa.</p>
     <p>Furthermore,<strong> the pages of the application and the application itself are decoupled too</strong>, in a similar manner to the above via the IPage interface.</p>
 
     <h3>2.2 Some more details</h3>
-    <h4>2.2.1 application:</h4>
-    <p>When you look into the IApp interface, besides normal properties. The key function is the function called The application has a CentralCallbackFunc(), it acts like a dispatcher, every time when the user triggers an event in the browser. The browser
-        will first pass back to a callback function inside the emulator, it will wrap some information according to the proper implementation of IApp interface, then pass back this CentralCallbackFunc(), then this function will dispatch this event to
-        the actual handler function in the IPage's implementation.</p>
+    <h4>2.2.1 Application:</h4>
+    <p>When you look at the IApp interface, besides normal properties, the key thing it has is the function CentralCallbackFunc(), which acts like a dispatcher, dispatching events every time the user triggers them in the browser. The browser will first pass the event back to a callback function inside the emulator, which will wrap some information according to the implementation of IApp interface, and then pass it to this CentralCallbackFunc(). This function will then dispatch the event to the actual handler function in the approproate page of the app (which will be an implementation of IPage).</p>
 
-    <h4>2.2.2 emulator</h4>
+    <h4>2.2.2 Emulator</h4>
     <p>Like the application side, <strong>the emulator part has a inside-decouple too.</strong> It contains the following parts.</p>
 
     <ul>
-        <li><strong>emulator class:</strong>
+        <li><strong>Emulator class:</strong>
             <ul>
-                <li>This class is the only class in this project which doesn't implement any interfaces since its job is scaffolding. It will assemble all the services class and the application during runtime and booting the emulator.</li>
+                <li>This class is the only class in this project which doesn't implement any interfaces since its job is scaffolding. It will assemble all the service classes as well as the application during runtime and booting the emulator.</li>
             </ul>
         </li>
         <li><strong>IActionService</strong>
