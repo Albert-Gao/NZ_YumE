@@ -81,7 +81,7 @@
     <ul>
         <li><strong>Emulator class:</strong>
             <ul>
-                <li>This class is the only class in this project which doesn't implement any interfaces since its job is to just be scaffolding. It will assemble all the service classes as well as the application during runtime and will boot the emulator.</li>
+                <li>This class is the only class in this project which doesn't implement any interfaces since its job is to just be scaffolding. It will assemble all the service classes as well as the application during runtime via <strong>dependency injection</strong> and will boot the emulator.</li>
             </ul>
         </li>
         <li><strong>IActionService</strong>
@@ -189,7 +189,7 @@
         </li>
         <li><strong>Testing matters:</strong>
             <ul>
-                <li>The testing part is really important since it can find many bugs which the compiler can't tell you about. We found bugs in the testing phase that were confusing us a lot during initial development. The initial command line tests gave us confidence that the bits we had done were working. We heavily used dependency injection throughout the design which made testing each part a bit easier since due to loose coupling. It enabled us to program at a very fast pace as we were programming to an interface, not an implementation.</li>
+                <li>The testing part is really important since it can find many bugs which the compiler can't tell you about. We found bugs in the testing phase that were confusing us a lot during initial development. The initial command line tests gave us confidence that the bits we had done were working. We heavily used <strong>dependency injection</strong> throughout the design which made testing each part a bit easier since due to loose coupling. It enabled us to program at a very fast pace as we were programming to an interface, not an implementation.</li>
             </ul>
         </li>
         <li><strong>Types matter:</strong>
