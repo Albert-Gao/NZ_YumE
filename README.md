@@ -64,14 +64,13 @@ You can click the go back button to go back to the first screen to do a re-searc
 - [x] NPM Packages init
 - [x] Typescript configuration
 - [x] Bundle System configuration (Webpack)
-- [x] this is a complete item
 - [x] All interfaces design
 - [x] implementing services
 - [x] optimizing the TemplatingService and SystemService for a better decouple
-- [x] Running using Webpack bundle version
-- [x] Running using SystemJS module version
+- [x] Running using Webpack bundle version - Release build
+- [x] Running using SystemJS module version - Debug Build
 - [x] implementing one page of the application
-- [x] Testing and make it running so the whole design is safe
+- [x] Testing and make it running to make sure the whole design is safe
 - [x] implementing the rest application
 - [x] Assemble whole architecture
 - [x] Report
