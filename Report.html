@@ -36,31 +36,40 @@
     </table>
     <h2>1. About the app</h2>
     <h3>1.1 Intro</h3>
-    <p>This App will enable you to search the great restaurants in Dunedin. The backend service is supported by Yelp.com. Every time you search, this app will send the keyword to the REST API from Yelp.com, retrieve the result from it, tailor the information,
-        and finally render it on the browser. You can click the "map" button to see the location information, or you can click the "go back" button to return to the search page to start a new search.</p>
+    <p>This App enables you to search for restaurants in Dunedin. The backend service is supported by Yelp.com. Every time you search, the app will send the keyword to the REST API from Yelp.com, retrieve the result from it, and tailor the information, and finally render it to the browser. You can click the "Map" button to see the location of the restuarant, or you can click the "Back" button to return to the search page to start a new search. The map page has a marker labelled F which shows where the restaurant the was searched for is, and also has a marker labelled U (i.e You) at the Octagon for reference. On this page, you can either go back to the restaurant information page, or back to the search page to conduct another search. The map is generated using Google's static map api.</p> 
     
     <h3>1.2 Procedure for Running:</h3>
     <ol>
-        <li>create a folder for the project and go to that folder</li>
-        <li>git clone <a href="https://github.com/Mr-Binary/NZ_YumE.git">https://github.com/Mr-Binary/NZ_YumE.git</a></li>
-        <li>type "npm install" to install the dependencies</li>
-        <li>type "npm install live-server -g" to install local server, optional if you have one</li>
-        <li>Run the following through your local server:
-            <ul>
-                <li>Open "./spec/index.html" to see the testing result</li>
-                <li>Open "./docs/index.html" to see the documentation</li>
-                <li>Open "./dist/index.html to see the App via the release build</li>
-            </ul>
-        </li>
+        <li>Create a folder for the project and the move  into it.</li>
+        <li>Clone the repository to this folder</li>
+        <ul>
+            <li>git clone <a href="https://github.com/Mr-Binary/NZ_YumE.git">https://github.com/Mr-Binary/NZ_YumE.git</a></li>
+        </ul>
+        <li>To view everything without additional installs:</li>
+        <ul>
+            <li>The app can be viewed by opening the NZ_YumE/dist/index.html file.</li>
+            <li>Documentation can be viewed by opening the NZ_YumE/docs/index.html file.</li>
+            <li>Tests can be viewed and run by opening the NZ_YumE/spec/index.html file.</li>
+        </ul>
+        <li>If for development:</li>
+        <ul>
+            <li>Type "npm install" to install the dependencies</li>
+            <li>Type "npm install live-server -g" to install a local server, (if you don't already have one)</li>
+            <li>Run the following through that local server:
+                <ul>
+                    <li>Open "./spec/index.html" to see the testing result</li>
+                    <li>Open "./docs/index.html" to see the documentation</li>
+                    <li>Open "./dist/index.html to see release build of the app</li>
+                </ul>
+            </li>
+        </ul>
     </ol>
 
     <h2>2. About the architecture</h2>
     <h3>2.1 brief</h3>
-    <p>The application sits on top of emulator, and it implements an interface called IApp, the implementation will contain the information of the app and its pages, something like the UI description and callback function. So the application basically describe
-        itself via the IApp interface. During runtime, the emulator will create an instance of this interface using the application implementation,handle its callback, translate and render its UI to the browser.</p>
-    <p><strong>The application and emulator is well decoupled via this way,</strong> anytime, you want create a new application, you just need to implement this IApp interface and the emulator will do the rest work for you. And you can just feel free to
-        modify anything in your application as long as you implement the IApp interface. No according modification needed in the emulator side. And vice versa.</p>
-    <p>Furthermore,<strong> the page of the application and the application itself is decoupled too</strong>, in a same manner as the above via the IPage interface.</p>
+    <p>The application sits on top of an emulator, and it implements an interface called IApp The implementation will contain the app's information and its pages, something like a UI description and callback function. Basically the application describes itself via the IApp interface. During runtime, the emulator will create an instance of this interface using the provided application implementation, handle its callback, and translate/render its UI to the browser.</p>
+    <p><strong>The application and emulator is decoupled in this way,</strong> so anytime you want create a new application, you just need to implement this IApp interface and the emulator will do the rest of the work for you. You're free to modify anything in your application as long as you implement the IApp interface. No corresponding modification is needed on the emulator side and vice versa.</p>
+    <p>Furthermore,<strong> the pages of the application and the application itself are decoupled too</strong>, in a similar manner to the above via the IPage interface.</p>
 
     <h3>2.2 Some more details</h3>
     <h4>2.2.1 application:</h4>
@@ -168,11 +177,15 @@
         <li><strong>Auto build to temp folder:</strong> just save the ts file while you editing. And you can also manually compile with the command "tsc".</li>
         <li><strong>Sourcemap:</strong> With this feature,You can debug typescript directly in the browser.</li>
     </ul>
-    <p><strong>5. About the team communication</strong></p>
+        
+    <h2>5. Testing</h2>
+    <p>The application has been tested, and shown to be working in Chrome, Chromium, Firefox and Qutebrowser, on OSX and Ubuntu, with all test cases passing in all of those browsers. There was some slight difficulty with Chrome at one point due to their cross origin domain policy preventing other files being loaded. This affected loading fixtures (what jamine-jquery calls chunks of html that tests can be run against) from external files. There is a command line flag that can be set when opening chrome to get around this, but for our tests, we didn't really need to have pages elaborate enough to warrent putting them in separate files, so could just specify the full html (often just a single div) of the fixture within the test that needed them.</p>
+
+    <h2>6. About the team communication</h2>
     <p>We cooperate as a team in a well-organized way. Everyone contributes to the final projects via their own way, coding, testing, documenting, reporting, proof-reading. And we held meetings for each milestone. Communicates with each other of the architecture
         design to make sure everyone is on the same boat.</p>
 
-    <h2>6. About the thoughts</h2>
+    <h2>7. Other thoughts</h2>
     <ul>
         <li><strong>Architecture design matters:</strong>
             <ul>
@@ -192,8 +205,8 @@
             </ul>
         </li>
     </ul>
-    <h2>7. Third party libraries used:</h2>
-    <h3>7.1 NPM Packages used:</h3>
+    <h2>8. Third party libraries used:</h2>
+    <h3>8.1 NPM Packages used:</h3>
     <ul>
         <li>Webpack: For code bundling, actually it is so awesome and can replace gulp, browserify and systemjs in a whole.
             <ul>
