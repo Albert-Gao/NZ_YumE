@@ -1,4 +1,6 @@
 # NZ_YumE
+The project is developed via typescript, a showcase on how to develop javascript apps via the traditional OOP approach, use IoC to separate each module. It use npm and webpack as well. The DEMO is [here](http://mr-binary.github.io/NZ_YumE/).
+
 It is a story about a web application which doesn't directly interact with browser...
 Yes, I mean it.
 
